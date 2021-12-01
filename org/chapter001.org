@@ -1,2 +1,182 @@
-#+title: Functional Differential Geometry
-#+OPTIONS: broken-links:t
+#+title: Chapter 1: Introduction
+#+STARTUP: noindent
+
+#+begin_quote
+Philosophy is written in that great book which ever lies before our eyes—I mean
+the Universe—but we cannot understand it if we do not learn the language and
+grasp the symbols in which it is written. This book is written in the
+mathematical language, and the symbols are triangles, circles, and other
+geometrical figures without whose help it is impossible to comprehend a single
+word of it, without which one wanders in vain through a dark labyrinth.
+
+Galileo Galilei [8]
+#+end_quote
+
+Differential geometry is a mathematical language that can be used to express
+physical concepts. In this introduction we show a typical use of this language.
+Do not panic! At this point we do not expect you to understand the details of
+what we are showing. All will be explained as needed in the text. The purpose is
+to get the flavor of this material.
+
+At the North Pole inscribe a line in the ice perpendicular to the Greenwich
+Meridian. Hold a stick parallel to that line and walk down the Greenwich
+Meridian keeping the stick parallel to itself as you walk. (The phrase “parallel
+to itself” is a way of saying that as you walk you keep its orientation
+unchanged. The stick will be aligned East-West, perpendicular to your direction
+of travel.) When you get to the Equator the stick will be parallel to the
+Equator. Turn East, and walk along the Equator, keeping the stick parallel to
+the Equator. Continue walking until you get to the 90◦E meridian. When you reach
+the 90°E meridian turn North and walk back to the North Pole keeping the stick
+parallel to itself. Note that the stick is perpendicular to your direction of
+travel. When you get to the Pole note that the stick is perpendicular to the
+line you inscribed in the ice. But you started with that stick parallel to that
+line and you kept the stick pointing in the same direction on the Earth
+throughout your walk --- how did it change orientation?
+
+The answer is that you walked a closed loop on a curved surface. As seen in
+three dimensions the stick was actually turning as you walked along the Equator,
+because you always kept the stick parallel to the curving surface of the Earth.
+But as a denizen of a 2-dimensional surface, it seemed to you that you kept the
+stick parallel to itself as you walked, even when making a turn. Even if you had
+no idea that the surface of the Earth was embedded in a 3-dimensional space you
+could use this experiment to conclude that the Earth was not flat. This is a
+small example of intrinsic geometry. It shows that the idea of parallel
+transport is not simple. For a general surface it is necessary to explicitly
+define what we mean by parallel.
+
+If you walked a smaller loop, the angle between the starting orientation and the
+ending orientation of the stick would be smaller. For small loops it would be
+proportional to the area of the loop you walked. This constant of
+proportionality is a measure of the curvature. The result does not depend on how
+fast you walked, so this is not a dynamical phenomenon.
+
+Denizens of the surface may play ball games. The balls are constrained to the
+surface; otherwise they are free particles. The paths of the balls are governed
+by dynamical laws. This motion is a solution of the Euler-Lagrange equations[fn:1]
+for the free-particle Lagrangian with coordinates that incorporate the
+constraint of living in the surface. There are coefficients of terms in the
+EulerLagrange equations that arise naturally in the description of the behavior
+of the stick when walking loops on the surface, connecting the static shape of
+the surface with the dynamical behavior of the balls. It turns out that the
+dynamical evolution of the balls may be viewed as parallel transport of the
+ball’s velocity vector in the direction of the velocity vector. This motion by
+parallel transport of the velocity is called /geodesic motion/.
+
+So there are deep connections between the dynamics of particles and the geometry
+of the space that the particles move in. If we understand this connection we can
+learn about dynamics by studying geometry and we can learn about geometry by
+studying dynamics. We enter dynamics with a Lagrangian and the associated
+Lagrange equations. Although this formulation exposes many important features of
+the system, such as how symmetries relate to conserved quantities, the geometry
+is not apparent. But when we express the Lagrangian and the Lagrange equations
+in differential geometry language, geometric properties become apparent. In the
+case of systems with no potential energy the Euler-Lagrange equations are
+equivalent to the geodesic equations on the configuration manifold. In fact, the
+coefficients of terms in the Lagrange equations are Christoffel coefficients,
+which define parallel transport on the manifold. Let’s look into this a bit.
+
+** Lagrange Equations
+
+   We write the Lagrange equations in functional notation[fn:2] as follows:
+
+   $$D\left(\partial_{2} L \circ \Gamma[q]\right) - \partial_{1} L \circ
+   \Gamma[q]=0.$$
+
+   In SICM [19], Section 1.6.3, we showed that a Lagrangian describing the free
+   motion of a particle subject to a coordinate-dependent constraint can be
+   obtained by composing a free-particle Lagrangian with a function that
+   describes how dynamical states transform given the coordinate transformation
+   that describes the constraints.
+
+   A Lagrangian for a free particle of mass m and velocity v is just its kinetic
+   energy, $mv^2/2$. The procedure =Lfree= implements the free Lagrangian:[fn:3]
+
+   #+begin_src scheme
+(define ((Lfree mass) state)
+  (* 1/2 mass (square (velocity state))))
+   #+end_src
+
+   For us the dynamical state of a system of particles is a tuple of time,
+   coordinates, and velocities. The free-particle Lagrangian depends only on the
+   velocity part of the state.
+
+   For motion of a point constrained to move on the surface of a sphere the
+   configuration space has two dimensions. We can describe the position of the
+   point with the generalized coordinates colatitude and longitude. If the
+   sphere is embedded in 3-dimensional space the position of the point in that
+   space can be given by a coordinate transformation from colatitude and
+   longitude to three rectangular coordinates.
+
+   For a sphere of radius R the procedure =sphere->R3= implements the
+   transformation of coordinates from colatitude $\theta$ and longitude $\phi$
+   on the surface of the sphere to rectangular coordinates in the embedding
+   space. (The $\hat{z}$ axis goes through the North Pole, and the Equator is in
+   the plane $z = 0$.)
+
+   #+begin_src scheme
+(define ((sphere->R3 R) state)
+  (let ((q (coordinate state)))
+    (let ((theta (ref q 0)) (phi (ref q 1)))
+      (up (* R (sin theta) (cos phi)) ; x
+          (* R (sin theta) (sin phi)) ; y
+          (* R (cos theta))))))       ; z
+   #+end_src
+
+   The coordinate transformation maps the generalized coordinates on the sphere
+   to the 3-dimensional rectangular coordinates. Given this coordinate
+   transformation we construct a corresponding transformation of velocities;
+   these make up the state transformation. The procedure =F->C= implements the
+   derivation of a transformation of states from a coordinate transformation:
+
+   #+begin_src scheme
+(define ((F->C F) state)
+  (up (time state)
+      (F state)
+      (+ (((partial 0) F) state)
+         (* (((partial 1) F) state)
+            (velocity state)))))
+   #+end_src
+
+   A Lagrangian governing free motion on a sphere of radius $R$ is then the
+   composition of the free Lagrangian with the transformation of states.
+
+   #+begin_src scheme
+(define (Lsphere m R)
+  (compose (Lfree m) (F->C (sphere->R3 R))))
+   #+end_src
+
+   So the value of the Lagrangian at an arbitrary dynamical state is:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((Lsphere 'm 'R)
+ (up 't (up 'theta 'phi) (up 'thetadot 'phidot)))
+   #+end_src
+
+   or, in infix notation:
+
+   $$\frac{1}{2} mR^2\dot{\theta}^2 +
+   \frac{1}{2}mR^2\left(\sin\left(\theta\right)\right)^2\dot{\phi}^2.$$
+
+** The Metric
+
+   Let’s now take a step into the geometry. A surface has a metric which tells
+   us how to measure sizes and angles at every point on the surface. (Metrics
+   are introduced in Chapter 9.)
+
+   The metric is a symmetric function of two vector fields that gives a number
+   for every point on the manifold. (Vector fields are introduced in Chapter 3).
+   Metrics may be used to compute the length of a vector field at each point, or
+   alternatively to compute the inner product of two vector fields at each
+   point. For example, the metric for the sphere of radius $R$ is
+
+* Footnotes
+
+[fn:3] An informal description of the Scheme programming language can be found
+in Appendix A.
+
+[fn:2] A short introduction to our functional notation, and why we have chosen
+it, is given in the prologue: Programming and Understanding. More details can be
+found in Appendix B
+
+[fn:1] It is customary to shorten “Euler-Lagrange equations” to “Lagrange
+equations.” We hope Leonhard Euler is not disturbed.
