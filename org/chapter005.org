@@ -16,11 +16,11 @@ increments of the independent variable in those subintervals:
 If we change variables $(x = g(y))$, then the form of the integral changes:
 
 \begin{equation}
-\begin{align}
+\begin{aligned}
 \int_a^b{f} &= \int_a^b{f(x)dx} \\
 &= \int_{g^{-1}(a)}^{g^{-1}(b)}{f(g(y)) Dg(y)dy} \\
 &= \int_{g^{-1}(a)}^{g^{-1}(b)}{(f \circ g) Dg}.
-\end{align}
+\end{aligned}
 \end{equation}
 
 We can make a coordinate-independent notion of integration in the following way.
