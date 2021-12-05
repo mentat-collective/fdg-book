@@ -1,0 +1,2 @@
+#+title: Chapter 7: Directional Derivatives
+#+STARTUP: noindent
