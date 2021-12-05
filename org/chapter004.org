@@ -1,6 +1,5 @@
-#+title: Chapter 4: Introduction
+#+title: Chapter 4: Basis Fields
 #+STARTUP: noindent
-
 
 A vector field may be written as a linear combination of basis vector fields. If
 =n= is the dimension, then any set of =n= linearly independent vector fields may
@@ -266,13 +265,13 @@ coefficients by applying the dual basis:
 
 \begin{equation}
 \label{eq:op-transform}
-\mathsf{\omega} = \sum_i{\mathsf{a}_i \tilde{\mathsf{e}}^{\prime i}}.
+\boldsymbol{\omega} = \sum_i{\mathsf{a}_i \tilde{\mathsf{e}}^{\prime i}}.
 \end{equation}
 
    The coefficients are[fn:4]
 
 \begin{equation}
-\mathsf{a}_i = \mathsf{\omega}(\mathsf{e}_i) = \sum_j{\mathsf{a}^\prime_j \tilde{\mathsf{e}}^{\prime j}}(\mathsf{e}_i) \
+\mathsf{a}_i = \boldsymbol{\omega}(\mathsf{e}_i) = \sum_j{\mathsf{a}^\prime_j \tilde{\mathsf{e}}^{\prime j}}(\mathsf{e}_i) \
 = \sum_j{\mathsf{a}^\prime_j \mathsf{J}^j_i}
 \end{equation}
 

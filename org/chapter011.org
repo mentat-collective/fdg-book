@@ -1,0 +1,154 @@
+#+title: Chapter 11: Special Relativity
+#+STARTUP: noindent
+
+Although the usual treatments of special relativity begin with the
+Michelson-Morley experiment, this is not how Einstein began. In
+fact, Einstein was impressed with Maxwell’s work and he was emulating Maxwell’s breakthrough.
+
+Maxwell was preceded by Faraday, Ampere, Oersted, Coulomb, Gauss, and Franklin.
+These giants discovered electromagnetism and worked out empirical equations that
+described the phenomena. They understood the existence of conserved charges and
+fields. Faraday invented the idea of lines of force by which fields can be
+visualized.
+
+Maxwell’s great insight was noticing and resolving the contradiction between the
+empirically-derived laws of electromagnetism and conservation of charge. He did
+this by introducing the then experimentally undetectable displacement-current
+term into one of the empirical equations. The modified equations implied a wave
+equation and the propagation speed of the wave predicted by the new equation
+turned out to be the speed of light, as measured by the eclipses of the Galilean
+satellites of Jupiter. The experimental confirmation by Hertz of the existence
+of electromagnetic radiation that obeyed Maxwell’s equations capped the
+discovery.
+
+By analogy, Einsten noticed that Maxwell’s equations were inconsistent with
+Galilean relativity. In free space, where electromagnetic waves propagate,
+Maxwell’s equations say that the vector source of electric fields is the time
+rate of change of the magnetic field and the vector source of magnetic field is
+the time rate of change of the electric field. The combination of these ideas
+yields the wave equation. The wave equation itself is not invariant under the
+Galilean transformation: As Einstein noted, if you run with the propagation
+speed of the wave there is no time variation in the field you observe, so there
+is no space variation either, contradicting the wave equation. But the Maxwell
+theory is beautiful, and it can be verified to a high degree of accuracy, so
+there must be something wrong with Galilean relativity. Einstein resolved the
+contradiction by generalizing the meaning of the Lorentz transformation, which
+was invented to explain the failure of the Michelson-Morley experiment. Lorentz
+and his colleagues decided that the problem with the Michelson-Morley experiment
+was that matter interacting with the luminiferous ether contracts in the
+direction of motion. To make this consistent he had to invent a "local time"
+which had no clear interpretation. Einstein took the Lorentz transformation to
+be a fundamental replacement for the Galilean transformation in all of
+mechanics.
+
+Now to the details. Before Maxwell the empirical laws of electromagnetism were
+as follows. Electric fields arise from charges, with the inverse square law of
+Coulomb. This is Carl Friedrich Gauss’s law for electrostatics:
+
+\begin{equation}
+\end{equation}
+
+Magnetic fields do not have a scalar source. This is Gauss’s law for
+magnetostatics:
+
+\begin{equation}
+\end{equation}
+
+Magnetic fields are produced by electric currents, as discovered by Hans
+Christian Oersted and quantified by André-Marie Ampère:
+
+\begin{equation}
+\end{equation}
+
+Michael Faraday (and Joseph Henry) discovered that electric fields are produced
+by moving magnetic fields:
+
+\begin{equation}
+\end{equation}
+
+Benjamin Franklin was the first to understand that electrical charges are
+conserved:
+
+\begin{equation}
+\end{equation}
+
+Although these equations are written in terms of the speed of light $c$, these
+laws were originally written in terms of electrical permittivity and magnetic
+permeability of free space, which could be determined by measurement of the
+forces for given currents and charges.
+
+It is easy to see that these equations are mutually contradictory. Indeed, if we
+take the divergence of equation (11.3) we get
+
+\begin{equation}
+\end{equation}
+
+which directly contradicts conservation of charge (11.5).
+
+Maxwell patched this bug by adding in the displacement current, changing
+equation (11.3) to read
+
+\begin{equation}
+\end{equation}
+
+Maxwell proceeded by taking the curl of equation (11.4) to get
+
+\begin{equation}
+\end{equation}
+
+Expanding the left-hand side
+
+\begin{equation}
+\end{equation}
+
+substituting from equations (11.7) and (11.1), and rearranging the terms we get
+the inhomogeneous wave equation:
+
+\begin{equation}
+\end{equation}
+
+We see that in free space (in the absence of any charges or currents) we have
+the familiar homogeneous linear wave equation. A similar equation can be derived
+for the magnetic field.
+
+Lorentz, whom Einstein also greatly respected, developed a general formula to
+describe the force on a particle with charge $q$ moving with velocity $\vec{v}$
+in an electromagnetic field:
+
+\begin{equation}
+\end{equation}
+
+A crucial point in Einstein’s inspiration for relativity is, quoting Einstein
+(in English translation), "During that year [1895–1896] in Aarau the question
+came to me: If one runs after a light wave with light velocity, then one would
+encounter a time-independent wavefield. However, something like that does not
+seem to exist!"[fn:1] This was the observation of the inconsistency.
+
+Let’s be more precise about this. Consider a plane sinusoidal wave moving in the
+$\hat{x}$ direction with velocity $c$ in free space ($\rho = 0$ and $\vec{I} =
+0$). This is a perfectly good solution of the wave equation. Now suppose that an
+observer is moving with the wave in the $\hat{x}$ direction with velocity $c$.
+Such an observer will see no time variation of the field. So the wave equation
+reduces to Laplace’s equation. But a sinusoidal variation in space is not a
+solution of Laplace’s equation.
+
+Einstein believed that the Maxwell-Lorentz electromagnetic theory was
+fundamentally correct, though he was unhappy with an apparent asymmetry in the
+formulation. Consider a system consisting of a conductor and a magnet. If the
+conductor is moved and the magnet is held stationary (a stationary magnetic
+field) then the charge carriers in the conductor are subject to the Lorentz
+force (11.11), causing them to move. However, if the magnet is moved past a
+stationary conductor then the changing magnetic field induces an electric field
+in the conductor by equation (11.4), which causes the charge carriers in the
+conductor to move. The actual current which results is identical for both
+explanations if the relative velocity of the magnet and the conductor are the
+same. To Einstein, there should not have been two explanations for the same
+phenomenon.
+
+** Invariance of the Wave Equation
+
+   TODO continue from page 170
+
+* Footnotes
+
+[fn:1] The quote is from Pais [12], p. 131.

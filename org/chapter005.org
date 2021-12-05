@@ -1,0 +1,86 @@
+#+title: Chapter 5: Integration
+#+STARTUP: noindent
+
+We know how to integrate real-valued functions of a real variable. We want to
+extend this idea to manifolds, in such a way that the integral is independent of
+the coordinate system used to compute it.
+
+The integral of a real-valued function of a real variable is the limit of a sum
+of products of the values of the function on subintervals and the lengths of the
+increments of the independent variable in those subintervals:
+
+\begin{equation}
+\int_a^b{f} = \int_a^b{f(x)dx} = \lim_{\Delta x_i \to 0} \sum_i{f(x_i)} \Delta x_i.
+\end{equation}
+
+If we change variables $(x = g(y))$, then the form of the integral changes:
+
+\begin{equation}
+\begin{align}
+\int_a^b{f} &= \int_a^b{f(x)dx} \\
+&= \int_{g^{-1}(a)}^{g^{-1}(b)}{f(g(y)) Dg(y)dy} \\
+&= \int_{g^{-1}(a)}^{g^{-1}(b)}{(f \circ g) Dg}.
+\end{align}
+\end{equation}
+
+We can make a coordinate-independent notion of integration in the following way.
+An interval of the real line is a 1-dimensional manifold with boundary. We can
+assign a coordinate chart χ to this manifold. Let $x = \chi(\mathsf{m})$. The
+coordinate basis is associated with a coordinate-basis vector field, here
+$\frac{\partial}{\partial x}$. Let $\boldsymbol{\omega}$ be a one-form on this
+manifold. The application of $\boldsymbol{\omega}$ to $\frac{\partial}{\partial x}
+is a real-valued function on the manifold. If we compose this with the inverse
+chart, we get a real-valued function of a real variable. We can then write the
+usual integral of this function
+
+\begin{equation}
+I = \int_a^b{\boldsymbol{\omega}(\partial / \partial x) \circ \chi^{-1}}.
+\end{equation}
+
+It turns out that the value of this integral is independent of the coordinate
+chart used in its definition. Consider a different coordinate chart $x^\prime =
+\chi^\prime(\mathsf{m})$, with associated basis vector field
+$\frac{\partial}{\partial x}$ . Let $g = \chi^\prime \circ \chi^{-1}$. We have
+
+\begin{equation}
+\begin{aligned}
+\int_{a^{\prime}}^{b^{\prime}} & \boldsymbol{\omega}\left(\partial / \partial \mathrm{x}^{\prime}\right) \circ \chi^{\prime-1} \\
+&=\int_{a^{\prime}}^{b^{\prime}} \boldsymbol{\omega}\left(\partial / \partial \mathrm{x}\left(D\left(\chi \circ \chi^{\prime-1}\right) \circ \chi^{\prime}\right)\right) \circ \chi^{\prime-1} \\
+&=\int_{a^{\prime}}^{b^{\prime}}\left(\boldsymbol{\omega}(\partial / \partial \mathrm{x}) D\left(\chi \circ \chi^{\prime-1}\right) \circ \chi^{\prime}\right) \circ \chi^{\prime-1} \\
+&=\int_{a^{\prime}}^{b^{\prime}}\left(\boldsymbol{\omega}(\partial / \partial \mathrm{x}) \circ \chi^{\prime-1}\right) D\left(\chi \circ \chi^{\prime-1}\right) \\
+&=\int_{a}^{b}\left(\left(\left(\boldsymbol{\omega}(\partial / \partial \mathrm{x}) \circ \chi^{-1}\right) D\left(\chi \circ \chi^{\prime-1}\right)\right) \circ g\right) D g \\
+&=\int_{a}^{b} \boldsymbol{\omega}(\partial / \partial \mathrm{x}) \circ \chi^{-1},
+\end{aligned}
+\end{equation}
+
+where we have used the rule for coordinate transformations of basis vectors
+(equation 3.19), linearity of forms in the first two lines, and the rule for
+change-of-variables under an integral in the last line.[fn:1]
+
+Because the integral is independent of the coordinate chart, we can write simply
+
+\begin{equation}
+I = \int_\mathsf{M} \boldsymbol{\omega},
+\end{equation}
+
+where $\mathsf{M} $is the 1-dimensional manifold with boundary corresponding to
+the interval.
+
+We are exploiting the fact that coordinate basis vectors in different coordinate
+systems are related by a Jacobian (see equation 3.19), which cancels the
+Jacobian that appears in the changeof-variables formula for integration (see
+equation 5.2).
+
+** Higher Dimensions
+
+   We have seen that we can integrate one-forms on 1-dimensional manifolds. We
+   need higher-rank forms that we can integrate on higher-dimensional manifolds
+   in a coordinate-independent manner.
+
+   TODO continue from page 57 (page 78 in the pdf)
+
+* Footnotes
+
+[fn:1] Note $(D (\chi \circ \chi^{\prime -1}) \circ (\chi^\prime \circ
+\chi^{-1})) D(\chi^\prime \circ \chi^{-1}) = 1$. With $g = \chi^\prime \circ
+\chi^{-1}$ this is $(D(g^{−1}) \circ g) (Dg) = 1$.
