@@ -1,0 +1,26 @@
+#+TITLE: Chapter 3: Vector Fields and One-Form Fields
+
+We want a way to think about how a function varies on a manifold. Suppose we have some complex linkage, such as a multiple pendulum. The potential energy is an important function on the multi-dimensional configuration manifold of the linkage. To understand the dynamics of the linkage we need to know how the potential energy changes as the configuration changes. The change in potential energy for a step of a certain size in a particular direction in the configuration space is a real physical quantity; itdoes not depend on how we measure the direction or the step size. What exactly this means is to be determined: What is a step size? What is a direction? We cannot subtract two configurations to determine the distance between them. It is our job here to make sense of this idea.
+
+So we would like something like a derivative, but there are problems. Since we cannot subtract two manifold points, we cannot take the derivative of a manifold function in the way described in elementary calculus. But we can take the derivative of a coordinate representation of a manifold function, because it takes real-number coordinates as its arguments. This is a start, but it is not independent of coordinate system. Let’s see what we can build out of this.
+
+*3.1 Vector Fields
+
+In multiple dimensions the derivative of a function is the multiplier for the best linear approximation of the function at each argument point:[fn:1]
+
+\begin{equation}
+f(x + \Delta x) \approx f(x) + (Df(x))\Delta x
+\end{equation}
+
+The derivative $Df(x)$ is independent of $\Delta x$. Although the derivative depends on the coordinates, the product $(Df(x))\Delta x$ is invariant under a change of coordinates in the follow
+ing sense. Let $\phi = \chi \circ \chi^{\prime -1}$ be a coordinate transformation, and $x = \phi(y)$. Then $\Delta x =D\phi(y)\Delta y$ is the linear approximation  to the change in $x$ when $y$ changes by $\Delta y$. If $f$ and $g4 are representations of a manifold function in the two coordinate systems, $g(y) = f(\phi(y)) = f(x)$, then the linear approximations to the increments in $f$ and $g$ are equal:
+
+$Dg(y)\Delta y = Df(\phi(y))(D\phi(y)\Delta y) = Df(x)\Delta x$
+
+The invariant product $(Df(x))\Delta x$ is the /directional derivative/ of $f$ at $x$ with respect to the vector specified by the tuole of the components $\Delta x$ in the coordinate system. We can generalise this idea to allow the vector at each point to depend on the point, making it a /vector field/. Let $b$ be a function of coordinates. We then have a directional derivative of $f$ at each point $x$, determined by $b$
+
+\begin{equation}
+D_{b}(f)(x) = (Df(x))b(x).
+\end{equation}
+
+Now we bring this back to the manifold and develop a usefule generalization of the idea of the direction derivative for functions on a manifold, rather than functions on $
