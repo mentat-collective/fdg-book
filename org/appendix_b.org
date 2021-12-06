@@ -513,9 +513,107 @@ D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
    function is a down tuple of the partial derivatives of the function with
    respect to each argument position
 
-   TODO continue from page 204!
+   Suppose we have a real-valued function $g$ of two real-valued arguments, and
+   we want to approximate the increment in the value of $g$ from its value at
+   $x, y$. If the arguments are incremented by the tuple $(\Delta x, \Delta y)$
+   we compute:
+
+\begin{equation}
+\begin{aligned}
+Dg(x,y) \cdot (\Delta x, \Delta y) &= \left[ \partial_0 g(x,y) + \partial_1 g(x,y) \right] \cdot (\Delta x, \Delta y) \\
+&= \partial_0 g(x,y)\Delta x + \partial_1 g(x,y)\Delta y.
+\end{aligned}
+\end{equation}
+
+Using the two-argument literal function =g= defined on page 198, we have:
+
+#+begin_src scheme :results value raw :exports both :cache yes
+((D g) 'x 'y)
+;; (down (((partial 0) g) x y) (((partial 1) g) x y))
+#+end_src
+
+In general, partial derivatives are just the components of the derivative of a
+function that takes multiple arguments (or structured arguments or both; see
+below). So a partial derivative of a function is a composition of a component
+selector and the derivative of that function.[fn:3] Indeed:
+
+\begin{equation}
+\partial_0 g = I_0 \circ Dg,
+\end{equation}
+
+\begin{equation}
+\partial_1 g = I_1 \circ Dg.
+\end{equation}
+
+Concretely, if
+
+\begin{equation}
+g(x, y) = x^3 y^5
+\end{equation}
+
+then
+
+\begin{equation}
+Dg(x, y) = [3x^2y^5, 5x^3y^4]
+\end{equation}
+
+and the first-order approximation of the increment for changing the arguments by
+$\Delta x$ and $\Delta y$ is
+
+\begin{equation}
+\begin{aligned}
+g(x + \Delta x, y + \Delta y) - g(x,y) &\approx [3x^2y^5, 5x^3y^4] \cdot (\Delta x, \Delta y) \\
+&= 3x^2y^5\Delta x + 5x^3y^4\Delta y.
+\end{aligned}
+\end{equation}
+
+Partial derivatives of compositions also obey a chain rule:
+
+\begin{equation}
+\partial_i(f \circ g) = ((Df) \circ g) \cdot \partial_i g.
+\end{equation}
+
+So if $x$ is a tuple of arguments, then
+
+\begin{equation}
+(\partial_i(f \circ g))(x) = Df(g(x)) \cdot \partial_i g(x).
+\end{equation}
+
+Mathematical notation usually does not distinguish functions of multiple
+arguments and functions of the tuple of arguments. Let $h((x, y)) = g(x, y)$.
+The function $h$, which takes a tuple of arguments $x$ and $y$, is not
+distinguished from the function $g$ that takes arguments $x$ and $y$. We use
+both ways of defining functions of multiple arguments. The derivatives of both
+kinds of functions are compatible for contraction with a tuple of increments to
+the arguments. Scheme comes in handy here:
+
+#+begin_src scheme
+(define (h s)
+  (g (ref s 0) (ref s 1)))
+#+end_src
+
+#+begin_src scheme :results value raw :exports both :cache yes
+(h (up 'x 'y))
+;; (g x y)
+#+end_src
+
+#+begin_src scheme :results value raw :exports both :cache yes
+((D g) 'x 'y)
+;; (down (((partial 0) g) x y) (((partial 1) g) x y))
+#+end_src
+
+#+begin_src scheme :results value raw :exports both :cache yes
+((D h) (up 'x 'y))
+(down (((partial 0) g) x y) (((partial 1) g) x y))
+#+end_src
+
+TODO continue from page 206
 
 * Footnotes
+
+[fn:3] Partial derivative operators such as =(partial 2)= are operators, so
+=(expt (partial 1) 2)= is a second partial derivative.
+
 [fn:2] To emphasize the relationship of simple tuple structures to matrix
 notation we often format =up= tuples as vertical arrangements of components and
 =down= tuples as horizontal arrangements of components. However, we could just
