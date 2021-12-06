@@ -68,7 +68,7 @@ the interval.
 
 We are exploiting the fact that coordinate basis vectors in different coordinate
 systems are related by a Jacobian (see equation 3.19), which cancels the
-Jacobian that appears in the changeof-variables formula for integration (see
+Jacobian that appears in the change-of-variables formula for integration (see
 equation 5.2).
 
 ** Higher Dimensions
@@ -77,9 +77,41 @@ equation 5.2).
    need higher-rank forms that we can integrate on higher-dimensional manifolds
    in a coordinate-independent manner.
 
-   TODO continue from page 57 (page 78 in the pdf)
+   Consider the integral of a real-valued function, $\mathsf{f} : \mathsf{R}^n
+   \to \mathsf{R}$, over a region $\mathsf{U}$ in $\mathsf{R}^n$. Under a
+   coordinate transformation $g : \mathsf{R}^n \to \mathsf{R}^n$, we have[fn:2]
+
+\begin{equation}
+\int_{\mathsf{U}}{\mathsf{f}} = \int_{g^{-1}(\mathsf{U})}{(\mathsf{f} \circ g) \det(Dg)}.
+\end{equation}
+
+   A rank $n$ form field takes $n$ vector field arguments and produces a
+   real-valued manifold function: $\boldsymbol{\omega}(\mathsf{v}, \mathsf{w},
+   \cdots, \mathsf{u})(\mathsf{m})$. By analogy with the 1-dimensional case,
+   higher-rank forms are linear in each argument. Higher-rank forms must also be
+   antisymmetric under interchange of any two arguments in order to make a
+   coordinatefree definition of integration analogous to equation (5.3).
+
+   Consider an integral in the coordinate system $\chi$:
+
+\begin{equation}
+\int_{\chi(\mathsf{U})}{\boldsymbol{\omega}(\mathsf{X}_0, \mathsf{X}_1, \cdots) \
+\circ \chi^{-1}}.
+\end{equation}
+
+   Under coordinate transformations $g = \chi \circ \chi^{\prime-1}$, the integral becomes
+
+\begin{equation}
+\int_{\chi^\prime(\mathsf{U})}{\boldsymbol{\omega}(\mathsf{X}_0, \mathsf{X}_1, \cdots) \
+\circ \chi^{\prime-1} \det (Dg)}.
+\end{equation}
+
+   Using the change-of-basis formula, equation (3.19):
 
 * Footnotes
+[fn:2] The /determinant/ is the unique function of the rows of its argument that
+i) is linear in each row, ii) changes sign under any interchange of rows, and
+iii) is one when applied to the identity multiplier.
 
 [fn:1] Note $(D (\chi \circ \chi^{\prime -1}) \circ (\chi^\prime \circ
 \chi^{-1})) D(\chi^\prime \circ \chi^{-1}) = 1$. With $g = \chi^\prime \circ
