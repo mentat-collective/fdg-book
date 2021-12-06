@@ -525,17 +525,17 @@ Dg(x,y) \cdot (\Delta x, \Delta y) &= \left[ \partial_0 g(x,y) + \partial_1 g(x,
 \end{aligned}
 \end{equation}
 
-Using the two-argument literal function =g= defined on page 198, we have:
+   Using the two-argument literal function =g= defined on page 198, we have:
 
 #+begin_src scheme :results value raw :exports both :cache yes
 ((D g) 'x 'y)
 ;; (down (((partial 0) g) x y) (((partial 1) g) x y))
 #+end_src
 
-In general, partial derivatives are just the components of the derivative of a
-function that takes multiple arguments (or structured arguments or both; see
-below). So a partial derivative of a function is a composition of a component
-selector and the derivative of that function.[fn:3] Indeed:
+   In general, partial derivatives are just the components of the derivative of
+   a function that takes multiple arguments (or structured arguments or both;
+   see below). So a partial derivative of a function is a composition of a
+   component selector and the derivative of that function.[fn:3] Indeed:
 
 \begin{equation}
 \partial_0 g = I_0 \circ Dg,
@@ -545,20 +545,20 @@ selector and the derivative of that function.[fn:3] Indeed:
 \partial_1 g = I_1 \circ Dg.
 \end{equation}
 
-Concretely, if
+   Concretely, if
 
 \begin{equation}
 g(x, y) = x^3 y^5
 \end{equation}
 
-then
+   then
 
 \begin{equation}
 Dg(x, y) = [3x^2y^5, 5x^3y^4]
 \end{equation}
 
-and the first-order approximation of the increment for changing the arguments by
-$\Delta x$ and $\Delta y$ is
+   and the first-order approximation of the increment for changing the arguments
+   by $\Delta x$ and $\Delta y$ is
 
 \begin{equation}
 \begin{aligned}
@@ -567,25 +567,25 @@ g(x + \Delta x, y + \Delta y) - g(x,y) &\approx [3x^2y^5, 5x^3y^4] \cdot (\Delta
 \end{aligned}
 \end{equation}
 
-Partial derivatives of compositions also obey a chain rule:
+   Partial derivatives of compositions also obey a chain rule:
 
 \begin{equation}
 \partial_i(f \circ g) = ((Df) \circ g) \cdot \partial_i g.
 \end{equation}
 
-So if $x$ is a tuple of arguments, then
+   So if $x$ is a tuple of arguments, then
 
 \begin{equation}
 (\partial_i(f \circ g))(x) = Df(g(x)) \cdot \partial_i g(x).
 \end{equation}
 
-Mathematical notation usually does not distinguish functions of multiple
-arguments and functions of the tuple of arguments. Let $h((x, y)) = g(x, y)$.
-The function $h$, which takes a tuple of arguments $x$ and $y$, is not
-distinguished from the function $g$ that takes arguments $x$ and $y$. We use
-both ways of defining functions of multiple arguments. The derivatives of both
-kinds of functions are compatible for contraction with a tuple of increments to
-the arguments. Scheme comes in handy here:
+   Mathematical notation usually does not distinguish functions of multiple
+   arguments and functions of the tuple of arguments. Let $h((x, y)) = g(x, y)$.
+   The function $h$, which takes a tuple of arguments $x$ and $y$, is not
+   distinguished from the function $g$ that takes arguments $x$ and $y$. We use
+   both ways of defining functions of multiple arguments. The derivatives of
+   both kinds of functions are compatible for contraction with a tuple of
+   increments to the arguments. Scheme comes in handy here:
 
 #+begin_src scheme
 (define (h s)
@@ -607,7 +607,230 @@ the arguments. Scheme comes in handy here:
 (down (((partial 0) g) x y) (((partial 1) g) x y))
 #+end_src
 
-TODO continue from page 206
+   A phase-space state function is a function of time, coordinates, and momenta.
+   Let $H$ be such a function. The value of $H$ is $H\left(t,(x, y), [p_x,
+   p_y]\right)$ for time $t$, coordinates $(x, y)$, and momenta $[p_x, p_y]$.
+   Let $s$ be the phase-space state tuple as in (B.6):
+
+\begin{equation}
+s = \left(t, (x, y), [p_x, p_y] \right).
+\end{equation}
+
+   The value of $H$ for argument tuple $s$ is $H(s)$. We use both ways of
+   writing the value of $H$.
+
+   We often show a function of multiple arguments that include tuples by
+   indicating the boundaries of the argument tuples with semicolons and
+   separating their components with commas. If $H$ is a function of phase-space
+   states with arguments $t$, $(x, y)$, and $[p_x, p_y]$, we may write $H(t; x,
+   y; p_x, p_y)$. This notation loses the up/down distinction, but our
+   semicolon-and-comma notation is convenient and reasonably unambiguous.
+
+   The derivative of $H$ is a function that produces an object that can be
+   contracted with an increment in the argument structure to produce an
+   increment in the function’s value. The derivative is a down tuple of three
+   partial derivatives. The first partial derivative is the partial derivative
+   with respect to the numerical argument. The second partial derivative is a
+   down tuple of partial derivatives with respect to each component of the
+   up-tuple argument. The third partial derivative is an up tuple of partial
+   derivatives with respect to each component of the down-tuple argument:
+
+\begin{equation}
+\begin{aligned}
+DH(s) &= \left[\partial_0 H(s), \partial_1 H(s), \partial_2 H(s) \right] \\
+&= \left[\partial_0 H(s), \left[ \partial_{1,0} H(s), \partial_{1,1} H(s) \right], \
+\left[ \partial_{2,0} H(s), \partial_{2,1} H(s) \right] \right],
+\end{aligned}
+\end{equation}
+
+   where $\partial_{1,0}$ indicates the partial derivative with respect to the
+   first component (index 0) of the second argument (index 1) of the function,
+   and so on. Indeed, $\partial_z F = I_z \circ DF$ for any function $F$ and
+   access chain $z$. So, if we let $\Delta s$ be an incremental phase-space
+   state tuple,
+
+\begin{equation}
+\Delta s = \left(\Delta t, (\Delta x, \Delta y), [\Delta p_x, \Delta p_y] \right)
+\end{equation}
+
+   then
+
+\begin{equation}
+\begin{aligned}
+DH(s)\Delta s = &\partial_0 H(s)\Delta t \\
+&+ \partial_{1,0} H(s)\Delta x + \partial_{1,1} H(s)\Delta y \\
+&+ \partial_{2,0} H(s)\Delta p_x + \partial_{2,1} H(s)\Delta p_y.
+\end{aligned}
+\end{equation}
+
+   Caution: Partial derivative operators with respect to different structured
+   arguments generally do not commute.
+
+   In Scheme we must make explicit choices. We usually assume that phase-space
+   state functions are functions of the tuple. For example,
+
+#+begin_src scheme
+(define H
+  (literal-function
+   'H
+   (-> (UP Real (UP Real Real) (DOWN Real Real)) Real)))
+#+end_src
+
+#+begin_src scheme :results value raw :exports both :cache yes
+(H s)
+;; (H (up t (up x y) (down p x p y)))
+#+end_src
+
+#+begin_src scheme :results value raw :exports both :cache yes
+((D H) s)
+;; (down
+;;  (((partial 0) H) (up t (up_x y) (down p_x p_y)))
+;;  (down (((partial 1 0) H) (up t (up_x y) (down p_x p_y)))
+;;        (((partial 1 1) H) (up t (up_x y) (down p_x p_y))))
+;;  (up (((partial 2 0) H) (up t (up_x y) (down p_x p_y)))
+;;      (((partial 2 1) H) (up t (up_x y) (down p_x p_y)))))
+#+end_src
+
+** Structured Results
+
+   Some functions produce structured outputs. A function whose output is a tuple
+   is equivalent to a tuple of component functions each of which produces one
+   component of the output tuple.
+
+   For example, a function that takes one numerical argument and produces a
+   structure of outputs may be used to describe a curve through space. The
+   following function describes a helical path around the $\hat{z}$-axis in
+   3-dimensional space:
+
+\begin{equation}
+h(t) = (\cos t, \sin t, t) = (\cos, \sin, I)(t).
+\end{equation}
+
+   The derivative is just the up tuple of the derivatives of each component of
+   the function:
+
+\begin{equation}
+Dh(t) = (-\sin t, \cos t, 1).
+\end{equation}
+
+   In Scheme we can write
+
+   #+begin_src scheme
+(define (helix t)
+  (up (cos t) (sin t) t))
+   #+end_src
+
+   or just
+
+   #+begin_src scheme
+(define helix (up cos sin identity))
+   #+end_src
+
+   Its derivative is just the up tuple of the derivatives of each component of
+   the function:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((D helix) 't)
+(up (* -1 (sin t)) (cos t) 1)
+   #+end_src
+
+   In general, a function that produces structured outputs is just treated as a
+   structure of functions, one for each of the components. The derivative of a
+   function of structured inputs that produces structured outputs is an object
+   that when contracted with an incremental input structure produces a linear
+   approximation to the incremental output. Thus, if we define function $g$ by
+
+\begin{equation}
+g(x, y) = \left((x+y)^2, (y-x)^3, e^{x+y} \right),
+\end{equation}
+
+   then the derivative of $g$ is
+
+\begin{equation}
+D g(x, y)=\left[\left(\begin{array}{c}
+2(x+y) \\
+-3(y-x)^{2} \\
+e^{x+y}
+\end{array}\right),\left(\begin{array}{c}
+2(x+y) \\
+3(y-x)^{2} \\
+e^{x+y}
+\end{array}\right)\right]
+\end{equation}
+
+   In Scheme:
+
+   #+begin_src scheme
+(define (g x y)
+  (up (square (+ x y)) (cube (- y x)) (exp (+ x y))))
+   #+end_src
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((D g) 'x 'y)
+;; (down (up (+ (* 2 x) (* 2 y))
+;;           (+ (* -3 (expt x 2)) (* 6 x y) (* -3 (expt y 2)))
+;;           (* (exp y) (exp x)))
+;;       (up (+ (* 2 x) (* 2 y))
+;;           (+ (* 3 (expt x 2)) (* -6 x y) (* 3 (expt y 2)))
+;;           (* (exp y) (exp x))))
+   #+end_src
+
+*** Exercise B.1: Chain Rule
+
+    Let $F(x, y) = x^2y^3$, $G(x, y)=(F(x, y), y)$, and $H(x, y) = F(F(x, y),
+    y)$, so that $H = F \circ G$.
+
+    a. Compute $\partial_0 F(x, y)$ and $\partial_1 F(x, y)$.
+    b. Compute $\partial_0 F(F(x, y), y)$ and $\partial_1 F(F(x, y), y)$.
+    c. Compute $\partial_0 G(x, y)$ and $\partial_1 G(x, y)$.
+    d. Compute $DF(a, b)$, $DG(3, 5)$ and $DH(3a^2, 5b^3)$.
+
+*** Exercise B.2: Computing Derivatives
+
+    We can represent functions of multiple arguments as procedures in several
+    ways, depending upon how we wish to use them. The simplest idea is to
+    identify the procedure arguments with the function’s arguments.
+
+    For example, we could write implementations of the functions that occur in
+    exercise B.1 as follows:
+
+    #+begin_src scheme
+(define (f x y)
+  (* (square x) (cube y)))
+
+(define (g x y)
+  (up (f x y) y))
+
+(define (h x y)
+  (f (f x y) y))
+    #+end_src
+
+    With this choice it is awkward to compose a function that takes multiple
+    arguments, such as $f$, with a function that produces a tuple of those
+    arguments, such as $g$. Alternatively, we can represent the function
+    arguments as slots of a tuple data structure, and then composition with a
+    function that produces such a data structure is easy. However, this choice
+    requires the procedures to build and take apart structures.
+
+    For example, we may define procedures that implement the functions above as
+    follows:
+
+    #+begin_src scheme
+(define (f v)
+  (let ((x (ref v 0))
+        (y (ref v 1)))
+    (* (square x) (cube y))))
+
+(define (g v)
+  (let ((x (ref v 0))
+        (y (ref v 1)))
+    (up (f v) y)))
+
+(define h (compose f g))
+    #+end_src
+
+    Repeat exercise B.1 using the computer. Explore both implementations of
+    multiple-argument functions.
 
 * Footnotes
 
