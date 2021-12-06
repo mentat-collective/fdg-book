@@ -1,2 +1,527 @@
 #+title: Appendix B: Our Notation
 #+STARTUP: noindent
+
+
+#+begin_quote
+An adequate notation should be understood by at
+least two people, one of whom may be the author.
+
+Abdus Salam (1950).
+#+end_quote
+
+
+We adopt a /functional mathematical notation/ that is close to that used by
+Spivak in his /Calculus on Manifolds/ [17]. The use of functional notation
+avoids many of the ambiguities of traditional mathematical notation that can
+impede clear reasoning. Functional notation carefully distinguishes the function
+from the value of the function when applied to particular arguments. In
+functional notation mathematical expressions are unambiguous and self-contained.
+
+We adopt a /generic arithmetic/ in which the basic arithmetic operations, such as
+addition and multiplication, are extended to a wide variety of mathematical
+types. Thus, for example, the addition operator $+$ can be applied to numbers,
+tuples of numbers, matrices, functions, etc. Generic arithmetic formalizes the
+common informal practice used to manipulate mathematical objects.
+
+We often want to manipulate aggregate quantities, such as the collection of all
+of the rectangular coordinates of a collection of particles, without explicitly
+manipulating the component parts. Tensor arithmetic provides a traditional way
+of manipulating aggregate objects: Indices label the parts; conventions, such as
+the summation convention, are introduced to manipulate the indices. We introduce
+a /tuple arithmetic/ as an alternative way of manipulating aggregate quantities
+that usually lets us avoid labeling the parts with indices. Tuple arithmetic is
+inspired by tensor arithmetic but it is more general: not all of the components
+of a tuple need to be of the same size or type.
+
+The mathematical notation is in one-to-one correspondence with expressions of
+the computer language /Scheme/ [10]. Scheme is based on the $\lambda$-calculus
+[5] and directly supports the manipulation of functions. We augment Scheme with
+symbolic, numerical, and generic features to support our applications. For a
+simple introduction to Scheme, see Appendix A. The correspondence between the
+mathematical notation and Scheme requires that mathematical expressions be
+unambiguous and self-contained. Scheme provides immediate feedback in
+verification of mathematical deductions and facilitates the exploration of the
+behavior of systems.
+
+** Functions
+
+   The expression $f(x)$ denotes the value of the function $f$ at the given
+   argument $x$; when we wish to denote the function we write just $f$.
+   Functions may take several arguments. For example, we may have the function
+   that gives the Euclidean distance between two points in the plane given by
+   their rectangular coordinates:
+
+\begin{equation}
+d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
+\end{equation}
+
+   In Scheme we can write this as:
+
+   #+begin_src scheme
+(define (d x1 y1 x2 y2)
+  (sqrt (+ (square (- x2 x1)) (square (- y2 y1)))))
+   #+end_src
+
+   Functions may be composed if the range of one overlaps the domain of the
+   other. The composition of functions is constructed by passing the output of
+   one to the input of the other. We write the composition of two functions
+   using the $\circ$ operator:
+
+\begin{equation}
+(f \circ g) : x \mapsto (f \circ g)(x) = f(g(x)).
+\end{equation}
+
+   A procedure =h= that computes the cube of the sine of its argument may be
+   defined by composing the procedures =cube= and =sin=:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define h (compose cube sin))
+
+(h 2)
+;; .7518269446689928
+   #+end_src
+
+   Which is the same as
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(cube (sin 2))
+;; .7518269446689928
+   #+end_src
+
+   Arithmetic is extended to the manipulation of functions: the usual
+   mathematical operations may be applied to functions. Examples are addition
+   and multiplication; we may add or multiply two functions if they take the
+   same kinds of arguments and if their values can be added or multiplied:
+
+\begin{equation}
+\begin{aligned}
+(f + g)(x) &= f(x) + g(x), \\
+(fg)(x) &= f(x)g(x).
+\end{aligned}
+\end{equation}
+
+   A procedure =g= that multiplies the cube of its argument by the sine of its
+   argument is
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define g (* cube sin))
+
+(g 2)
+;; 7.274379414605454
+   #+end_src
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(* (cube 2) (sin 2))
+;; 7.274379414605454
+   #+end_src
+
+** Symbolic Values
+
+   As in usual mathematical notation, arithmetic is extended to allow the use of
+   symbols that represent unknown or incompletely specified mathematical
+   objects. These symbols are manipulated as if they had values of a known type.
+   By default, a Scheme symbol is assumed to represent a real number. So the
+   expression ='a= is a literal Scheme symbol that represents an unspecified real
+   number:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((compose cube sin) 'a)
+;; (expt (sin a) 3)
+   #+end_src
+
+   The default printer simplifies the expression,[fn:1] and displays it in a
+   readable form. We can use the simplifier to verify a trigonometric identity:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((- (+ (square sin) (square cos)) 1) 'a)
+;; 0
+   #+end_src
+
+   Just as it is useful to be able to manipulate symbolic numbers, it is useful
+   to be able to manipulate symbolic functions. The procedure =literal-function=
+   makes a procedure that acts as a function having no properties other than its
+   name. By default, a literal function is defined to take one real argument and
+   produce one real value. For example, we may want to work with a function $f :
+   \mathbf{R} \to \mathbf{R}$:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((literal-function 'f) 'x)
+;; (f x)
+   #+end_src
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((compose (literal-function 'f) (literal-function 'g)) 'x)
+;; (f (g x))
+   #+end_src
+
+   We can also make literal functions of multiple, possibly structured arguments
+   that return structured values. For example, to denote a literal function
+   named =g= that takes two real arguments and returns a real value ($g :
+   \mathbf{R} \times \mathbf{R} \to \mathbf{R}$) we may write:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define g (literal-function 'g (-> (X Real Real) Real)))
+
+(g 'x 'y)
+;; (g x y)
+   #+end_src
+
+   We may use such a literal function anywhere that an explicit function of the
+   same type may be used.
+
+   There is a whole language for describing the type of a literal function in
+   terms of the number of arguments, the types of the arguments, and the types
+   of the values. Here we describe a function that maps pairs of real numbers to
+   real numbers with the expression =(-> (X Real Real) Real)=. Later we will
+   introduce structured arguments and values and show extensions of literal
+   functions to handle these.
+
+** Tuples
+
+   There are two kinds of tuples: /up/ tuples and /down/ tuples. We write tuples
+   as ordered lists of their components; a tuple is delimited by parentheses if
+   it is an up tuple and by square brackets if it is a down tuple. For example,
+   the up tuple $v$ of velocity components $v^0$, $v^1$, and $v^2$ is
+
+\begin{equation}
+v = (v^0, v^1, v^2).
+\end{equation}
+
+   The down tuple $p$ of momentum components $p_0$, $p_1$, and $p_2$ is
+
+\begin{equation}
+p = [p_0, p_1, p_2].
+\end{equation}
+
+   A component of an up tuple is usually identified by a superscript. A
+   component of a down tuple is usually identified by a subscript. We use
+   zero-based indexing when referring to tuple elements. This notation follows
+   the usual convention in tensor arithmetic.
+
+   We make tuples with the constructors =up= and =down=:
+
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define v (up 'v^0 'v^1 'v^2))
+v
+;; (up vˆ0 vˆ1 vˆ2)
+   #+end_src
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define p (down 'p_0 'p_1 'p_2))
+p
+;; (down p_0 p_1 p_2)
+
+   #+end_src
+
+   Note that =v^0= and =p_2= are just symbols. The caret and underline
+   characters are symbol constituents, so there is no meaning other than
+   mnemonic to the structure of these symbols. However, our software can also
+   display expressions using $\TeX$, and then these decorations turn into
+   superscripts and subscripts.
+
+   Tuple arithmetic is different from the usual tensor arithmetic in that the
+   components of a tuple may also be tuples and different components need not
+   have the same structure. For example, a tuple structure $s$ of phase-space
+   states is
+
+\begin{equation}
+s = \left(t, \left(x, y\right), \left[p_x, p_y \right] \right).
+\end{equation}
+
+   It is an up tuple of the time, the coordinates, and the momenta. The time $t$
+   has no substructure. The coordinates are an up tuple of the coordinate
+   components $x$ and $y$. The momentum is a down tuple of the momentum
+   components $p_x$ and $p_y$. In Scheme this is written:
+
+   #+begin_src scheme
+(define s (up 't (up 'x 'y) (down 'p_x 'p_y)))
+   #+end_src
+
+   In order to reference components of tuple structures there are selector
+   functions, for example:
+
+\begin{equation}
+\begin{aligned}
+I(s) &= s \\
+I_0(s) &= y \\
+I_1(s) &= (x,y) \\
+I_2(s) &= [p_x, p_y] \\
+I_{1,0}(s) &= x \\
+&\ldots \\
+I_{2,1}(s) &= p_y.
+\end{aligned}
+\end{equation}
+
+   The sequence of integer subscripts on the selector describes the access chain
+   to the desired component.
+
+   The procedure =component= is the general selector procedure that implements
+   the selector function $I_z$:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((component 0 1) (up (up 'a 'b) (up 'c 'd)))
+;; b
+   #+end_src
+
+   To access a component of a tuple we may also use the selector procedure
+   =ref=, which takes a tuple and an index and returns the indicated element of
+   the tuple:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(ref (up 'a 'b 'c) 1)
+;; b
+   #+end_src
+
+   We use zero-based indexing everywhere. The procedure =ref= can be used to
+   access any substructure of a tree of tuples:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(ref (up (up 'a 'b) (up 'c 'd)) 0 1)
+;; b
+   #+end_src
+
+   Two up tuples of the same length may be added or subtracted, elementwise, to
+   produce an up tuple, if the components are compatible for addition.
+   Similarly, two down tuples of the same length may be added or subtracted,
+   elementwise, to produce a down tuple, if the components are compatible for
+   addition.
+
+   Any tuple may be multiplied by a number by multiplying each component by the
+   number. Numbers may, of course, be multiplied. Tuples that are compatible for
+   addition form a vector space.
+
+   For convenience we define the square of a tuple to be the sum of the squares
+   of the components of the tuple. Tuples can be multiplied, as described below,
+   but the square of a tuple is not the product of the tuple with itself.
+
+   The meaning of multiplication of tuples depends on the structure of the
+   tuples. Two tuples are compatible for contraction if they are of opposite
+   types, they are of the same length, and corresponding elements have the
+   following property: either they are both tuples and are compatible for
+   contraction, or at least one is not a tuple. If two tuples are compatible for
+   contraction then generic multiplication is interpreted as contraction: the
+   result is the sum of the products of corresponding components of the tuples.
+   For example, $p$ and $v$ introduced in equations (B.4) and (B.5) above are
+   compatible for contraction; the product is
+
+\begin{equation}
+pv = p_0 v^0 + p_1 v^1 + p_2 v^2.
+\end{equation}
+
+   So the product of tuples that are compatible for contraction is an inner
+   product. Using the tuples =p= and =v= defined above gives us
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(* p v)
+;; (+ (* p 0 vˆ0) (* p 1 vˆ1) (* p 2 vˆ2))
+   #+end_src
+
+   Contraction of tuples is commutative: $pv = vp$. Caution: Multiplication of
+   tuples that are compatible for contraction is, in general, not associative.
+   For example, let $u = (5, 2)$, $v = (11, 13)$, and $g = \left[\left[3,
+   5\right] , \left[7, 9\right]\right]$. Then $u(gv) = 964$, but $(ug)v = 878$.
+   The expression $ugv$ is ambiguous. An expression that has this ambiguity does
+   not occur in this book.
+
+   The rule for multiplying two structures that are not compatible for
+   contraction is simple. If $A$ and $B$ are not compatible for contraction, the
+   product $AB$ is a tuple of type $B$ whose components are the products of $A$
+   and the components of $B$. The same rule is applied recursively in
+   multiplying the components. So if $B = (B^0, B^1, B^2)$, the product of $A$
+   and $B$ is
+
+\begin{equation}
+AB = (AB^0, AB^1, AB^2).
+\end{equation}
+
+   If $A$ and $C$ are not compatible for contraction and $C = [C_0, C_1, C_2]$,
+   the product is
+
+\begin{equation}
+AB = [AC_0, AC_1, AC_2].
+\end{equation}
+
+   Tuple structures can be made to represent linear transformations. For
+   example, the rotation commonly represented by the matrix
+
+\begin{equation}
+\left[\begin{array}{cc}
+\cos \theta & -\sin \theta \\
+\sin \theta & \cos \theta
+\end{array}\right]
+\end{equation}
+
+   can be represented as a tuple structure:[fn:2]
+
+\begin{equation}
+\left[\left(\begin{array}{c}
+\cos \theta \\
+\sin \theta
+\end{array}\right)\left(\begin{array}{c}
+-\sin \theta \\
+\cos \theta
+\end{array}\right)\right].
+\end{equation}
+
+   Such a tuple is compatible for contraction with an up tuple that represents a
+   vector. So, for example:
+
+\begin{equation}
+\left[\left(\begin{array}{c}
+\cos \theta \\
+\sin \theta
+\end{array}\right) \left(\begin{array}{c}
+-\sin \theta \\
+\cos \theta
+\end{array}\right)\right] \left(\begin{array}{c}
+x \\
+y
+\end{array}\right) =
+\left(\begin{array}{c}
+x \cos \theta - y \sin \theta \\
+x \sin \theta + y \cos \theta
+\end{array}\right).
+\end{equation}
+
+   The product of two tuples that represent linear transformations -- which are
+   not compatible for contraction -- represents the composition of the linear
+   transformations. For example, the product of the tuples representing two
+   rotations is
+
+\begin{equation}
+\begin{gathered}
+{\left[\left(\begin{array}{c}
+\cos \theta \\
+\sin \theta
+\end{array}\right)\left(\begin{array}{c}
+-\sin \theta \\
+\cos \theta
+\end{array}\right)\right]\left[\left(\begin{array}{c}
+\cos \varphi \\
+\sin \varphi
+\end{array}\right)\left(\begin{array}{c}
+-\sin \varphi \\
+\cos \varphi
+\end{array}\right)\right]} \\
+=\left[\left(\begin{array}{c}
+\cos (\theta+\varphi) \\
+\sin (\theta+\varphi)
+\end{array}\right)\left(\begin{array}{c}
+-\sin (\theta+\varphi) \\
+\cos (\theta+\varphi)
+\end{array}\right)\right].
+\end{gathered}
+\end{equation}
+
+   Multiplication of tuples that represent linear transformations is associative
+   but generally not commutative, just as the composition of the transformations
+   is associative but not generally commutative.
+
+** Derivatives
+
+   The derivative of a function $f$ is a function, denoted by $Df$. Our
+   notational convention is that $D$ is a high-precedence operator. Thus $D$
+   operates on the adjacent function before any other application occurs:
+   $Df(x)$ is the same as $(Df)(x)$. Higher-order derivatives are described by
+   exponentiating the derivative operator. Thus the $n$th derivative of a function
+   $f$ is notated as $D^n f$.
+
+   The Scheme procedure for producing the derivative of a function is named =D=.
+   The derivative of the =sin= procedure is a procedure that computes =cos=:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(define derivative-of-sine (D sin))
+
+(derivative-of-sine 'x)
+;; (cos x)
+   #+end_src
+
+   The derivative of a function $f$ is the function $Df$ whose value for a
+   particular argument is something that can be multiplied by an increment
+   $\Delta x$ in the argument to get a linear approximation to the increment in
+   the value of $f$:
+
+\begin{equation}
+f(x + \Delta x) \approx f(x) + Df(x)\Delta x.
+\end{equation}
+
+   For example, let $f$ be the function that cubes its argument ($f(x) = x^3$);
+   then $Df$ is the function that yields three times the square of its argument
+   ($Df(y) = 3y^2$). So $f(5) = 125$ and $Df(5) = 75$. The value of $f$ with
+   argument $x + \Delta x$ is
+
+\begin{equation}
+f(x + \Delta x) = (x + \Delta{x})^3 = x^3 + 3x^2 \Delta{x} + 3x\Delta{x}^2 + \Delta{x}^3
+\end{equation}
+
+   and
+
+\begin{equation}
+Df(x)\Delta{x} = 3x^2 \Delta{x}.
+\end{equation}
+
+   So $Df(x)$ multiplied by $\Delta x$ gives us the term in $f(x + \Delta x)$
+   that is linear in $\Delta x$, providing a good approximation to $f(x + \Delta
+   x) − f(x)$ when $\Delta x$ is small.
+
+   Derivatives of compositions obey the chain rule:
+
+\begin{equation}
+D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
+\end{equation}
+
+   So at $x$,
+
+\begin{equation}
+(D(f \circ g))(x) = Df(g(x)) \cdot Dg(x).
+\end{equation}
+
+   =D= is an example of an operator. An operator is like a function except that
+   multiplication of operators is interpreted as composition, whereas
+   multiplication of functions is multiplication of the values (see equation
+   B.3). If $D$ were an ordinary function, then the rule for multiplication
+   would imply that $D^2 f$ would just be the product of $Df$ with itself, which
+   is not what is intended. A product of a number and an operator scales the
+   operator. So, for example
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(((* 5 D) cos) 'x)
+;; (* -5 (sin x))
+   #+end_src
+
+   Arithmetic is extended to allow manipulation of operators. A typical operator
+   is $(D + I)(D − I) = D^2 − I$, where $I$ is the identity operator, subtracts
+   a function from its second derivative. Such an operator can be constructed
+   and used in Scheme as follows:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(((* (+ D I) (- D I)) (literal-function 'f)) 'x)
+;; (+ (((expt D 2) f) x) (* -1 (f x)))
+   #+end_src
+
+** Derivatives of Functions of Multiple Arguments
+
+   The derivative generalizes to functions that take multiple arguments. The
+   derivative of a real-valued function of multiple arguments is an object whose
+   contraction with the tuple of increments in the arguments gives a linear
+   approximation to the increment in the function’s value.
+
+   A function of multiple arguments can be thought of as a function of an up
+   tuple of those arguments. Thus an incremental argument tuple is an up tuple
+   of components, one for each argument position. The derivative of such a
+   function is a down tuple of the partial derivatives of the function with
+   respect to each argument position
+
+   TODO continue from page 204!
+
+* Footnotes
+[fn:2] To emphasize the relationship of simple tuple structures to matrix
+notation we often format =up= tuples as vertical arrangements of components and
+=down= tuples as horizontal arrangements of components. However, we could just
+as well have written this tuple as $\left[\left(\cos \theta, \sin \theta\right),
+\left(−\sin \theta, \cos \theta\right)\right]$.
+
+[fn:1] The procedure =print-expression= can be used in a program to print a
+simplified version of an expression. The default printer in the user interface
+incorporates the simplifier.

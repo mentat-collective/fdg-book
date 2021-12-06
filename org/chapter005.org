@@ -87,7 +87,7 @@ equation 5.2).
 
    A rank $n$ form field takes $n$ vector field arguments and produces a
    real-valued manifold function: $\boldsymbol{\omega}(\mathsf{v}, \mathsf{w},
-   \cdots, \mathsf{u})(\mathsf{m})$. By analogy with the 1-dimensional case,
+   \ldots, \mathsf{u})(\mathsf{m})$. By analogy with the 1-dimensional case,
    higher-rank forms are linear in each argument. Higher-rank forms must also be
    antisymmetric under interchange of any two arguments in order to make a
    coordinatefree definition of integration analogous to equation (5.3).
