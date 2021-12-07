@@ -1,2 +1,57 @@
 #+title: Chapter 10: Hodge Star and Electrodynamics
 #+STARTUP: noindent
+
+
+The vector space of $p$-form fields on an $n$-dimensional manifold has dimension
+$n!/((n−p)!p!)$. This is the same dimension as the space of $(n − p)$-form
+fields. So these vector spaces are isomorphic. If we have a metric there is a
+natural isomorphism: for each $p$-form field $\boldsymbol{\omega}$ on an
+$n$-dimensional manifold there is an $(n − p)$-form field
+$\mathsf{g}^*\boldsymbol{\omega}$, called its /Hodge dual/.[fn:1] The Hodge dual
+should not be confused with the duality of vector bases and one-form bases,
+which is defined without reference to a metric. The Hodge dual is useful for the
+elegant formalization of electrodynamics.
+
+In Euclidean 3-space, if we think of a one-form as a foliation of the space,
+then the dual is a two-form, which can be thought of as a pack of square tubes,
+whose axes are perpendicular to the leaves of the foliation. The original
+one-form divides these tubes up into volume elements. For example, the dual of
+the basis oneform dx is the two-form $\mathsf{g}^* \mathsf{d}x = \mathsf{d}y
+\wedge \mathsf{d}z$. We may think of $\mathsf{d}x$ as a set of planes
+perpendicular to the $\hat{x}$-axis. Then $\mathsf{g}^{*} \mathsf{d}x$ is a set
+of tubes parallel to the $\hat{x}$-axis. In higher-dimensional spaces the
+visualization is more complicated, but the basic idea is the same. The Hodge
+dual of a two-form in four dimensions is a twoform that is perpendicular to the
+given two-form. However, if the metric is indefinite (e.g., the Lorentz metric)
+there is an added complication with the signs.
+
+The Hodge dual is a linear operator, so it can be defined by its action on the
+basis elements. Let $\left\{\partial / \partial \mathsf{x}^0, \ldots, \partial /
+\partial x^{n−1} \right\}$ be an orthonormal basis of vector fields[fn:2] and
+let $\left\{\mathsf{d}x^0, \ldots, \mathsf{d}x^{n−1} \right\}$ be the ordinary
+dual basis for the one-forms. Then the $(n − p)$-form
+$\mathsf{g}^{∗}\boldsymbol{\omega}$ that is the Hodge dual of the $p$-form
+$\boldsymbol{\omega}$ can be defined by its coefficients with respect to the
+basis, using indices, as
+
+\begin{equation}
+\begin{aligned}
+& \left(\mathsf{g}^{*} \boldsymbol{\omega} \right)_{j_p \ldots j_{n-1}} \\
+&\qquad=\sum_{i_0 \ldots i_{p-1} j_0 \ldots j_{p-1}} \frac{1}{p!} \
+\omega_{i_0 \ldots i_{p-1}} g^{i_0 j_0} \ldots g^{i_{p-1} j_{p-1}} \epsilon_{j_0 \ldots j_{n-1}}
+\end{aligned}
+\end{equation}
+
+where $g^{ij{$ are the coefficients of the inverse metric and $\epsilon_{j_0
+\ldots j_{n-1}$ is either $−1$ or $+1$ if the permutation $\left\{0 \ldots n-1
+\right\} \mapsto \left\{j_0 \ldots j_{n-1}\right\}$ is odd or even,
+respectively.
+
+** Relationship to Vector Calculus
+
+* Footnotes
+[fn:2] We have a metric, so we can define "orthonormal” and"use it to construct
+an orthonormal basis given any basis. The Gram-Schmidt procedure does the job.
+
+[fn:1] The traditional notion is to just use an asterisk; we use $g^∗$ to
+emphasize that this duality depends on the choice of metric $g$.
