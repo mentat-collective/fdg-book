@@ -1,0 +1,315 @@
+* Errata for FDG
+
+** Chapter 1
+
+   Page 9: =Cartan= is used in =geodesic-equation-residuals= before it is
+   defined just after. Be careful to flip evaluation order of these two
+   listings.
+
+** Chapter 3
+
+   Page 24: the definition of =v= assumes that =R2->R= from page 16 is still
+   defined. This might be nice to add to the =scmutils= library so that this
+   code will work if users attempt chapter 3 independently.
+
+   The listing at the bottom of the page assumes =R2-rect-point= is still
+   defined.
+
+   Page 38: Note that =omega= was already defined on page 35.
+
+** Chapter 4
+
+   Page 44: Note that you need to install the =R2-rect= coordinate system:
+
+   #+begin_src scheme
+(define-coordinates (up x y) R2-rect)
+   #+end_src
+
+** Chapter 5
+
+   Page 60: This page restates:
+
+   #+begin_src scheme
+(define-coordinates (up x y z) R3-rect)
+   #+end_src
+
+   But assumes that the =R3-rect-point= binding still exists from the previous
+   chapter:
+
+   #+begin_src scheme
+(define R3-rect-point ((point R3-rect) (up 'x0 'y0 'z0)))
+   #+end_src
+
+   Page 60: I was concerned that
+
+   #+begin_src scheme
+(define-coordinates (up r theta z) R3-cyl)
+   #+end_src
+
+   installs =z=, =dz= and =d/dz= from cylindrical coordinates over top of the
+   rectangular coordinates. I know that these are equivalent for all intents and
+   purposes... just noting that maybe
+
+   #+begin_src scheme
+(define-coordinates (up r theta z-cyl) R3-cyl)
+   #+end_src
+
+   would be more pedantic, and, maybe, more correct? Or maybe this affects
+   nothing.
+
+   Page 67: the definitions of =alpha= and =beta= assume that =R2->R= from page
+   16 is still defined.
+
+   Page 67 uses =R2-rect-point= without ever defining it. The definition is, of
+   course,
+
+   #+begin_src scheme
+(define R2-rect-point ((point R2-rect) (up 'x0 'y0)))
+   #+end_src
+
+** Chapter 6
+
+   Page 75: the definition of =S2= references the nonexistent manifold family
+   =S^2= instead of =S^2-type=:
+
+   #+begin_src scheme
+(define S2 (make-manifold S^2 2 3))
+   #+end_src
+
+** Chapter 7
+
+   On page 92, the result at the top of the page is not correct, and =scmutils=
+   won't produce it for the supplied code... I don't know enough to see how the
+   book result comes about, so I submit it to you for examination! The code on
+   the page is written for =R3= but the result is for =R2=. If you run the code
+   in the book, you get:
+
+#+begin_src scheme
+((((partial 1) f-rect) (up 1 0 0))
+ (* a (((partial 0) f-rect) (up 1 0 0)))
+ (* -1/2 (expt a 2) (((partial 1) f-rect) (up 1 0 0)))
+ (* -1/6 (expt a 3) (((partial 0) f-rect) (up 1 0 0)))
+ (* 1/24 (expt a 4) (((partial 1) f-rect) (up 1 0 0))))
+#+end_src
+
+   While the book shows:
+
+#+begin_src scheme
+((((partial 0) f-rect) (up 1 0))
+ (* -1 a (((partial 1) f-rect) (up 1 0)))
+ (* -1/2 (expt a 2) (((partial 1) f-rect) (up 1 0)))
+ (* 1/6 (expt a 3) (((partial 0) f-rect) (up 1 0)))
+ (* 1/24 (expt a 4) (((partial 1) f-rect) (up 1 0))))
+#+end_src
+
+   The =(partial 0)= and =(partial 1)= are switched, the point is in R2 vs R3
+   and the negative signs are distributed differently. Strange!
+
+   Page 103: I believe the code listing at the end of the page subs in =J= where
+   =circular= belongs. The code shown is:
+
+#+begin_src scheme
+(((((covariant-derivative R2-polar-Cartan) d/dx) J) f) R2-rect-point)
+#+end_src
+
+   The correct version is:
+
+#+begin_src scheme
+(((((covariant-derivative R2-polar-Cartan) d/dx) circular) f) R2-rect-point)
+#+end_src
+
+   Page 107: the definition of =S2-Christoffel= will not work without
+   =S2-spherical= coordinates installed:
+
+#+begin_src scheme
+(define-coordinates (up theta phi) S2-spherical)
+#+end_src
+
+   Page 107: The definition of =sphere= references the nonexistent =S^2=
+   manifold family instead of the correct =S^2-type=.
+
+** Chapter 8
+
+   Page 116: The code beginning here requires the =S2-spherical= coordinate
+   system:
+
+   #+begin_src scheme
+(define-coordinates (up theta phi) S2-spherical)
+   #+end_src
+
+   Page 127 states "Where =omega= is an arbitrary one-form field." It would be
+   nice to add this definition to the setup in footnote 8:
+
+   #+begin_src scheme
+(define omega (literal-oneform-field 'omega S2-spherical))
+   #+end_src
+
+   The torsion example on page 127 uses an =f= that has not yet been defined:
+
+   #+begin_src scheme
+(let ((X (literal-vector-field ’X-sphere S2-spherical))
+      (Y (literal-vector-field ’Y-sphere S2-spherical)))
+  ((((torsion-vector nabla) X Y) f) m))
+   #+end_src
+
+   This can be fixed by adding the following to footnote 8's setup instructions:
+
+   #+begin_src scheme
+(define f (literal-manifold-function f S2-spherical))
+   #+end_src
+
+** Chapter 9
+
+   Page 135: I'm not sure if it causes any problems, but =raise= as defined in
+   the book does not wrap its return procedure in =procedure->vector-field=,
+   like the =scmutils= version does. Other functions in the book are careful to
+   show this, so it might be worth a note.
+
+   Page 136: The code beginning here requires the =S2-spherical= coordinate
+   system and =S2-basis=:
+
+   #+begin_src scheme
+(define-coordinates (up theta phi) S2-spherical)
+(define S2-basis (coordinate-system->basis S2-spherical))
+   #+end_src
+
+  Page 141: The simplifier in the current build of =scmutils= can't simplify the
+  denominators to the book's terms with the =3/2= power. If this was
+  hand-simplified, great! Otherwise, maybe this is a regression in the
+  simplifier. I can't see a setting in =rules.scm= that would allow this, but I
+  haven't looked at the full set of rules in a while...
+
+
+  Page 146: The code in section 9.3 requires the =spacetime-rect= coordinate
+  system to be installed. =spacetime-rect-basis= is also used in the first code
+  block on this page without definition:
+
+   #+begin_src scheme
+(define-coordinates (up t x y z) spacetime-rect)
+(define spacetime-rect-basis (coordinate-system->basis spacetime-rect))
+   #+end_src
+
+   Page 147: =V= is passed as an argument to =Newton-metric= without first being
+   defined. =V= was declared inline above in the definition of =nabla=, and
+   should be explicitly defined like so:
+
+#+begin_src scheme
+(define V (literal-function ’V (-> (UP Real Real Real) Real)))
+#+end_src
+
+   Page 147: the expression after "If we evaluate the right-hand side expression
+   we obtain" actually returns
+
+   #+begin_src scheme
+(+ (* 1/2 (expt :c 4) rho)
+   (* 2 (expt :c 2) rho (V (up x y z)))
+   (* 2 rho (expt (V (up x y z)) 2)))
+   #+end_src
+
+   instead of the stated return value:
+
+   #+begin_src scheme
+(* 1/2 (expt :c 4) rho)
+   #+end_src
+
+   Maybe the shown value is meant to be just the leading term, but this is worth
+   explaining.
+
+** Chapter 10
+
+   Page 159: the setup block should define =SR-basis=, as it is used in the last
+   example of the section, on page 160:
+
+   #+begin_src scheme
+(define SR-basis (coordinate-system->basis SR))
+   #+end_src
+
+   If the setup block defined =SR-basis= then the =SR-vector-basis= definition
+   on page 160 could become:
+
+   #+begin_src scheme
+(define SR-vector-basis (basis->vector-basis SR-basis))
+   #+end_src
+
+   Page 159: the Minkowski metric is written with a =c^2= term, but all of the
+   following functions, results and discussion seem to assume that =c= is
+   normalized to =1=. I would recommend a note on page 159 to this effect!
+
+   Including the =c^2= term explicitly would require, I believe, the following
+   substitutions (along with result substitutions for the forms below):
+
+   #+begin_src scheme
+;; page 159
+(define (g-Minkowski u v)
+  (+ (* -1 (square ':c) (dct u) (dct v))
+     (* (dx u) (dx v))
+     (* (dy u) (dy v))
+     (* (dz u) (dz v))))
+
+;; page 160
+(define SR-vector-basis (down (* (/ 1 ':c) d/dct) d/dx d/dy d/dz))
+(define SR-1form-basis (up (* ':c dct) dx dy dz))
+(define SR-basis (make-basis SR-vector-basis SR-1form-basis))
+
+(define (Faraday Ex Ey Ez Bx By Bz)
+  (+ (* Ex ':c (wedge dx dct))
+     (* Ey ':c (wedge dy dct))
+     (* Ez ':c (wedge dz dct))
+     (* Bx (wedge dy dz))
+     (* By (wedge dz dx))
+     (* Bz (wedge dx dy))))
+
+;; page 161
+(define (Maxwell Ex Ey Ez Bx By Bz)
+  (+ (* -1 ':c Bx (wedge dx dct))
+     (* -1 ':c By (wedge dy dct))
+     (* -1 ':c Bz (wedge dz dct))
+     (* Ex (wedge dy dz))
+     (* Ey (wedge dz dx))
+     (* Ez (wedge dx dy))))
+
+(define (J charge-density Ix Iy Iz)
+  (- (* (/ 1 ':c) (+ (* Ix dx) (* Iy dy) (* Iz dz)))
+     (* charge-density 'c dct)))
+
+;; page 163
+(((d F) (* (/ 1 ':c) d/dct) d/dy d/dz) an-event)
+(((d F) (* (/ 1 ':c) d/dct) d/dz d/dx) an-event)
+(((d F) (* (/ 1 ':c) d/dct) d/dx d/dy) an-event)
+
+;; page 164
+(((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
+  (* (/ 1 ':c) d/dct) d/dy d/dz)
+ an-event)
+
+(((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
+  (* (/ 1 ':c) d/dct) d/dz d/dx)
+ an-event)
+
+(((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
+  (* (/ 1 ':c) d/dct) d/dx d/dy)
+ an-event)
+   #+end_src
+
+   Page 165: In the definition of =Force=, =eta-inverse= is not defined, so the
+   following two code examples (and, presumably, exercise 10.1b) will not run!
+
+** Chapter 11
+
+   Page 178: This is not necessarily a "bug", but simplifying the expression
+   produced by the form at the top of the page is extremely slow on my machine,
+   in both =scmutils= and the Clojure port. Could be a regression? I have not
+   been able to get the computation to complete, and GCD times out.
+
+
+   Page 180 states "Assume that we have a base frame called =home=." The base
+   frame defined in the library is =the-ether=; I would recommend including one
+   of the the following definitions as setup:
+
+   #+begin_src scheme
+(define home
+  ((frame-maker base-frame-point base-frame-chart)
+   'home 'home))
+
+(define home the-ether)
+   #+end_src
