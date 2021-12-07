@@ -1,2 +1,18 @@
 #+title: Chapter 9: Metrics
 #+STARTUP: noindent
+
+We often want to impose further structure on a manifold to allow us to define
+lengths and angles. This is done by generalizing the idea of the Euclidean dot
+product, which allows us to compute lengths of vectors and angles between
+vectors in traditional vector algebra.
+
+For vectors $\vec{u} = u^x\hat{x} + u^y\hat{y} + u^z\hat{z}$ and $\vec{v} =
+v^x\hat{x} + v^y\hat{y} + v^z\hat{z}$ the dot product is $\vec{u} \cdot \vec{v}
+= u^xv^x + u^yv^y + u^zv^z$. The generalization is to provide coefficients for
+these terms and to include cross terms, consistent with the requirement that the
+function of two vectors is symmetric. This symmetric, bilinear, real-valued
+function of two vector fields is called a /metric field/.
+
+For example, the natural metric on a sphere of radius $R$ is
+
+TODO continue on page 133.
