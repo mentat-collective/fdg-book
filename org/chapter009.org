@@ -15,4 +15,353 @@ function of two vector fields is called a /metric field/.
 
 For example, the natural metric on a sphere of radius $R$ is
 
-TODO continue on page 133.
+\begin{equation}
+\mathsf{g}(\mathsf{u}, \mathsf{v}) = \
+R^2\left(\mathsf{d}\theta(\mathsf{u}) \mathsf{d}\theta(\mathsf{v}) \
++ (\sin \theta)^2 \mathsf{d}\phi(\mathsf{u}) \mathsf{d}\phi(\mathsf{v}) \right),
+\end{equation}
+
+and the Minkowski metric on the 4-dimensional space of special relativity is
+
+\begin{equation}
+\mathsf{g}(\mathsf{u}, \mathsf{v}) = \
+\mathsf{d}x(\mathsf{u}) \mathsf{d}x(\mathsf{v}) \
++ \mathsf{d}y(\mathsf{u}) \mathsf{d}y(\mathsf{v}) \
++ \mathsf{d}z(\mathsf{u}) \mathsf{d}z(\mathsf{v}) \
+- c^2 \mathsf{d}t(\mathsf{u}) \mathsf{d}t(\mathsf{v}).
+\end{equation}
+
+Although these examples are expressed in terms of a coordinate basis, the value
+of the metric on vector fields does not depend on the coordinate system that is
+used to specify the metric.
+
+Given a metric field $\mathsf{g}$ and a vector field $\mathsf{v}$ the scalar
+field $\mathsf{g(v, v)}$ is the squared length of the vector at each point of
+the manifold.
+
+** Metric Music
+   The metric can be used to construct a one-form field
+   $\boldsymbol{\omega}_\mathsf{u}$ from a vector field $\mathsf{u}$, such that
+   for any vector field $\mathsf{v}$ we have
+
+\begin{equation}
+\omega_\mathsf{u}(\mathsf{v}) = \mathsf{g(v, u)}.
+\end{equation}
+
+   The operation of constructing a one-form field from a vector field using a
+   metric is called "lowering" the vector field. It is sometimes notated as
+
+\begin{equation}
+\boldsymbol{\omega}_\mathsf{u} = g^\flat(\mathsf{u}).
+\end{equation}
+
+   There is also an inverse metric that takes two one-form fields. It is defined
+   by the relation
+
+\begin{equation}
+\delta_k^i = \sum_j {g^{-1} \left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j \right) \mathsf{g}(\mathsf{e}_j, \mathsf{e}_k)}.
+\end{equation}
+
+   where $\mathsf{e}$ and $\tilde{\mathsf{e}}$ are any basis and its dual basis.
+
+   The inverse metric can be used to construct a vector field
+   $\mathsf{v}_\omega$ from a one-form field $\boldsymbol{\omega}$, such that
+   for any one-form field $\boldsymbol{\tau}$ we have
+
+\begin{equation}
+\boldsymbol{\tau}(\mathsf{v}_\omega) = \mathsf{g}^{-1}(\boldsymbol{\omega}, \boldsymbol{\tau}).
+\end{equation}
+
+   This definition is implicit, but the vector field can be explicitly computed
+   from the one-form field with respect to a basis as follows:
+
+\begin{equation}
+\mathsf{v}_\omega = \sum_i {g^{-1} \left(\boldsymbol{\omega}, \tilde{\mathsf{e}}^i \right) \mathsf{e}_i}.
+\end{equation}
+
+   The operation of constructing a vector field from a one-form field using a
+   metric is called "raising" the one-form field. It is sometimes notated
+
+\begin{equation}
+\mathsf{v}_\omega = \mathsf{g}^\sharp(\boldsymbol{\omega}).
+\end{equation}
+
+   The raising and lowering operations allow one to interchange the vector
+   fields and the one-form fields. However they should not be confused with the
+   dual operation that allows one to construct a dual one-form basis from a
+   vector basis or construct a vector basis from a one-form basis. The dual
+   operation that interchanges bases is defined without assigning a metric
+   structure on the space.
+
+   Lowering a vector field with respect to a metric is a simple program:
+
+   #+begin_src scheme
+(define ((lower metric) u)
+  (define (omega v) (metric v u))
+  (procedure->1form-field omega))
+   #+end_src
+
+   But raising a one-form field to make a vector field is a bit more
+   complicated:
+
+   #+begin_src scheme
+(define (raise metric basis)
+  (let ((gi (metric:invert metric basis)))
+    (lambda (omega)
+      (contract (lambda (e i w^i)
+                  (* (gi omega w^i) e i))
+                basis))))
+   #+end_src
+
+   where =contract= is the trace over a basis of a two-argument function that
+   takes a vector field and a one-form field as its arguments.[fn:1]
+
+   #+begin_src scheme
+(define (contract proc basis)
+  (let ((vector-basis (basis->vector-basis basis))
+        (1form-basis (basis->1form-basis basis)))
+    (s:sigma/r proc
+               vector-basis
+               1form-basis)))
+   #+end_src
+
+** Metric Compatibility
+
+   A connection is said to be compatible with a metric $\mathsf{g}$ if the
+   covariant derivative for that connection obeys the "product rule":
+
+\begin{equation}
+\Delta_\mathsf{X}\left(g(\mathsf{Y}, \mathsf{Z})\right) = g\left(\Delta_\mathsf{X}(\mathsf{Y}), \mathsf{Z}\right) \
++ g\left(\mathsf{Y}, \Delta_\mathsf{X}(\mathsf{Z})\right).
+\end{equation}
+
+   For a metric there is a unique torsion-free connection that is compatible
+   with it. The Christoffel coefficients of the first kind are computed from the
+   metric by the following:
+
+\begin{equation}
+\bar{\Gamma}_{i j k} = \frac{1}{2}\left(\mathsf{e}_{k}\left(\mathsf{g}\left(\mathsf{e}_{i}, \mathsf{e}_{j}\right)\right) \
++ \mathsf{e}_{j}\left(\mathsf{g}\left(\mathsf{e}_{i}, \mathsf{e}_{k}\right)\right) \
+- \mathsf{e}_{i}\left(\mathsf{g}\left(\mathsf{e}_{j}, \mathsf{e}_{k}\right)\right)\right)
+\end{equation}
+
+   for the coordinate basis $\mathsf{e}$. We can then construct the Christoffel
+   coefficients of the second kind (the ones used previously to define a
+   connection) by "raising the first index." To do this we define a function of
+   three vectors, with a weird currying:
+
+\begin{equation}
+\sum_{ijk} {\bar{\Gamma}_{ijk} \tilde{\mathsf{e}}^i(\mathsf{u}) \tilde{\mathsf{e}}^j(\mathsf{v}) \tilde{\mathsf{e}}^k(\mathsf{w})}.
+\end{equation}
+
+   This function takes two vector fields and produces a one-form field. We can
+   use it with equation (9.7) to construct a new function that takes two vector
+   fields and produces a vector field:
+
+\begin{equation}
+\hat{\Gamma}(\mathsf{v}, \mathsf{w}) \
+= \sum_i {\mathsf{g}^{-1} \left(\tilde{\Gamma}(\mathsf{v}, \mathsf{w}), \tilde{\mathsf{e}}^i\right)\mathsf{e}_i}.
+\end{equation}
+
+   We can now construct the Christoffel coefficients of the second kind:
+
+\begin{equation}
+\Gamma_{jk}^i = \tilde{\mathsf{e}}^i \left(\hat{\Gamma}\left(\mathsf{e}_j, \mathsf{e}_k \right)\right) \
+= \sum_m \bar{\Gamma}_{mjk} \mathsf{g}^{-1} \left(\tilde{\mathsf{e}}^m, \tilde{\mathsf{e}}^i \right)
+\end{equation}
+
+   The Cartan forms are then just
+
+\begin{equation}
+\varpi_j^i \
+= \sum_k \Gamma_{jk}^i \tilde{\mathrm{e}}^k \
+= \sum_k \tilde{\mathrm{e}}^i \left(\hat{\Gamma}\left(\mathrm{e}_j, \mathrm{e}_k \right)\right) \tilde{\mathrm{e}}^k.
+\end{equation}
+
+   So, for example, we can compute the Christoffel coefficients for the sphere
+   from the metric for the sphere. First, we need the metric:
+
+   #+begin_src scheme
+(define ((g-sphere R) u v)
+  (* (square R)
+     (+ (* (dtheta u) (dtheta v))
+        (* (compose (square sin) theta)
+           (dphi u)
+           (dphi v)))))
+   #+end_src
+
+   The Christoffel coefficients of the first kind are a complex structure with
+   all three indices down:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((Christoffel->symbols
+  (metric->Christoffel-1 (g-sphere 'R) S2-basis))
+ ((point S2-spherical) (up 'theta0 'phi0)))
+;; (down
+;;  (down (down 0 0)
+;;        (down 0 (* (* (cos theta0) (sin theta0)) (expt R 2))))
+;;  (down (down 0 (* (* (cos theta0) (sin theta0)) (expt R 2)))
+;;        (down (* (* -1 (cos theta0) (sin theta0)) (expt R 2))
+;;              0)))
+   #+end_src
+
+   And the Christoffel coefficients of the second kind have the innermost index
+   up:
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+((Christoffel->symbols
+  (metric->Christoffel-2 (g-sphere 'R) S2-basis))
+ ((point S2-spherical) (up 'theta0 'phi0)))
+;; (down (down (up 0 0)
+;;             (up 0 (/ (cos theta0) (sin theta0))))
+;;       (down (up 0 (/ (cos theta0) (sin theta0)))
+;;             (up (* -1 (cos theta0) (sin theta0)) 0)))
+   #+end_src
+
+*** Exercise 9.1: Metric Compatibility
+
+    The connections constructed from a metric by equation (9.13) are "metric
+    compatible," as described in equation (9.9). Demonstrate that this is true
+    for a literal metric, as described on page 6, in $\mathbf{R}^4$. Your
+    program should produce a zero.
+
+**  Metrics and Lagrange Equations
+
+   In the Introduction (Chapter 1) we showed that the Lagrange equations for a
+   free particle constrained to a 2-dimensional surface are equivalent to the
+   geodesic equations for motion on that surface. We illustrated that in detail
+   in Section 7.4 for motion on a sphere.
+
+   Here we expand this understanding to show that the Christoffel symbols can be
+   derived from the Lagrange equations. Specifically, if we solve the Lagrange
+   equations for the acceleration (the highest-order derivatives) we find that
+   the Christoffel symbols are the symmetrized coefficients of the quadratic
+   velocity terms.
+
+   Consider the Lagrange equations for a free particle, with Lagrangian
+
+\begin{equation}
+L_2(t, x, v) = \frac{1}{2}g(x)(v,v).
+\end{equation}
+
+   If we solve the Lagrange equations for the accelerations, the accelerations
+   can be expressed with the geodesic equations (7.79):
+
+\begin{equation}
+D^2 q^i + \sum_{jk} \left(\Gamma_{jk}^i \circ \chi^{-1} \circ q \right) Dq^j Dq^{k} = 0.
+\end{equation}
+
+   We can verify this computationally. Given a metric, we can construct a
+   Lagrangian where the kinetic energy is the metric applied to the velocity
+   twice: The kinetic energy is proportional to the squared length of the
+   velocity vector.
+
+   #+begin_src scheme
+(define (metric->Lagrangian metric coordsys)
+  (define (L state)
+    (let ((q (ref state 1)) (qd (ref state 2)))
+      (define v
+        (components->vector-field (lambda (m) qd) coordsys))
+      ((* 1/2 (metric v v)) ((point coordsys) q))))
+  L)
+   #+end_src
+
+   The following code compares the Christoffel symbols with the coefficients of
+   the terms of second order in velocity appearing in the accelerations,
+   determined by solving the Lagrange equations for the highest-order
+   derivative.[fn:2] We extract these terms by taking two partials with respect to
+   the structure of velocities. Because the elementary partials commute we get
+   two copies of each coefficient, requiring a factor of 1/2.
+
+   #+begin_src scheme :results value raw :exports both :cache yes
+(let* ((metric (literal-metric 'g R3-rect))
+       (q (typical-coords R3-rect))
+       (L2 (metric->Lagrangian metric R3-rect)))
+  (+ (* 1/2
+        (((expt (partial 2) 2) (Lagrange-explicit L2))
+         (up 't q (corresponding-velocities q))))
+     ((Christoffel->symbols
+       (metric->Christoffel-2 metric
+                              (coordinate-system->basis R3-rect)))
+      ((point R3-rect) q))))
+;; (down (down (up 0 0 0) (up 0 0 0) (up 0 0 0))
+;;       (down (up 0 0 0) (up 0 0 0) (up 0 0 0))
+;;       (down (up 0 0 0) (up 0 0 0) (up 0 0 0)))
+   #+end_src
+
+   We get a structure of zeros, demonstrating the correspondence between
+   Christoffel symbols and coefficients of the Lagrange equations.
+
+   Thus, if we have a metric specifying an inner product, the geodesic equations
+   are equivalent to the Lagrange equations for the Lagrangian that is equal to
+   the inner product of the generalized velocities with themselves
+
+** Kinetic Energy or Arc Length
+
+   A geodesic is a path of stationary length with respect to variations in the
+   path that keep the endpoints fixed. On the other hand, the solutions of the
+   Lagrange equations are paths of stationary action that keep the endpoints
+   fixed. How are these solutions related?
+
+   The integrand of the traditional action is the Lagrangian, which is in this
+   case the Lagrangian $L_2$, the kinetic energy. The integrand of the arc
+   length is
+
+\begin{equation}
+\end{equation}
+
+   and the path length is
+
+\begin{equation}
+\end{equation}
+
+   If we compute the Lagrange equations for $L_2$ we get the Lagrange equations
+   for $L_1$ with a correction term. Since
+
+\begin{equation}
+\end{equation}
+
+   and the Lagrange operator for $L_2$ is[fn:3]
+
+$$
+$$
+
+   we find
+
+\begin{equation}
+\end{equation}
+
+   $L_2$ is the kinetic energy. It is conserved along solution paths, since
+   there is no explicit time dependence. Because of the relation between $L_1$
+   and $L_2$, $L_1$ is also a conserved quantity. Let $L_1$ take the constant
+   value a on the geodesic coordinate path q we are
+
+*** For Two Dimensions
+
+* Footnotes
+
+[fn:3] $\mathbf{E}$ is the Euler-Lagrange operator, which gives the residuals of
+the Lagrange equations for a Lagrangian. $\mathbf{\Gamma}$ extends a
+configuration-space path $q$ to make a state-space path, with as many terms as
+needed: $\mathbf{\Gamma}[q](t) = (t, q(t), Dq(t), \ldots)$. The total time
+derivative $D_t$ is defined by $D_t F \circ \mathbf{\Gamma}[q] = D\left(F \circ
+\mathbf{\Gamma}[q]\right)$ for any state function $F$ and path $q$. The Lagrange
+equations are $\mathbf{E}$[L] \circ \Gamma[q] = 0. See [19] for more details.
+
+[fn:2] The procedure =Lagrange-explicit= produces the accelerations of the
+coordinates. In this code the division operator (=/=) multiplies its first
+argument on the left by the inverse of its second argument.
+
+#+begin_src scheme
+(define (Lagrange-explicit L)
+  (let ((P ((partial 2) L))
+        (F ((partial 1) L)))
+    (/ (- F (+ ((partial 0) P) (* ((partial 1) P) velocity)))
+       ((partial 2) P))))
+#+end_src
+
+[fn:1] Notice that =raise= and =lower= are not symmetrical. This is because
+vector fields and form fields are not symmetrical: a vector field takes a
+manifold function as its argument, whereas a form field takes a vector field as
+its argument. This asymmetry is not apparent in traditional treatments based on
+index notation.
