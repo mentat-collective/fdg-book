@@ -524,7 +524,124 @@ $$
     We see that if these expressions must be zero, then $D^2f = 0$. This tells
     us that $f$ is at most affine in $t: f(t) = at + b$.
 
+*** Exercise 9.2: SO(3) Geodesics
+
+    We have derived a basis for SO(3) in terms of incremental rotations around
+    the rectangular axes. See equations (4.29, 4.30, 4.31). We can use the dual
+    basis to define a metric on SO(3).
+
+    #+begin_src scheme
+(define (SO3-metric v1 v2)
+  (+ (* (e^x v1) (e^x v2))
+     (* (e^y v1) (e^y v2))
+     (* (e^z v1) (e^z v2))))
+    #+end_src
+
+    This metric determines a connection. Show that uniform rotation about an
+    arbitrary axis traces a geodesic on SO(3).
+
+*** Exercise 9.3: Curvature of a Spherical Surface
+
+    The 2-dimensional surface of a 3-dimensional sphere can be embedded in three
+    dimensions with a metric that depends on the radius:
+
+    #+begin_src scheme
+(define M (make-manifold S^2-type 2 3))
+(define spherical
+  (coordinate-system-at 'spherical 'north-pole M))
+(define-coordinates (up theta phi) spherical)
+(define spherical-basis (coordinate-system->basis spherical))
+
+(define ((spherical-metric r) v1 v2)
+  (* (square r)
+     (+ (* (dtheta v1) (dtheta v2))
+        (* (square (sin theta))
+           (dphi v1) (dphi v2)))))
+    #+end_src
+
+    If we raise one index of the Ricci tensor (see equation 8.20) by contracting
+    it with the inverse of the metric tensor we can further contract it to
+    obtain a scalar manifold function:
+
+\begin{equation}
+R = \sum_{ij} \mathsf{g}\left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j\right) \
+ r\left(\mathsf{e}^i, \mathsf{e}^j\right).
+\end{equation}
+
+    The =trace2down= procedure converts a tensor that takes two vector fields
+    into a tensor that takes a vector field and a one-form field, and then it
+    contracts the result over a basis to make a trace. It is useful for getting
+    the Ricci scalar from the Ricci tensor, given a metric and a basis.
+
+    #+begin_src scheme
+(define ((trace2down metric basis) tensor)
+  (let ((inverse-metric-tensor
+         (metric:invert metric-tensor basis)))
+    (contract
+     (lambda (v1 w1)
+       (contract
+        (lambda (v w)
+          (* (inverse-metric-tensor w1 w)
+             (tensor v v1)))
+        basis))
+     basis)))
+    #+end_src
+
+    Evaluate the Ricci scalar for a sphere of radius $r$ to obtain a measure of
+    its intrinsic curvature. You should obtain the answer $2/r^2$.
+
+*** Exercise 9.4: Curvature of a Pseudosphere
+
+    Compute the scalar curvature of the pseudosphere (see exercise 8.2). You
+    should obtain the value −2.
+
+** General Relativity
+
+   By analogy to Newtonian mechanics, relativistic mechanics has two parts.
+   There are equations of motion that describe how particles move under the
+   influence of "forces" and there are field equations that describe how the
+   forces arise. In general relativity the only force considered is gravity.
+   However, gravity is not treated as a force. Instead, gravity arises from
+   curvature in the spacetime, and the equations of motion are motion along
+   geodesics of that space.
+
+   The geodesic equations for a spacetime with the metric
+
+\begin{equation}
+\begin{aligned}
+\end{aligned}
+\end{equation}
+
+   are Newton’s equations to lowest order in $V/c^2$:
+
+\begin{equation}
+
+\end{equation}
+
+*** Exercise 9.5: Newton’s Equations
+
+    Verify that Newton’s equations (9.25) are indeed the lowest-order terms of
+    the geodesic equations for the metric (9.24).
+
+    Einstein’s field equations tell how the local energy-momentum distribution
+    determines the local shape of the spacetime, as described by the metric
+    tensor $g$. The equations are traditionally written
+
+\begin{equation}
+\end{equation}
+
+    where $R_{\mu \nu}$ are the components of the Ricci tensor (equation 8.20),
+    $R$ is the Ricci scalar (equation 9.23),[fn:5] and $\Lambda$ is the
+    cosmological constant.
+
 * Footnotes
+
+[fn:5] The tensor with components $G_{\mu \nu} = R_{\mu \nu} - \frac{1}{2} R
+g_{\mu \nu}$ is called the Einstein tensor. In his search for an appropriate
+field equation for gravity, Einstein demanded /general covariance/ (independence
+of coordinate system) and local Lorentz invariance (at each point
+transformations must preserve the line element). These considerations led
+Einstein to look for a tensor equation (see Appendix C).
 [fn:4] We cheated: We hand-simplified the denominator to make the result more
 obvious.
 
