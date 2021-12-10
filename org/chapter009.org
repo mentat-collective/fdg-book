@@ -355,11 +355,178 @@ $$
    On the other hand, we can solve for the highest-order derivative in
    $\boldsymbol{E}[L_2]$. This is because $L_1 \boldsymbol{E}[L_1]$ is
    homogeneous of degree 2. So the equations derived from $L_2$ uniquely
-   determine the time evolution along the geodesic path.
 
 *** For Two Dimensions
 
+    We can show this is true for a 2-dimensional system with a general metric.
+    We define the Lagrangians in terms of this metric:
+
+    #+begin_src scheme
+(define L2
+  (metric->Lagrangian (literal-metric 'm R2-rect)
+                      R2-rect))
+
+(define (L1 state)
+  (sqrt (* 2 (L2 state))))
+    #+end_src
+
+    Although the mass matrix of $L_2$ is nonsingular
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(determinant
+ (((partial 2) ((partial 2) L2))
+  (up 't (up 'x 'y) (up 'vx 'vy))))
+;; (+ (* (m_00 (up x y)) (m_11 (up x y)))
+;;    (* -1 (expt (m_01 (up x y)) 2)))
+    #+end_src
+
+    the mass matrix of $L_1$ has determinant zero
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(determinant
+ (((partial 2) ((partial 2) L1))
+  (up 't (up 'x 'y) (up 'vx 'vy))))
+;; 0
+    #+end_src
+
+    showing that these Lagrange equations are dependent.
+
+    We can show this dependence explicitly, for a simple system. Consider the
+    simplest possible system, a geodesic (straight line) in a plane:
+
+    #+begin_src scheme
+(define (L1 state)
+  (sqrt (square (velocity state))))
+    #+end_src
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(((Lagrange-equations L1)
+  (up (literal-function 'x) (literal-function 'y)))
+ 't)
+;; (down
+;;  (/ (+ (* (((expt D 2) x) t) (expt ((D y) t) 2))
+;;        (* -1 ((D x) t) ((D y) t) (((expt D 2) y) t)))
+;;     (expt (+ (expt ((D x) t) 2) (expt ((D y) t) 2)) 3/2))
+;;  (/ (+ (* -1 (((expt D 2) x) t) ((D x) t) ((D y) t))
+;;        (* (expt ((D x) t) 2) (((expt D 2) y) t)))
+;;     (expt (+ (expt ((D x) t) 2) (expt ((D y) t) 2)) 3/2)))
+
+    #+end_src
+
+    These residuals must be zero; so the numerators must be zero.[fn:4] They
+    are:
+
+\begin{aligned}
+D^2x\,(Dy)^2 &= Dx\,Dy\,D^2y \\
+D^2x\,Dx\,Dy &= (Dx)^2\,D^2y
+\end{aligned}
+
+    Note that the only constraint is $D^2x\,Dy = Dx\,D^2y$, so the resulting
+    Lagrange equations are dependent.
+
+    This is enough to determine that the result is a straight line, without
+    specifying the rate along the line. Suppose $y = f(x)$, for path $(x(t),
+    y(t))$. Then
+
+$$
+Dy = Df(x)\,Dx\text{ and } D^2y = D^2f(x)\,Dx + Df(x)\,D^2(x).
+$$
+
+    Substituting, we get
+
+$$
+Df(x)\,Dx\,D^2x = Dx\left(D^2f(x)\,Dx + Df(x)\,D^2x\right)
+$$
+
+    or
+
+$$
+Df(x)\,D^2x = D^2f(x)\,Dx + Df(x)\,D^2x,
+$$
+
+
+    so $D^2f(x) = 0$. Thus $f$ is a straight line, as required.
+
+*** Reparametrization
+
+    More generally, a differential equation system $F[q](t) = 0$ is said to be
+    /reparameterized/ if the coordinate path $q$ is replaced with a new
+    coordinate path $q \circ f$. For example, we may change the scale of the
+    independent variable. The system $F[q \circ f] = 0$ is said to be
+    independent of the parameterization if and only if $F[q] \circ f = 0$. So
+    the differential equation system is satisfied by $q \circ f$ if and only if
+    it is satisfied by $q$.
+
+    The Lagrangian $L_1$ is homogeneous of degree 1 in the velocities; so
+
+\begin{equation}
+\boldsymbol{E}[L_1] \circ \Gamma[q \circ f] \
+- \left(\boldsymbol{E}[L_1] \circ \Gamma[q] \circ f\right) Df = 0.
+\end{equation}
+
+    We can check this in a simple case. For two dimensions $q = (x, y)$, the
+    condition under which a reparameterization $f$ of the geodesic paths with
+    coordinates $q$ satisfies the Lagrange equations for $L_1$ is:
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(let ((x (literal-function 'x))
+      (y (literal-function 'y))
+      (f (literal-function 'f))
+      (E1 (Euler-Lagrange-operator L1)))
+  ((- (compose E1
+               (Gamma (up (compose x f)
+                          (compose y f))
+                      4))
+      (* (compose E1
+                  (Gamma (up x y) 4)
+                  f)
+         (D f)))
+   't))
+;; (down 0 0)
+    #+end_src
+
+    This residual is identically satisfied, showing that the Lagrange equations
+    for $L_1$ are independent of the parameterization of the independent
+    variable.
+
+    The Lagrangian $L_2$ is homogeneous of degree 2 in the velocities; so
+
+\begin{equation}
+\boldsymbol{E}[L_2][q \circ f] - (\boldsymbol{E}[L_2][q]  \circ f)(Df)^2 \
+= \left(\partial_2 L_2 \circ \Gamma[q] \circ f\right)(D^2f).
+\end{equation}
+
+    Although the Euler-Lagrange equations for $L_1$ are invariant under an
+    arbitrary reparameterization $(Df \ne 0)$, the Euler-Lagrange equations for
+    $L_2$ are invariant only for a restricted set of $f$. The conditions under
+    which a reparameterization $f$ of geodesic paths with coordinates $q$
+    satisfies the Lagrange equations for $L_2$ are:
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(let ((q (up (literal-function 'x) (literal-function 'y)))
+      (f (literal-function 'f)))
+  ((- (compose (Euler-Lagrange-operator L2)
+               (Gamma (compose q f) 4))
+      (* (compose (Euler-Lagrange-operator L2)
+                  (Gamma q 4)
+                  f)
+         (expt (D f) 2)))
+   't))
+;; (down
+;;  (* (+ (* ((D x) (f t)) (m 00 (up (x (f t)) (y (f t)))))
+;;        (* ((D y) (f t)) (m 01 (up (x (f t)) (y (f t))))))
+;;     (((expt D 2) f) t))
+;;  (* (+ (* ((D x) (f t)) (m 01 (up (x (f t)) (y (f t)))))
+;;        (* ((D y) (f t)) (m 11 (up (x (f t)) (y (f t))))))
+;;     (((expt D 2) f) t)))
+    #+end_src
+
+    We see that if these expressions must be zero, then $D^2f = 0$. This tells
+    us that $f$ is at most affine in $t: f(t) = at + b$.
+
 * Footnotes
+[fn:4] We cheated: We hand-simplified the denominator to make the result more
+obvious.
 
 [fn:3] $\mathbf{E}$ is the Euler-Lagrange operator, which gives the residuals of
 the Lagrange equations for a Lagrangian. $\mathbf{\Gamma}$ extends a
