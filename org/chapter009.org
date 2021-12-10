@@ -308,33 +308,54 @@ D^2 q^i + \sum_{jk} \left(\Gamma_{jk}^i \circ \chi^{-1} \circ q \right) Dq^j Dq^
    length is
 
 \begin{equation}
+L_1(t, x, v) = \sqrt{g(x)(v, v)} = \sqrt{2L_2(t, x, v)}
 \end{equation}
 
    and the path length is
 
 \begin{equation}
+\tau = \int_{t_1}^{t_2}{L_1\left(t, q(t), Dq(t)\right)dt}.
 \end{equation}
 
    If we compute the Lagrange equations for $L_2$ we get the Lagrange equations
    for $L_1$ with a correction term. Since
 
 \begin{equation}
+L_2(t, x, v) = \frac{1}{2}(L_1(t, x, v))^2,
 \end{equation}
 
    and the Lagrange operator for $L_2$ is[fn:3]
 
 $$
+\boldsymbol{E}[L_2] = D_t \partial_2 L_2 - \partial_1 L_2,
 $$
 
    we find
 
 \begin{equation}
+\boldsymbol{E}[L_2] =L_1 \boldsymbol{E}[L_1] + \partial_2 L_1 D_t L_1.
 \end{equation}
 
    $L_2$ is the kinetic energy. It is conserved along solution paths, since
    there is no explicit time dependence. Because of the relation between $L_1$
    and $L_2$, $L_1$ is also a conserved quantity. Let $L_1$ take the constant
-   value a on the geodesic coordinate path q we are
+   value $a$ on the geodesic coordinate path $q$ we are considering. Then $\tau
+   = a(t_2 - t_1)$. Since $L_1$ is conserved, $(D_t L_1) \circ
+   \boldsymbol{\Gamma}[q] = 0$ on the geodesic path $q$, and both
+   $\boldsymbol{E}[L_1] \circ \boldsymbol{\Gamma}[q] = 0$ and
+   $\boldsymbol{E}[L_2] \circ \boldsymbol{\Gamma}[q] = 0$, as required by
+   equation (9.20).
+
+   Since $L_2$ is homogeneous of degree 2 in the velocities, $L_1$ is
+   homogeneous of degree 1. So we cannot solve for the highest-order derivative
+   in the Lagrange-Euler equations derived from $L_1$: The Lagrange equations of
+   the Lagrangian $L_1$ are dependent. But although they do not uniquely specify
+   the evolution, they do specify the geodesic path.
+
+   On the other hand, we can solve for the highest-order derivative in
+   $\boldsymbol{E}[L_2]$. This is because $L_1 \boldsymbol{E}[L_1]$ is
+   homogeneous of degree 2. So the equations derived from $L_2$ uniquely
+   determine the time evolution along the geodesic path.
 
 *** For Two Dimensions
 
