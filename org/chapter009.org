@@ -634,7 +634,320 @@ R = \sum_{ij} \mathsf{g}\left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j\right) 
     $R$ is the Ricci scalar (equation 9.23),[fn:5] and $\Lambda$ is the
     cosmological constant.
 
+    $T_{\mu \nu}$ are the components of the stress-energy tensor describing the
+    energy-momentum distribution. Equivalently, one can write
+
+\begin{equation}
+R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} \right) - \Lambda g_{\mu \nu}
+\end{equation}
+
+    where $T =T_{\mu \nu} g^{\mu \nu}$.[fn:6]
+
+    Einstein’s field equations arise from a heuristic derivation by analogy to
+    the Poisson equation for a Newtonian gravitational field:
+
+\begin{equation}
+\operatorname{Lap}(V) = 4\pi G \rho
+\end{equation}
+
+    where $V$ is the gravitational potential field at a point, $\rho$ is the
+    mass density at that point, and $\operatorname{Lap}$ is the Laplacian
+    operator.
+
+    The time-time component of the Ricci tensor derived from the metric (9.24)
+    is the Laplacian of the potential, to lowest order.
+
+    #+begin_src scheme
+(define (Newton-metric M G c V)
+  (let ((a
+         (+ 1 (* (/ 2 (square c))
+                 (compose V (up x y z))))))
+    (define (g v1 v2)
+      (+ (* -1 (square c) a (dt v1) (dt v2))
+         (* (dx v1) (dx v2))
+         (* (dy v1) (dy v2))
+         (* (dz v1) (dz v2))))
+    g))
+
+(define (Newton-connection M G c V)
+  (Christoffel->Cartan
+   (metric->Christoffel-2 (Newton-metric M G c V)
+                          spacetime-rect-basis)))
+
+(define nabla
+  (covariant-derivative
+   (Newton-connection 'M 'G ':c
+                      (literal-function 'V (-> (UP Real Real Real) Real)))))
+
+    #+end_src
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(((Ricci nabla (coordinate-system->basis spacetime-rect))
+  d/dt d/dt)
+ ((point spacetime-rect) (up 't 'x 'y 'z)))
+;; mess
+    #+end_src
+
+    The leading terms of the mess are
+
+    #+begin_src scheme :eval none
+(+ (((partial 0) ((partial 0) V)) (up x y z))
+   (((partial 1) ((partial 1) V)) (up x y z))
+   (((partial 2) ((partial 2) V)) (up x y z)))
+    #+end_src
+
+    which is the Laplacian of V . The other terms are smaller by $V/c^2$.
+
+    Now consider the right-hand side of equation (9.27). In the Poisson equation
+    the source of the gravitational potential is the density of matter. Let the
+    time-time component of the stress-energy tensor $T_{00}$ be the matter
+    density $\rho$. Here is a program for the stress-energy tensor:
+
+    #+begin_src scheme
+(define (Tdust rho)
+  (define (T w1 w2)
+    (* rho (w1 d/dt) (w2 d/dt)))
+  T)
+    #+end_src
+
+    If we evaluate the right-hand side expression we obtain[fn:7]
+
+    #+begin_src scheme :results value raw :exports both :cache yes
+(let ((g (Newton-metric 'M 'G ':c V)))
+  (let ((T ij ((drop2 g spacetime-rect-basis) (Tdust 'rho))))
+    (let ((T ((trace2down g spacetime-rect-basis) T ij)))
+      ((- (T ij d/dt d/dt) (* 1/2 T (g d/dt d/dt)))
+       ((point spacetime-rect) (up 't 'x 'y 'z))))))
+;; (* 1/2 (expt :c 4) rho)
+    #+end_src
+
+    So, to make the Poisson analogy we get
+
+\begin{equation}
+R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} \right) - \Lambda g_{\mu \nu}
+\end{equation}
+
+    as required.
+
+*** Exercise 9.6: Curvature of Schwarzschild Spacetime
+
+    In spherical coordinates around a nonrotating gravitating body the metric of
+    Schwarzschild spacetime is given as:[fn:8]
+
+    #+begin_src scheme
+(define-coordinates (up t r theta phi) spacetime-sphere)
+
+(define (Schwarzschild-metric M G c)
+  (let ((a (- 1 (/ (* 2 G M) (* (square c) r)))))
+    (lambda (v1 v2)
+      (+ (* -1 (square c) a (dt v1) (dt v2))
+         (* (/ 1 a) (dr v1) (dr v2))
+         (* (square r)
+            (+ (* (dtheta v1) (dtheta v2))
+               (* (square (sin theta))
+                  (dphi v1) (dphi v2))))))))
+    #+end_src
+
+    Show that the Ricci curvature of the Schwarzschild spacetime is zero. Use
+    the definition of the Ricci tensor in equation (8.20).
+
+*** Exercise 9.7: Circular Orbits in Schwarzschild Spacetime
+
+    Test particles move along geodesics in spacetime. Now that we have a metric
+    for Schwarzschild spacetime (page 147) we can use it to construct the
+    geodesic equations and determine how test particles move. Consider circular
+    orbits. For example, the circular orbit along a line of constant longitude
+    is a geodesic, so it should satisfy the geodesic equations. Here is the
+    equation of a circular path along the zero longitude line.
+
+    #+begin_src scheme
+(define (prime-meridian r omega)
+  (compose (point spacetime-sphere)
+           (lambda (t) (up t r (* omega t) 0))
+           (chart R1-rect)))
+    #+end_src
+
+    This equation will satisfy the geodesic equations for compatible values of
+    the radius =r= and the angular velocity =omega. If you substitute this into
+    the geodesic equation and set the residual to zero you will obtain a
+    constraint relating =r and =omega=. Do it.
+
+    Surprise: You should find out that $\omega^2 r^3 = GM$ --- Kepler’s law!
+
+*** Exercise 9.8: Stability of Circular Orbits
+
+    In Schwarzschild spacetime there are stable circular orbits if the
+    coordinate $r$ is large enough, but below that value all orbits are
+    unstable. The critical value of $r$ is larger than the Schwarzschild horizon
+    radius. Let’s find that value.
+
+    For example, we can consider a perturbation of the orbit of constant
+    longitude. Here is the result of adding an exponential variation of size
+    =epsilon=:
+
+    #+begin_src scheme
+(define (prime-meridian+X r epsilon X)
+  (compose
+   (point spacetime-sphere)
+   (lambda (t)
+     (up (+ t (* epsilon (* (ref X 0) (exp (* 'lambda t)))))
+         (+ r (* epsilon (* (ref X 1) (exp (* 'lambda t)))))
+         (+ (* (sqrt (/ (* 'G 'M) (expt r 3))) t)
+            (* epsilon (* (ref X 2) (exp (* 'lambda t)))))
+         0))
+   (chart R1-rect)))
+    #+end_src
+
+    Plugging this into the geodesic equation yields a structure of residuals:
+
+    #+begin_src scheme
+(define (geodesic-equation+X-residuals eps X)
+  (let ((gamma (prime-meridian+X 'r eps X)))
+    (((((covariant-derivative Cartan gamma) d/dtau)
+       ((differential gamma) d/dtau))
+      (chart spacetime-sphere))
+     ((point R1-rect) 't))))
+    #+end_src
+
+    The characteristic equation in the eigenvalue =lambda= can be obtained as the
+    numerator of the expression:
+
+    #+begin_src scheme
+(determinant
+ (submatrix (((* (partial 1) (partial 0))
+              geodesic-equation+X-residuals)
+             0
+             (up 0 0 0))
+            0 3 0 3))
+    #+end_src
+
+    Show that the orbits are unstable if $r < 6GM / c^2$.
+
+*** Exercise 9.9: Friedmann-Lemaître-Robertson-Walker
+
+    The Einstein tensor $G_{\mu \nu}$ (see footnote 5) can be expressed as a
+    program:
+
+    #+begin_src scheme
+(define (Einstein coordinate-system metric-tensor)
+  (let* ((basis (coordinate-system->basis coordinate-system))
+         (connection
+          (Christoffel->Cartan
+           (metric->Christoffel-2 metric-tensor basis)))
+         (nabla (covariant-derivative connection))
+         (Ricci-tensor (Ricci nabla basis))
+         (Ricci-scalar
+          ((trace2down metric-tensor basis) Ricci-tensor)))
+    (define (Einstein-tensor v1 v2)
+      (- (Ricci-tensor v1 v2)
+         (* 1/2 Ricci-scalar (metric-tensor v1 v2))))
+    Einstein-tensor))
+
+(define (Einstein-field-equation
+         coordinate-system metric-tensor Lambda stress-energy-tensor)
+  (let ((Einstein-tensor
+         (Einstein coordinate-system metric-tensor)))
+    (define EFE-residuals
+      (- (+ Einstein-tensor (* Lambda metric-tensor))
+         (* (/ (* 8 :pi :G) (expt :c 4))
+            stress-energy-tensor)))
+    EFE-residuals))
+    #+end_src
+
+    One exact solution to the Einstein equations was found by Alexander
+    Friedmann in 1922. He showed that a metric for an isotropic and homogeneous
+    spacetime was consistent with a similarly isotropic and homogeneous
+    stress-energy tensor in Einstein’s equations. In this case the residuals of
+    the Einstein equations gave ordinary differential equations for the
+    time-dependent scale of the universe. These are called the Robertson-Walker
+    equations. Friedmann’s metric is:
+
+    #+begin_src scheme
+(define (FLRW-metric c k R)
+  (define-coordinates (up t r theta phi) spacetime-sphere)
+  (let ((a (/ (square (compose R t)) (- 1 (* k (square r)))))
+        (b (square (* (compose R t) r))))
+    (define (g v1 v2)
+      (+ (* -1 (square c) (dt v1) (dt v2))
+         (* a (dr v1) (dr v2))
+         (* b (+ (* (dtheta v1) (dtheta v2))
+                 (* (square (sin theta))
+                    (dphi v1) (dphi v2))))))
+    g))
+    #+end_src
+
+    Here =c= is the speed of light, =k= is the intrinsic curvature, and =R= is a
+    length scale that is a function of time.
+
+    The associated stress-energy tensor is
+
+    #+begin_src scheme
+(define (Tperfect-fluid rho p c metric)
+  (define-coordinates (up t r theta phi) spacetime-sphere)
+  (let* ((basis (coordinate-system->basis spacetime-sphere))
+         (inverse-metric (metric:invert metric basis)))
+    (define (T w1 w2)
+      (+ (* (+ (compose rho t)
+               (/ (compose p t) (square c)))
+            (w1 d/dt) (w2 d/dt))
+         (* (compose p t) (inverse-metric w1 w2))))
+    T))
+    #+end_src
+
+    where =rho is the energy density, and =p= is the pressure in an ideal fluid
+    model.
+
+    The Robertson-Walker equations are:
+
+\begin{equation}
+TODO conitnue here!!
+\end{equation}
+
+    Use the programs supplied to derive the Robertson-Walker equations.
+
+*** Exercise 9.10: Cosmology
+
+    For energy to be conserved, the stress-energy tensor must be constrained so
+    that its covariant divergence is zero
+
+\begin{equation}
+\end{equation}
+
+    for every one-form $\omega$.
+
 * Footnotes
+
+[fn:8] The spacetime manifold is built from $\mathbf{R}^4$ with the addition of
+appropriate coordinate systems:
+
+#+begin_src scheme
+(define spacetime (make-manifold R^n 4))
+(define spacetime-rect
+  (coordinate-system-at 'rectangular 'origin spacetime))
+(define spacetime-sphere
+  (coordinate-system-at 'spacetime-spherical 'origin spacetime))
+#+end_src
+
+[fn:7] The procedure =trace2down= is defined on page 144. This expression also
+uses =drop2=, which converts a tensor field that takes two one-form fields into a
+tensor field that takes two vector fields. Its definition is
+
+#+begin_src scheme
+(define ((drop2 metric-tensor basis) tensor)
+  (lambda (v1 v2)
+    (contract
+     (lambda (e1 w1)
+       (contract
+        (lambda (e2 w2)
+          (* (metric-tensor v1 e1) (tensor w1 w2) (metric-tensor e2 v2)))
+        basis))
+     basis)))
+#+end_src
+
+[fn:6] Start with equation (9.26). Raise one index of both sides, and then
+contract. Notice that the trace $g_\mu^\mu = 4$, the dimension of spacetime.
+This gets $R = −\left(\frac{8 \pi G}{c^4}\right) T$ , from which we can deduce
+equation (9.27).
 
 [fn:5] The tensor with components $G_{\mu \nu} = R_{\mu \nu} - \frac{1}{2} R
 g_{\mu \nu}$ is called the Einstein tensor. In his search for an appropriate
@@ -642,6 +955,7 @@ field equation for gravity, Einstein demanded /general covariance/ (independence
 of coordinate system) and local Lorentz invariance (at each point
 transformations must preserve the line element). These considerations led
 Einstein to look for a tensor equation (see Appendix C).
+
 [fn:4] We cheated: We hand-simplified the denominator to make the result more
 obvious.
 
