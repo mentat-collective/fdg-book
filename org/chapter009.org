@@ -900,7 +900,10 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
     The Robertson-Walker equations are:
 
 \begin{equation}
-TODO conitnue here!!
+\begin{aligned}
+\left(\frac{DR(t)}{R(t)} \right)^2 + \frac{kc^2}{(R(t))^2} - \frac{\Lambda c^2}{3} = \frac{8 \pi G}{3} \rho(t), \\
+2 \frac{D^2 R(t)}{R(t)} - \frac{2}{3} \Lambda c^2 = -8 \pi G \left(\frac{\rho(t)}{3} + \frac{p(t)}{c^2} \right).
+\end{aligned}
 \end{equation}
 
     Use the programs supplied to derive the Robertson-Walker equations.
@@ -911,9 +914,24 @@ TODO conitnue here!!
     that its covariant divergence is zero
 
 \begin{equation}
+\sum_\mu \Delta_{e_\mu} T\left(\tilde{\mathsf{e}}^\mu, \omega \right) = 0
 \end{equation}
 
     for every one-form $\omega$.
+
+    a. Show that for the perfect fluid stress-energy tensor and the FLRW metric
+       this constraint is equivalent to the differential equation
+
+\begin{equation}
+D\left(c^2 \rho R^3\right) + pD\left(R^3\right) = 0.
+\end{equation}
+
+    b. Assume that in a “matter-dominated universe” radiation pressure is
+       negligible, so $p = 0$. Using the Robertson-Walker equations (9.30) and
+       the energy conservation equation (9.32) show that the observation of an
+       expanding universe is compatible with a negative curvature universe, a
+       flat universe, or a positive curvature universe: $k \in \left\{−1, 0,
+       +1\right\}$.
 
 * Footnotes
 
