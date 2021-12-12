@@ -1,2 +1,89 @@
 #+title: Chapter 8: Curvature
 #+STARTUP: noindent
+
+If the intrinsic curvature of a manifold is not zero, a vector
+paralleltransported around a small loop will end up different from the vector
+that started. We saw the consequence of this before, on page 1 and on page 93.
+The Riemann tensor encapsulates this idea.
+
+The Riemann curvature operator is
+
+\begin{equation}
+\end{equation}
+
+The traditional Riemann tensor is[fn:1]
+
+\begin{equation}
+\end{equation}
+
+where $\boldsymbol{\omega}$ is a one-form field that measures the incremental
+change in the vector field $\mathsf{u}$ caused by parallel-transporting it
+around the loop defined by the vector fields $\mathsf{w}$ and $\mathsf{v}$.
+$\mathsf{R}$ allows us to compute the /intrinsic curvature/ of a manifold at a
+point.
+
+The Riemann curvature is computed by
+
+#+begin_src scheme
+(define ((Riemann-curvature nabla) w v)
+  (- (commutator (nabla w) (nabla v))
+     (nabla (commutator w v))))
+#+end_src
+
+The =Riemann-curvature= procedure is parameterized by the relevant
+covariant-derivative operator =nabla=, which implements $\nabla$. The =nabla= is
+itself dependent on the connection, which provides the details of the local
+geometry. The same =Riemann-curvature= procedure works for ordinary covariant
+derivatives and for covariant derivatives over a map. Given two vector fields,
+the result of =((Riemann-curvature nabla) w v)= is a procedure that takes a
+vector field and produces a vector field so we can implement the Riemann tensor
+as
+
+#+begin_src scheme
+(define ((Riemann nabla) omega u w v)
+  (omega (((Riemann-curvature nabla) w v) u)))
+#+end_src
+
+So, for example,[fn:2]
+
+#+begin_src scheme :results value raw :exports both :cache yes
+(((Riemann (covariant-derivative sphere-Cartan))
+  dphi d/dtheta d/dphi d/dtheta)
+ ((point S2-spherical) (up 'theta0 'phi0)))
+;; 1
+#+end_src
+
+Here we have computed the φ component of the result of carrying a $\partial /
+\partial \theta$ basis vector around the parallelogram defined by $\partial /
+\partial \phi$ and $\partial / \partial \theta$. The result shows a net rotation
+in the $\phi$ direction.
+
+Most of the sixteen coefficients of the Riemann tensor for the sphere are zero.
+The following are the nonzero coefficients:
+
+\begin{equation}
+\begin{aligned}
+\mathsf{R}\left(\mathsf{d}\theta, \frac{\partial}{\partial \phi}, \frac{\partial}{\partial \theta}, \frac{\partial}{\partial \phi} \right) \
+\left(\chi^{-1} \left(q^\theta, q^\phi \right) \right) &= \left(\sin \left(q^\theta \right) \right)^2, \\
+\mathsf{R}\left(\mathsf{d}\theta, \frac{\partial}{\partial \phi}, \frac{\partial}{\partial \phi}, \frac{\partial}{\partial \theta} \right) \
+\left(\chi^{-1} \left(q^\theta, q^\phi \right) \right) &= -\left(\sin \left(q^\theta \right) \right)^2, \\
+\mathsf{R}\left(\mathsf{d}\phi, \frac{\partial}{\partial \theta}, \frac{\partial}{\partial \theta}, \frac{\partial}{\partial \phi} \right) \
+\left(\chi^{-1} \left(q^\theta, q^\phi \right) \right) &= -1, \\
+\mathsf{R}\left(\mathsf{d}\phi, \frac{\partial}{\partial \theta}, \frac{\partial}{\partial \phi}, \frac{\partial}{\partial \theta} \right) \
+\left(\chi^{-1} \left(q^\theta, q^\phi \right) \right) &= 1.
+\end{aligned}
+\end{equation}
+
+** Explicit Transport
+
+   We will show that the result of the Riemann calculation of the change in a
+   vector, as we traverse a loop, is what we get by explicitly calculating the
+   transport. The coordinates of the vector to be transported are governed by
+   the differential equations (see equation 7.72)
+
+* Footnotes
+[fn:2] The connection specified by =sphere-Cartan= is defined on page 107.
+
+[fn:1] [11], [4], and [14] use our definition. [20] uses a different convention
+for the order of arguments and a different sign. See Appendix C for a definition
+of tensors.
