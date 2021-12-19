@@ -14,5 +14,8 @@ pom.xml.asc
 .cpcache/
 org/*.pdf
 org/*.tex
+org/*.aux
+org/*.out
+org/*.toc
 org/ltximg
 org/auto

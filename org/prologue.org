@@ -1,74 +1,69 @@
-#+title: Prologue
-#+STARTUP: noindent
+* Prologue
 
-One way to become aware of the precision required to unambiguously communicate a
-mathematical idea is to program it for a computer. Rather than using canned
-programs purely as an aid to visualization or numerical computation, we use
-computer programming in a functional style to encourage clear thinking.
-Programming forces us to be precise and unambiguous, without forcing us to be
-excessively rigorous. The computer does not tolerate vague descriptions or
-incomplete constructions. Thus the act of programming makes us keenly aware of
-our errors of reasoning or unsupported conclusions.[fn:1]
+  One way to become aware of the precision required to unambiguously communicate
+  a mathematical idea is to program it for a computer. Rather than using canned
+  programs purely as an aid to visualization or numerical computation, we use
+  computer programming in a functional style to encourage clear thinking.
+  Programming forces us to be precise and unambiguous, without forcing us to be
+  excessively rigorous. The computer does not tolerate vague descriptions or
+  incomplete constructions. Thus the act of programming makes us keenly aware of
+  our errors of reasoning or unsupported conclusions.[fn:1]
 
-Although this book is about differential geometry, we can show how thinking
-about programming can help in understanding in a more elementary context. The
-traditional use of Leibniz’s notation and Newton’s notation is convenient in
-simple situations, but in more complicated situations it can be a serious
-handicap to clear reasoning.
+  Although this book is about differential geometry, we can show how thinking
+  about programming can help in understanding in a more elementary context. The
+  traditional use of Leibniz’s notation and Newton’s notation is convenient in
+  simple situations, but in more complicated situations it can be a serious
+  handicap to clear reasoning.
 
-A mechanical system is described by a Lagrangian function of the system state
-(time, coordinates, and velocities). A motion of the system is described by a
-path that gives the coordinates for each moment of time. A path is allowed if
-and only if it satisfies the Lagrange equations. Traditionally, the Lagrange
-equations are written
+  A mechanical system is described by a Lagrangian function of the system state
+  (time, coordinates, and velocities). A motion of the system is described by a
+  path that gives the coordinates for each moment of time. A path is allowed if
+  and only if it satisfies the Lagrange equations. Traditionally, the Lagrange
+  equations are written
 
-$${\frac{d}{d t} \frac{\partial L}{\partial \dot{q}}}-\frac{\partial L}{\partial
-q}=0.$$
+  $${\frac{d}{d t} \frac{\partial L}{\partial \dot{q}}}-\frac{\partial
+  L}{\partial q}=0.$$
 
-What could this expression possibly mean?
+  What could this expression possibly mean?
 
-Let’s try to write a program that implements Lagrange equations. What are
-Lagrange equations for? Our program must take a proposed path and give a result
-that allows us to decide if the path is allowed. This is already a problem; the
-equation shown above does not have a slot for a path to be tested.
+  Let’s try to write a program that implements Lagrange equations. What are
+  Lagrange equations for? Our program must take a proposed path and give a
+  result that allows us to decide if the path is allowed. This is already a
+  problem; the equation shown above does not have a slot for a path to be
+  tested.
 
-So we have to figure out how to insert the path to be tested. The partial
-derivatives do not depend on the path; they are derivatives of the Lagrangian
-function and thus they are functions with the same arguments as the Lagrangian.
-But the time derivative d/dt makes sense only for a function of time. Thus we
-must be intending to substitute the path (a function of time) and its derivative
-(also a function of time) into the coordinate and velocity arguments of the
-partial derivative functions.
+  So we have to figure out how to insert the path to be tested. The partial
+  derivatives do not depend on the path; they are derivatives of the Lagrangian
+  function and thus they are functions with the same arguments as the
+  Lagrangian. But the time derivative d/dt makes sense only for a function of
+  time. Thus we must be intending to substitute the path (a function of time)
+  and its derivative (also a function of time) into the coordinate and velocity
+  arguments of the partial derivative functions.
 
-So probably we meant something like the following (assume that $\omega$ is a
-path through the coordinate configuration space, and so $w(t)$ specifies the
-configuration coordinates at time $t$):
+  So probably we meant something like the following (assume that $\omega$ is a
+  path through the coordinate configuration space, and so $w(t)$ specifies the
+  configuration coordinates at time $t$):
 
-$$\frac{d}{d t}\left(
-\left.\frac{\partial L(t, q, \dot{q})}{\partial \dot{q}}
-\right|_{\substack{
-{q=w(t)} \\ {\dot{q}=\frac{d w(t)}{d t}}
-}}
-\right)-\left.\frac{\partial L(t, q, \dot{q})}{\partial q}\right|_{
-\substack{
-q=w(t) \\ {\dot{q}=\frac{d w(t)}{d t}}}
-}=0.$$
+  $$\frac{d}{d t}\left( \left.\frac{\partial L(t, q, \dot{q})}{\partial \dot{q}}
+  \right|_{\substack{ {q=w(t)} \\ {\dot{q}=\frac{d w(t)}{d t}} }}
+  \right)-\left.\frac{\partial L(t, q, \dot{q})}{\partial q}\right|_{ \substack{
+  q=w(t) \\ {\dot{q}=\frac{d w(t)}{d t}}} }=0.$$
 
-In this equation we see that the partial derivatives of the Lagrangian function
-are taken, then the path and its derivative are substituted for the position and
-velocity arguments of the Lagrangian, resulting in an expression in terms of the
-time.
+  In this equation we see that the partial derivatives of the Lagrangian
+  function are taken, then the path and its derivative are substituted for the
+  position and velocity arguments of the Lagrangian, resulting in an expression
+  in terms of the time.
 
-This equation is complete. It has meaning independent of the context and there
-is nothing left to the imagination. The earlier equations require the reader to
-fill in lots of detail that is implicit in the context. They do not have a clear
-meaning independent of the context.
+  This equation is complete. It has meaning independent of the context and there
+  is nothing left to the imagination. The earlier equations require the reader
+  to fill in lots of detail that is implicit in the context. They do not have a
+  clear meaning independent of the context.
 
-By thinking computationally we have reformulated the Lagrange equations into a
-form that is explicit enough to specify a computation. We could convert it into
-a program for any symbolic manipulation program because it tells us /how/ to
-manipulate expressions to compute the residuals of Lagrange’s equations for a
-purported solution path.[fn:2]
+  By thinking computationally we have reformulated the Lagrange equations into a
+  form that is explicit enough to specify a computation. We could convert it
+  into a program for any symbolic manipulation program because it tells us /how/
+  to manipulate expressions to compute the residuals of Lagrange’s equations for
+  a purported solution path.[fn:2]
 
 ** Functional Abstraction
 
@@ -80,11 +75,9 @@ purported solution path.[fn:2]
    new functions, and by specifying the particular partial derivative by the
    position of the argument that is varied
 
-$$
-\frac{d}{d t}\left(\left(\partial_{2} L\right)\left(t, w(t), \frac{d}{d t}
-w(t)\right)\right)-\left(\partial_{1} L\right)\left(t, w(t), \frac{d}{d t}
-w(t)\right)=0,
-$$
+   $$ \frac{d}{d t}\left(\left(\partial_{2} L\right)\left(t, w(t), \frac{d}{d t}
+   w(t)\right)\right)-\left(\partial_{1} L\right)\left(t, w(t), \frac{d}{d t}
+   w(t)\right)=0, $$
 
    where $\partial_{i}L$ is the function which is the partial derivative of the
    function L with respect to the ith argument.[fn:4]
@@ -116,8 +109,8 @@ $$
    To do this for the Lagrange equation we need to construct a function to take
    the derivative of.
 
-   Given a configuration-space path $w$, there is a standard way to make
-   the state-space path. We can abstract this method as a mathematical function
+   Given a configuration-space path $w$, there is a standard way to make the
+   state-space path. We can abstract this method as a mathematical function
    $\Gamma$:
 
    $$\Gamma[w](t)=\left(t, w(t), \frac{d}{d t} w(t)\right).$$
@@ -125,13 +118,13 @@ $$
    Using $\Gamma$ we can write:
 
    $$\frac{d}{dt}\left(\left(\partial_{2} L\right) \left(\Gamma[w](t)\right)
-\right)\right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
+   \right)\right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
 
    If we now define composition of functions $(f \circ g)(x) = f(g(x))$, we can
    express the Lagrange equations entirely in terms of functions:
 
-   $$D\left(\left(\partial_{2} L\right) \circ \left(\Gamma[w]\right)\right) \\
-   -\left(\partial_{1} L\right) \circ \left(\Gamma[w]\right)=0.$$
+   $$D\left(\left(\partial_{2} L\right) \circ \left(\Gamma[w]\right)\right)
+   \\ -\left(\partial_{1} L\right) \circ \left(\Gamma[w]\right)=0.$$
 
    The functions $\partial_1 L$ and $\partial_2 L$ are partial derivatives of
    the function $L$. Composition with $\Gamma[w]$ evaluates these partials with
@@ -167,8 +160,8 @@ $$
 
    The result of applying the =Lagrange-equations= procedure to a procedure
    =Lagrangian= that implements a Lagrangian function is a procedure that takes
-   a configuration-space path procedure =w= and returns a procedure that gives the
-   residual of the Lagrange equations for that path at a time.
+   a configuration-space path procedure =w= and returns a procedure that gives
+   the residual of the Lagrange equations for that path at a time.
 
    For example, consider the harmonic oscillator, with Lagrangian
 
@@ -237,6 +230,7 @@ $$
    variable.
 
 * Footnotes
+
 [fn:6] The programs in this book are written in Scheme, a dialect of Lisp. The
 details of the language are not germane to the points being made. What is
 important is that it is mechanically interpretable, and thus unambiguous. In
