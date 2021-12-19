@@ -2,7 +2,7 @@
 #+STARTUP: noindent
 
 If the intrinsic curvature of a manifold is not zero, a vector
-paralleltransported around a small loop will end up different from the vector
+parallel-transported around a small loop will end up different from the vector
 that started. We saw the consequence of this before, on page 1 and on page 93.
 The Riemann tensor encapsulates this idea.
 
@@ -252,7 +252,11 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     objects, eliminating the state. After a long algebraic story we find that
 
 \begin{equation}
-
+\begin{aligned}
+&((\mathcal{R}(\mathsf{w}, \mathsf{v}))(\mathsf{u}))(\mathsf{f}) \\
+&\quad=\mathsf{e}(\mathsf{f})\{(\mathsf{w}(\varpi(\mathsf{v}))-\mathsf{v}(\varpi(\mathsf{w}))-\varpi([\mathsf{w}, \mathsf{v}])) \tilde{\mathsf{e}}(\mathsf{u}) \\
+&\quad+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}
+\end{aligned}
 \end{equation}
 
     or as a program:
@@ -301,12 +305,13 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     Since the Riemann curvature is defined as in equation (8.1),
 
 \begin{equation}
-\mathcal{R}(\mathsf{w}, \mathsf{v}) \= [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]},
+\mathcal{R}(\mathsf{w}, \mathsf{v}) = [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]},
 \end{equation}
 
     it is natural[fn:7] to identify these terms with the corresponding terms in
 
 \begin{equation}
+\left(\left(\left[L_{g_w}, L_{g_v}\right] - L_{g_{[w,v]}}\right)U\right)(s_0).
 \end{equation}
 
     Unfortunately, this does not work, as demonstrated below:
@@ -345,17 +350,36 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     this works out. First, recall
 
 \begin{equation}
+\begin{aligned}
+\nabla_\mathsf{v} \mathsf{u}(\mathsf{f}) &= \sum_i \mathsf{e}_i(\mathsf{f})\left(\mathsf{v}\left(\tilde{\mathsf{e}}^i(\mathsf{u})\right) \
++ \sum_j \varpi_j^i(\mathsf{v}) \tilde{\mathsf{e}}^j(\mathsf{u})\right) \\
+&=\mathsf{e}(\mathsf{f})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) \
++ \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})),
+\end{aligned}
 \end{equation}
 
     where the second form uses tuple arithmetic. Now let’s consider the first
     part of the Riemann curvature operator:
 
 \begin{equation}
+\begin{aligned}
+\left[\nabla_\mathsf{w}, \nabla_\mathsf{v} \right] \mathsf{u} \\
+=& \nabla_\mathsf{w} \nabla_\mathsf{v} \mathsf{u} - \nabla_\mathsf{v} \nabla_\mathsf{w} \mathsf{u} \\
+=& \mathsf{e}\{\mathsf{w}(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})) \
++ \varpi(\mathsf{w})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
+&-\mathsf{e}\{\mathsf{v}(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u}))+\varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})) \
++ \varpi(\mathsf{v})(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
+=& \mathsf{e}\{[\mathsf{w}, \mathsf{v}] \tilde{\mathsf{e}}(\mathsf{u})\\
+&+\mathsf{w}(\varpi(\mathsf{v})) \tilde{\mathsf{e}}(\mathsf{u}) - \mathsf{v}(\varpi(\mathsf{w})) \tilde{\mathsf{e}}(\mathsf{u}) \\
+&+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}.
+\end{aligned}
 \end{equation}
 
     The second term of the Riemann curvature operator is
 
 \begin{equation}
+\nabla_{[\mathsf{w}, \mathsf{v}]} \mathsf{u} = \mathsf{e}\left\{[\mathsf{w}, \mathsf{v}]\tilde{\mathsf{e}}(\mathsf{u}) \
++ \varpi\left([\mathsf{w}, \mathsf{v}]\right)\tilde{\mathsf{e}}(u)\right\}.
 \end{equation}
 
     The difference of these is the Riemann curvature operator. Notice that the
@@ -367,6 +391,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     Riemann tensor by
 
 \begin{equation}
+R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u}, \mathsf{e}_i, \mathsf{v}\right).
 \end{equation}
 
     Expressed as a program:
@@ -429,6 +454,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    computed as follows:
 
 \begin{equation}
+\mathcal{T}(\mathsf{u}, \mathsf{v})=\nabla_{\mathsf{u}} \mathsf{v}-\nabla_{\mathsf{v}} \mathsf{u}-[\mathsf{u}, \mathsf{v}].
 \end{equation}
 
    The torsion takes two vector fields and produces a vector field. The torsion
@@ -478,6 +504,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     components of the torsion are
 
 \begin{equation}
+\tilde{\mathsf{e}}\left(\mathsf{T}(\mathsf{e}_i, \mathsf{e}_j)\right) = \Gamma_{ij}^k + \Gamma_{ji}^k + \Gamma_{ij}^k,
 \end{equation}
 
    where $\mathsf{d}_{ij}^k$ are the structure constants of the basis. See
@@ -488,6 +515,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    Recall the geodesic equation (7.79):
 
 \begin{equation}
+D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 \end{equation}
 
    Observe that the lower indices of $\Gamma$ are contracted with two copies of
@@ -509,12 +537,14 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    $\mathsf{T}$ be the vector field of tangent vectors to those geodesics:
 
 \begin{equation}
+\nabla_\mathsf{T} \mathsf{T} = 0.
 \end{equation}
 
    We can parameterize travel along the geodesics with parameter $t$: a geodesic
    curve $\gamma_s(t) = \phi_t^\mathsf{T}(\mathsf{m}_s)$ where
 
 \begin{equation}
+\mathsf{f} \circ \phi_t^\mathsf{T}(\mathsf{m}_s) = \left(e^{tT}\mathsf{f}\right)(\mathsf{m}_s).
 \end{equation}
 
    Let $U = \partial / \partial s$ be the vector field corresponding to the
@@ -526,20 +556,32 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    The geodesic deviation vector field is defined as:
 
 \begin{equation}
+\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}).
 \end{equation}
 
    If the connection has zero torsion, the geodesic deviation can be related to
    the Riemann curvature:
 
 \begin{equation}
+\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}),
 \end{equation}
 
    as follows, using equation (8.21),
+
+\begin{equation}
+\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}),
+\end{equation}
 
    because both the torsion is zero and $[\mathsf{T}, \mathsf{U}] = 0$.
    Continuing
 
 \begin{equation}
+\begin{aligned}
+\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) &= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) \\
+&= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) + \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) \\
+&= \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}) \\
+&= -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}).
+\end{aligned}
 \end{equation}
 
    In the last line the first term was dropped because $\mathsf{T}$ satisfies
@@ -554,6 +596,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    separation of the two geodesics is
 
 \begin{equation}
+(\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \delta(s, t, \Delta s)\hat{s}
 \end{equation}
 
    where $\hat{s}$ is a unit vector in the direction of increasing $s$. So
@@ -562,6 +605,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    factor of increase of acceleration with increase of separation:
 
 \begin{equation}
+\nabla{\mathsf{T}}(\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \partial_1 \delta(s, t, \Delta s)\hat{s}.
 \end{equation}
 
 *** Longitude Lines on a Sphere
@@ -726,6 +770,9 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    The first Bianchi identity is
 
 \begin{equation}
+\mathsf{R}(\omega, \mathsf{x}, \mathsf{y}, \mathsf{z}) \
++ \mathsf{R}(\omega, \mathsf{y}, \mathsf{z}, \mathsf{x}) \
++ \mathsf{R}(\omega, \mathsf{z}, \mathsf{x}, \mathsf{y}) = 0,
 \end{equation}
 
    or, as a program:
@@ -742,6 +789,9 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    The second Bianchi identity is
 
 \begin{equation}
+\nabla_\mathsf{x} \mathsf{R}(\omega, \mathsf{v}, \mathsf{y}, \mathsf{z}) \
++ \nabla_\mathsf{y} \mathsf{R}(\omega, \mathsf{v}, \mathsf{z}, \mathsf{x}) \
++ \nabla_\mathsf{z} \mathsf{R}(\omega, \mathsf{v}, \mathsf{x}, \mathsf{y}) = 0
 \end{equation}
 
    or, as a program:
