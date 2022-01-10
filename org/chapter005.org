@@ -213,7 +213,7 @@ $\mathsf{u} = \mathsf{u}^{0}{\partial}/{\partial\mathsf{x}} +
 
 Note that this is the area of the parallelogram in the coordinate plane, which
 is the range of the coordinate function. It is not the area on the manifold. To
-define that, we need more structure — the metric. We will put a metric on the
+define that, we need more structure --- the metric. We will put a metric on the
 manifold in Chapter 9.
 
 ** 3-Dimensional Euclidean Space

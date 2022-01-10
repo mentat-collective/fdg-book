@@ -1,8 +1,8 @@
 * Chapter 1: Introduction
 
   #+begin_quote
-  Philosophy is written in that great book which ever lies before our eyes—I mean
-  the Universe—but we cannot understand it if we do not learn the language and
+  Philosophy is written in that great book which ever lies before our eyes---I mean
+  the Universe---but we cannot understand it if we do not learn the language and
   grasp the symbols in which it is written. This book is written in the
   mathematical language, and the symbols are triangles, circles, and other
   geometrical figures without whose help it is impossible to comprehend a single

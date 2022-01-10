@@ -16,7 +16,7 @@
   differential geometry needed as a foundation for a deep understanding of
   general relativity or quantum field theory. Our approach differs from the
   traditional one in several ways. Our coverage is unusual. We do not prove the
-  general Stokes’s Theorem— this is well covered in many other books—instead, we
+  general Stokes’s Theorem--- this is well covered in many other books---instead, we
   show how it works in two dimensions. Because our target is relativity, we put
   lots of emphasis on the development of the covariant derivative, and we erect
   a common context for understanding both the Lie derivative and the covariant
@@ -55,7 +55,7 @@
    community of Scheme programmers for providing support and advice for the
    elegant language that we use. In particular, Gerald Jay Sussman wants to
    thank Guy Lewis Steele and Alexey Radul for many fun days of programming
-   together—we learned much from each other’s style. Matthew Halfant started us
+   together---we learned much from each other’s style. Matthew Halfant started us
    on the development of the Scmutils system. He encouraged us to get into
    scientific computation, using Scheme and functional style as an active way to
    explain the ideas, without the distractions of imperative languages such as
