@@ -612,18 +612,18 @@ R = \sum_{ij} \mathsf{g}\left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j\right) 
 \end{aligned}
 \end{equation}
 
-   are Newton’s equations to lowest order in $V/c^2$:
+   are Newton's equations to lowest order in $V/c^2$:
 
 \begin{equation}
 
 \end{equation}
 
-*** Exercise 9.5: Newton’s Equations
+*** Exercise 9.5: Newton's Equations
 
-    Verify that Newton’s equations (9.25) are indeed the lowest-order terms of
+    Verify that Newton's equations (9.25) are indeed the lowest-order terms of
     the geodesic equations for the metric (9.24).
 
-    Einstein’s field equations tell how the local energy-momentum distribution
+    Einstein's field equations tell how the local energy-momentum distribution
     determines the local shape of the spacetime, as described by the metric
     tensor $g$. The equations are traditionally written
 
@@ -643,7 +643,7 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
 
     where $T =T_{\mu \nu} g^{\mu \nu}$.[fn:6]
 
-    Einstein’s field equations arise from a heuristic derivation by analogy to
+    Einstein's field equations arise from a heuristic derivation by analogy to
     the Poisson equation for a Newtonian gravitational field:
 
 \begin{equation}
@@ -772,14 +772,14 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
     the geodesic equation and set the residual to zero you will obtain a
     constraint relating =r and =omega=. Do it.
 
-    Surprise: You should find out that $\omega^2 r^3 = GM$ --- Kepler’s law!
+    Surprise: You should find out that $\omega^2 r^3 = GM$ --- Kepler's law!
 
 *** Exercise 9.8: Stability of Circular Orbits
 
     In Schwarzschild spacetime there are stable circular orbits if the
     coordinate $r$ is large enough, but below that value all orbits are
     unstable. The critical value of $r$ is larger than the Schwarzschild horizon
-    radius. Let’s find that value.
+    radius. Let's find that value.
 
     For example, we can consider a perturbation of the orbit of constant
     longitude. Here is the result of adding an exponential variation of size
@@ -857,10 +857,10 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
     One exact solution to the Einstein equations was found by Alexander
     Friedmann in 1922. He showed that a metric for an isotropic and homogeneous
     spacetime was consistent with a similarly isotropic and homogeneous
-    stress-energy tensor in Einstein’s equations. In this case the residuals of
+    stress-energy tensor in Einstein's equations. In this case the residuals of
     the Einstein equations gave ordinary differential equations for the
     time-dependent scale of the universe. These are called the Robertson-Walker
-    equations. Friedmann’s metric is:
+    equations. Friedmann's metric is:
 
     #+begin_src scheme
 (define (FLRW-metric c k R)

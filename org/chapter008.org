@@ -346,7 +346,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 ;; a nonzero mess
     #+end_src
 
-    Let’s compute the two parts of the Riemann curvature operator and see how
+    Let's compute the two parts of the Riemann curvature operator and see how
     this works out. First, recall
 
 \begin{equation}
@@ -358,7 +358,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 \end{aligned}
 \end{equation}
 
-    where the second form uses tuple arithmetic. Now let’s consider the first
+    where the second form uses tuple arithmetic. Now let's consider the first
     part of the Riemann curvature operator:
 
 \begin{equation}
@@ -494,7 +494,7 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
 ;; 0
    #+end_src
 
-*** Torsion Doesn’t Affect Geodesics
+*** Torsion Doesn't Affect Geodesics
 
     There are multiple connections that give the same geodesic curves. Among
     these connections there is always one with zero torsion. Thus, if you care
@@ -681,7 +681,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     #+end_src
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(((partial 1) (delta ’R)) 'phi0 'theta0 'Delta-phi)
+(((partial 1) (delta 'R)) 'phi0 'theta0 'Delta-phi)
 ;; (* Delta-phi R (cos theta0))
     #+end_src
 
@@ -748,7 +748,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
   (covariant-derivative
    (Christoffel->Cartan
     (symmetrize-Christoffel
-     (literal-Christoffel-2 ’C R4-rect)))))
+     (literal-Christoffel-2 'C R4-rect)))))
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
@@ -813,7 +813,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 (define nabla
   (covariant-derivative
    (Christoffel->Cartan
-    (literal-Christoffel-2 ’C R4-rect))))
+    (literal-Christoffel-2 'C R4-rect))))
 
 (define R (Riemann nabla))
 (define T (torsion-vector nabla))

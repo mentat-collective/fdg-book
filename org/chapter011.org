@@ -3,7 +3,7 @@
 
 Although the usual treatments of special relativity begin with the
 Michelson-Morley experiment, this is not how Einstein began. In fact, Einstein
-was impressed with Maxwell’s work and he was emulating Maxwell’s breakthrough.
+was impressed with Maxwell's work and he was emulating Maxwell's breakthrough.
 
 Maxwell was preceded by Faraday, Ampere, Oersted, Coulomb, Gauss, and Franklin.
 These giants discovered electromagnetism and worked out empirical equations that
@@ -11,19 +11,19 @@ described the phenomena. They understood the existence of conserved charges and
 fields. Faraday invented the idea of lines of force by which fields can be
 visualized.
 
-Maxwell’s great insight was noticing and resolving the contradiction between the
+Maxwell's great insight was noticing and resolving the contradiction between the
 empirically-derived laws of electromagnetism and conservation of charge. He did
 this by introducing the then experimentally undetectable displacement-current
 term into one of the empirical equations. The modified equations implied a wave
 equation and the propagation speed of the wave predicted by the new equation
 turned out to be the speed of light, as measured by the eclipses of the Galilean
 satellites of Jupiter. The experimental confirmation by Hertz of the existence
-of electromagnetic radiation that obeyed Maxwell’s equations capped the
+of electromagnetic radiation that obeyed Maxwell's equations capped the
 discovery.
 
-By analogy, Einsten noticed that Maxwell’s equations were inconsistent with
+By analogy, Einsten noticed that Maxwell's equations were inconsistent with
 Galilean relativity. In free space, where electromagnetic waves propagate,
-Maxwell’s equations say that the vector source of electric fields is the time
+Maxwell's equations say that the vector source of electric fields is the time
 rate of change of the magnetic field and the vector source of magnetic field is
 the time rate of change of the electric field. The combination of these ideas
 yields the wave equation. The wave equation itself is not invariant under the
@@ -43,12 +43,12 @@ mechanics.
 
 Now to the details. Before Maxwell the empirical laws of electromagnetism were
 as follows. Electric fields arise from charges, with the inverse square law of
-Coulomb. This is Carl Friedrich Gauss’s law for electrostatics:
+Coulomb. This is Carl Friedrich Gauss's law for electrostatics:
 
 \begin{equation}
 \end{equation}
 
-Magnetic fields do not have a scalar source. This is Gauss’s law for
+Magnetic fields do not have a scalar source. This is Gauss's law for
 magnetostatics:
 
 \begin{equation}
@@ -118,19 +118,19 @@ in an electromagnetic field:
 \begin{equation}
 \end{equation}
 
-A crucial point in Einstein’s inspiration for relativity is, quoting Einstein
+A crucial point in Einstein's inspiration for relativity is, quoting Einstein
 (in English translation), "During that year [1895--1896] in Aarau the question
 came to me: If one runs after a light wave with light velocity, then one would
 encounter a time-independent wavefield. However, something like that does not
 seem to exist!"[fn:1] This was the observation of the inconsistency.
 
-Let’s be more precise about this. Consider a plane sinusoidal wave moving in the
+Let's be more precise about this. Consider a plane sinusoidal wave moving in the
 $\hat{x}$ direction with velocity $c$ in free space ($\rho = 0$ and $\vec{I} =
 0$). This is a perfectly good solution of the wave equation. Now suppose that an
 observer is moving with the wave in the $\hat{x}$ direction with velocity $c$.
 Such an observer will see no time variation of the field. So the wave equation
-reduces to Laplace’s equation. But a sinusoidal variation in space is not a
-solution of Laplace’s equation.
+reduces to Laplace's equation. But a sinusoidal variation in space is not a
+solution of Laplace's equation.
 
 Einstein believed that the Maxwell-Lorentz electromagnetic theory was
 fundamentally correct, though he was unhappy with an apparent asymmetry in the

@@ -176,7 +176,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
     (compose star d star flat)))
    #+end_src
 
-   The divergence is defined even if we don’t have a metric, but have only a
+   The divergence is defined even if we don't have a metric, but have only a
    connection. In that case the divergence can be computed with
 
    #+begin_src scheme
@@ -407,7 +407,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    So, the Laplacian of a scalar field is the wave equation!
 
    #+begin_src scheme
-(define p (literal-manifold-function ’phi SR))
+(define p (literal-manifold-function 'phi SR))
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
@@ -421,7 +421,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 ** Electrodynamics
 
    Using Hodge duals we can represent electrodynamics in an elegant way.
-   Maxwell’s electrodynamics is invariant under Lorentz transformations. We use
+   Maxwell's electrodynamics is invariant under Lorentz transformations. We use
    4-dimensional rectangular coordinates for the flat spacetime of special
    relativity.
 
@@ -484,7 +484,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    The coefficient =(/ 1 :c)= makes the components of the one-form uniform with
    respect to units.
 
-   To develop Maxwell’s equations we need a general Faraday field and a general
+   To develop Maxwell's equations we need a general Faraday field and a general
    current-density field:
 
    #+begin_src scheme
@@ -505,7 +505,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
 ** Maxwell's Equations
 
-   Maxwell’s equations in the language of differential forms are
+   Maxwell's equations in the language of differential forms are
 
 \begin{equation}
 \mathsf{dF} = 0,
@@ -539,7 +539,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    $\mathsf{d}(g^{*}\mathsf{F})- 4{\pi}g^{*} \mathsf{J}$. Since these are both
    two-form fields, their exterior derivatives are three-form fields, so we have
    to provide three basis vectors to get each component. Each component equation
-   will yield one of Maxwell’s equations, written in coordinates, without vector
+   will yield one of Maxwell's equations, written in coordinates, without vector
    notation. So, the purely spatial component $\mathsf{dF}(\partial / \partial
    x, \partial / \partial y, \partial / \partial z)$ of equation 10.13 is
    equation 10.15:

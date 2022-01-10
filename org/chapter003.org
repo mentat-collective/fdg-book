@@ -18,7 +18,7 @@ cannot subtract two manifold points, we cannot take the derivative of a manifold
 function in the way described in elementary calculus. But we can take the
 derivative of a co- ordinate representation of a manifold function, because it
 takes real-number coordinates as its arguments. This is a start, but it is not
-independent of coordinate system. Let’s see what we can build out of this.
+independent of coordinate system. Let's see what we can build out of this.
 
 ** Vector Fields
 
@@ -145,19 +145,19 @@ independent of coordinate system. Let’s see what we can build out of this.
    #+begin_src scheme
      (define v
        (components->vector-field
-        (up (literal-function ’b^0 R2->R)
-            (literal-function ’b^1 R2->R))
+        (up (literal-function 'b^0 R2->R)
+            (literal-function 'b^1 R2->R))
         R2-rect))
    #+end_src
    To make it convenient to define literal vector fields we provide
-   a shorthand: ~(define v (literal-vector-field ’b R2-rect))~
+   a shorthand: ~(define v (literal-vector-field 'b R2-rect))~
    This makes a vector field with component functions named ~b^0~
    and ~b^1~ and names the result ~v~. When this vector field is applied
    to an arbitrary manifold function it gives the directional derivative
    of that manifold function in the direction specified by the
    components ~b^0~ and ~b^1~:
    #+begin_src scheme
-     ((v (literal-manifold-function ’f-rect R2-rect)) R2-rect-point)
+     ((v (literal-manifold-function 'f-rect R2-rect)) R2-rect-point)
      ;; (+ (* (((partial 0) f-rect) (up x0 y0)) (b?0 (up x0 y0)))
      ;;    (* (((partial 1) f-rect) (up x0 y0)) (b?1 (up x0 y0))))
    #+end_src
@@ -199,8 +199,8 @@ independent of coordinate system. Let’s see what we can build out of this.
      We can apply a coordinatized vector field to a function of coordinates
      to get the same answer as before.
      #+begin_src scheme
-       (((coordinatize v R2-rect) (literal-function ’f-rect R2->R))
-        (up ’x0 ’y0))
+       (((coordinatize v R2-rect) (literal-function 'f-rect R2->R))
+        (up 'x0 'y0))
        ;; (+ (* (((partial 0) f-rect) (up x0 y0)) (b?0 (up x0 y0)))
        ;;    (* (((partial 1) f-rect) (up x0 y0)) (b?1 (up x0 y0))))
      #+end_src
@@ -442,7 +442,7 @@ independent of coordinate system. Let’s see what we can build out of this.
    evolution in a circle around the origin starting at ~(1, 0)~:
    #+begin_src scheme
      (series:for-each print-expression
-                      (((exp (* ’t circular)) (chart R2-rect))
+                      (((exp (* 't circular)) (chart R2-rect))
                        ((point R2-rect) (up 1 0)))
                       6)
      ;; (up 1 0)
@@ -472,7 +472,7 @@ independent of coordinate system. Let’s see what we can build out of this.
    We can evolve circular from the initial point up to the parameter
    ~t~, and accumulate the first six terms as follows:
    #+begin_src scheme
-     ((((evolution 6) ’delta-t circular) (chart R2-rect))
+     ((((evolution 6) 'delta-t circular) (chart R2-rect))
       ((point R2-rect) (up 1 0)))
      ;; (up (+ (* -1/720 (expt delta-t 6))
      ;;        (* 1/24 (expt delta-t 4))
@@ -630,9 +630,9 @@ independent of coordinate system. Let’s see what we can build out of this.
      #+begin_src scheme
        (define omega
          (components->1form-field
-          (down (literal-function ’a
+          (down (literal-function 'a
                                     0 R2->R)
-                (literal-function ’a
+                (literal-function 'a
                                     1 R2->R))
           R2-rect))
      #+end_src
@@ -733,7 +733,7 @@ independent of coordinate system. Let’s see what we can build out of this.
      So ~circular~ is the same as ~d/dtheta~, as we can see by applying
      them both to the general function ~f~:
      #+begin_src scheme
-       (define f (literal-manifold-function ’f-rect R2-rect))
+       (define f (literal-manifold-function 'f-rect R2-rect))
        (((- circular d/dtheta) f) R2-rect-point)
        0
      #+end_src
