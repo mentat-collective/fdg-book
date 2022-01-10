@@ -300,7 +300,7 @@ colatitude and longitude.
 
 [fn:10] The plane with the addition of a point at infinity is conformally equivalent to
 the sphere by this correspondence. This correspondence is called the Riemann
-sphere, in honor of the great mathematician Bernard Riemann (1826–1866),
+sphere, in honor of the great mathematician Bernard Riemann (1826--1866),
 who made major contributions to geometry.
 
 [fn:9] This is actually a nasty, but traditional, abuse of notation. An expression

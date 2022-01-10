@@ -119,7 +119,7 @@ in an electromagnetic field:
 \end{equation}
 
 A crucial point in Einstein’s inspiration for relativity is, quoting Einstein
-(in English translation), "During that year [1895–1896] in Aarau the question
+(in English translation), "During that year [1895--1896] in Aarau the question
 came to me: If one runs after a light wave with light velocity, then one would
 encounter a time-independent wavefield. However, something like that does not
 seem to exist!"[fn:1] This was the observation of the inconsistency.

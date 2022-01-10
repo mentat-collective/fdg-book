@@ -494,7 +494,7 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
 
    We can also compute the commutators for the basis vector fields
    $\mathsf{e}_x$, $\mathsf{e}_y$, and $\mathsf{e}_z$ in the SO(3) manifold (see
-   equations 4.29–4.31) that correspond to rotations about the $x$, $y$, and $z$
+   equations 4.29--4.31) that correspond to rotations about the $x$, $y$, and $z$
    axes, respectively:[fn:6]
 
    #+begin_src scheme :results value raw :exports both :cache yes
@@ -571,7 +571,7 @@ e^{-\epsilon \mathsf{v}} e^{-\epsilon \mathsf{w}} \mathsf{f} \right)\left(\maths
 
    Note that the Euler angles are singular at $\theta = 0$ (where $\phi$ and
    $\psi$ become degenerate), so the representations of $\mathsf{e}_x$,
-   $\mathsf{e}_y$, and $\mathsf{e}_z$ (defined in equations 4.29–4.31) have
+   $\mathsf{e}_y$, and $\mathsf{e}_z$ (defined in equations 4.29--4.31) have
    problems there. An alternate coordinate system avoids this problem, while
    introducing a similar problem elsewhere in the manifold. Consider the
    "alternate angles" $(\theta_a, \phi_a, \psi_a)$ which define a rotation
@@ -592,7 +592,7 @@ e^{-\epsilon \mathsf{v}} e^{-\epsilon \mathsf{w}} \mathsf{f} \right)\left(\maths
 ** Exercise 4.3: SO(3) Basis and Angular Momentum Basis
 
    How are $\mathsf{J}_x$, $\mathsf{J}_y$, and $\mathsf{J}_z$ related to
-   $\mathsf{e}_x$, $\mathsf{e}_y$, and $\mathsf{e}_z$ in equations (4.29–4.31)?
+   $\mathsf{e}_x$, $\mathsf{e}_y$, and $\mathsf{e}_z$ in equations (4.29--4.31)?
 
 * Footnotes
 
