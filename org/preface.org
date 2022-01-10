@@ -25,7 +25,7 @@
   much material as possible independent of the assumption of a metric. This
   allows us to see what results depend on the metric when we introduce it. We
   also try to avoid the use of traditional index notation for tensors. Although
-  one can become very adept at “index gymnastics,” that leads to much mindless
+  one can become very adept at "index gymnastics," that leads to much mindless
   (though useful) manipulation without much thought to meaning. Instead, we use
   a semantically richer language of vector fields and differential forms.
 

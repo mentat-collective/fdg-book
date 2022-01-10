@@ -19,8 +19,8 @@
 
   At the North Pole inscribe a line in the ice perpendicular to the Greenwich
   Meridian. Hold a stick parallel to that line and walk down the Greenwich
-  Meridian keeping the stick parallel to itself as you walk. (The phrase “parallel
-  to itself” is a way of saying that as you walk you keep its orientation
+  Meridian keeping the stick parallel to itself as you walk. (The phrase "parallel
+  to itself" is a way of saying that as you walk you keep its orientation
   unchanged. The stick will be aligned East-West, perpendicular to your direction
   of travel.) When you get to the Equator the stick will be parallel to the
   Equator. Turn East, and walk along the Equator, keeping the stick parallel to
@@ -452,5 +452,5 @@ in Appendix A.
 it, is given in the prologue: Programming and Understanding. More details can be
 found in Appendix B
 
-[fn:1] It is customary to shorten “Euler-Lagrange equations” to “Lagrange
-equations.” We hope Leonhard Euler is not disturbed.
+[fn:1] It is customary to shorten "Euler-Lagrange equations" to "Lagrange
+equations." We hope Leonhard Euler is not disturbed.

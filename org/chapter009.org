@@ -926,7 +926,7 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
 D\left(c^2 \rho R^3\right) + pD\left(R^3\right) = 0.
 \end{equation}
 
-    b. Assume that in a “matter-dominated universe” radiation pressure is
+    b. Assume that in a "matter-dominated universe" radiation pressure is
        negligible, so $p = 0$. Using the Robertson-Walker equations (9.30) and
        the energy conservation equation (9.32) show that the observation of an
        expanding universe is compatible with a negative curvature universe, a

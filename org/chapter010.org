@@ -787,7 +787,7 @@ p.108.
 [fn:3] The metric in relativity is not positive definite, so nonzero vectors
 can have zero length.
 
-[fn:2] We have a metric, so we can define "orthonormal” and"use it to construct
+[fn:2] We have a metric, so we can define "orthonormal" and"use it to construct
 an orthonormal basis given any basis. The Gram-Schmidt procedure does the job.
 
 [fn:1] The traditional notion is to just use an asterisk; we use $g^∗$ to
