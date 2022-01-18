@@ -23,11 +23,11 @@ operators give:
 \end{equation}
 
 Next we specify the directional derivative of a vector field
-$\mathsf{u]$ with respect to a vector field $\mathsf{v}$. Let an
-integral curve of the vector field $\mathsf{v}$ be γ, parameterized by
+$\mathsf{u}$ with respect to a vector field $\mathsf{v}$. Let an
+integral curve of the vector field $\mathsf{v}$ be $\gamma$, parameterized by
 $t$, and let $\mathsf{m} = \gamma(t)$. Let $\mathsf{u}^{\prime}$ be a
 vector field that results from transporting the vector field
-$\mathsf{u}$ along γ for a parameter increment δ. How $\mathsf{u}$ is
+$\mathsf{u}$ along $\gamma$ for a parameter increment $\delta$. How $\mathsf{u}$ is
 transported to make $\mathsf{u}^{\prime}$ determines the type of
 derivative. We formulate the method of transport by:
 
@@ -71,7 +71,7 @@ The linearity of transport implies that
 \mathcal{D}_{\mathsf{v}}(\alpha\mathsf{O}+\beta\mathsf{P}) = \alpha\mathcal{D}_{\mathsf{v}}\mathsf{O}+\beta\mathcal{D}_{\mathsf{v}}\mathsf{P},
 \end{equation}
 
-for any real α and β and manifold objects $\mathsf{O}$ and
+for any real $\alpha$ and $\beta$ and manifold objects $\mathsf{O}$ and
 $\mathsf{P}$.
 
 The directional derivative obeys superposition in its vector-field
@@ -88,8 +88,8 @@ vector-field argument:
 \mathcal{D}_{\alpha\mathsf{v}} = \alpha\mathcal{D}_{\mathsf{v}},
 \end{equation}
 
-for any real α.[fn:2] This follows from the fact that for evolution
-along integral curves: when α is a real number,
+for any real $\alpha$.[fn:2] This follows from the fact that for evolution
+along integral curves: when $\alpha$ is a real number,
 
 \begin{equation}
 \phi^{\alpha\mathsf{v}}_{t}(\mathsf{m}) = \phi^{\mathsf{v}}_{\alpha t}(\mathsf{m}).
@@ -171,7 +171,7 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m}) - ((\phi^{\mathsf{v}}_{\delta})_{
 (series:sum (((exp (* delta v)) (chart coordsys)) m)
 order)))
 
-   Expand the quantities in equation (7.13) to first order in δ:
+   Expand the quantities in equation (7.13) to first order in $\delta$:
 
 \begin{equation}
 \begin{aligned}
@@ -304,7 +304,7 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m})-(\phi^{\mathsf{v}}_{\delta *}\mat
 
 ** Form Fields
 
-   We can also define the Lie derivative of a form field ω with
+   We can also define the Lie derivative of a form field $\omega$ with
    respect to the vector field $\mathsf{v}$ by its action on an
    arbitrary vector field $\mathsf{y}$, using the extended Leibniz
    rule (see equation 7.10):
@@ -315,10 +315,10 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m})-(\phi^{\mathsf{v}}_{\delta *}\mat
 
    The first term computes the rate of change of the combination
    $\omega(\mathsf{y})$ along the integral curve of $\mathsf{v}$,
-   while the second subtracts ω applied to the change in
-   $\mathsf{y}$. The result is the change in ω along the curve.
+   while the second subtracts $\omega$ applied to the change in
+   $\mathsf{y}$. The result is the change in $\omega$ along the curve.
 
-   The Lie derivative of a $k$-form field ω with respect to a vector
+   The Lie derivative of a $k$-form field $\omega$ with respect to a vector
    field $\mathsf{v}$ is a $k$-form field that is defined by its
    behavior when applied to $k$ arbitrary vector fields
    $\mathsf{w}_{0},\ldots,\mathsf{w}_{k-1}$. We generalize equation
@@ -368,7 +368,7 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m})-(\phi^{\mathsf{v}}_{\delta *}\mat
    with $\alpha,\beta\in\mathsf{R}$ and vector fields or one-form
    fields $\mathsf{a}$ and $\mathsf{b}$.
 
-   For any $k$-form field ω and any vector field $\mathsf{v}$ the
+   For any $k$-form field $\omega$ and any vector field $\mathsf{v}$ the
    exterior derivative commutes with the Lie derivative with respect
    to the vector field:
 
@@ -376,7 +376,7 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m})-(\phi^{\mathsf{v}}_{\delta *}\mat
 \mathcal{L}_{\mathsf{v}}(\mathsf{d}\omega) = \mathsf{d}(\mathcal{L}_{\mathsf{v}}\omega).
 \end{equation}
 
-   If ω is an element of surface then $\mathsf{d}\omega$ is an element
+   If $\omega$ is an element of surface then $\mathsf{d}\omega$ is an element
    of volume. The Lie derivative computes the rate of change of its
    argument under a deformation described by the vector field. The
    answer is the same whether we deform the surface before computing
@@ -385,45 +385,53 @@ g(\delta) = \mathsf{y}(\mathsf{f})(\mathsf{m})-(\phi^{\mathsf{v}}_{\delta *}\mat
    We can verify this in 3-dimensional rectangular space for a general
    one-form field:[fn:4]
 
-(((- ((Lie-derivative V) (d theta))
-(d ((Lie-derivative V) theta)))
-X Y)
-R3-rect-point)
-0
+#+begin_src scheme
+  (((- ((Lie-derivative V) (d theta))
+       (d ((Lie-derivative V) theta)))
+    X Y)
+   R3-rect-point)
+  0
+#+end_src
 
    and for the general two-form field:
 
-(((- ((Lie-derivative V) (d omega))
-(d ((Lie-derivative V) omega)))
-X Y Z)
-R3-rect-point)
-0
+#+begin_src scheme
+  (((- ((Lie-derivative V) (d omega))
+       (d ((Lie-derivative V) omega)))
+    X Y Z)
+   R3-rect-point)
+  0
+#+end_src
 
    The Lie derivative satisfies another nice elementary
-   relationship. If $\mathsf{v}$ and $\mathsf{w]$ are two vector
+   relationship. If $\mathsf{v}$ and $\mathsf{w}$ are two vector
    fields, then
 
 \begin{equation}
 [\mathcal{L}_{\mathsf{v}},\mathcal{L}_{\mathsf{w}}] = \mathcal{L}_{[\mathsf{v},\mathsf{w}]}.
 \end{equation}
 
-   Again, for our general one-form field θ:
+   Again, for our general one-form field $\theta$:
 
-((((- (commutator (Lie-derivative X) (Lie-derivative Y))
-(Lie-derivative (commutator X Y)))
-theta)
-Z)
-R3-rect-point)
-0
+#+begin_src scheme
+  ((((- (commutator (Lie-derivative X) (Lie-derivative Y))
+        (Lie-derivative (commutator X Y)))
+     theta)
+    Z)
+   R3-rect-point)
+  0
+#+end_src
 
-   and for the two-form field ω:
+   and for the two-form field $\omega$:
 
-((((- (commutator (Lie-derivative X) (Lie-derivative Y))
-(Lie-derivative (commutator X Y)))
-omega)
-Z V)
-R3-rect-point)
-0
+#+begin_src scheme
+  ((((- (commutator (Lie-derivative X) (Lie-derivative Y))
+        (Lie-derivative (commutator X Y)))
+     omega)
+    Z V)
+   R3-rect-point)
+  0
+#+end_src
 
 ** Exponentiating Lie Derivatives
 
@@ -481,7 +489,7 @@ e^{t\mathcal{L}_{\mathsf{v}}}\mathsf{y} = \mathsf{y}+t\mathcal{L}_{\mathsf{v}}\m
    There is a simple but useful operation available between vector
    fields and form fields called /interior product/. This is the
    substitution of a vector field $\mathsf{v}$ into the first argument
-   of a $p$-form field ω to produce a $p-1$-form field:
+   of a $p$-form field $\omega$ to produce a $p-1$-form field:
 
 \begin{equation}
 (i_{\mathsf{v}}\omega)(\mathsf{v}_{1},\ldots\mathsf{v}_{\mathsf{p}-1})=\omega(\mathsf{v},\mathsf{v}_{1},\ldots\mathsf{v}_{\mathsf{p-1}}).
@@ -598,7 +606,7 @@ F^{\mathsf{v}}_{\delta}\mathsf{u}(\mathsf{f})(\mathsf{m})=\sum_{i,j}(A^{i}_{j}(\
 g(\delta)=\mathsf{u}(\mathsf{f})(\mathsf{m})-(F^{\mathsf{v}}_{\delta}\mathsf{u})(\mathsf{f})(\mathsf{m}).
 \end{equation}
 
-   Expanding with respect to a basis $\set{\mathsf{e}_{i}}$ we get
+   Expanding with respect to a basis $\{\mathsf{e}_{i}\}$ we get
 
 \begin{equation}
 g(\delta)=\sum_{i}\Bigg(\mathsf{u}^{i}\mathsf{e}_{i}(\mathsf{f})-\sum_{j}A^{i}_{j}(\delta)(\mathsf{u}^{j}\circ\phi^{\mathsf{v}}_{-\delta})\mathsf{e}_{i}(\mathsf{f})\Bigg)(\mathsf{m}).
@@ -634,7 +642,7 @@ A^{i}_{j}(\delta) = B^{i}_{j}(\mathsf{v})(\delta).
 
    Parallel transport depends on the path but not on the rate along
    the path. Incrementally, if we scale the vector field $\mathsf{v}$
-   by ξ,
+   by $\xi$,
 
 \begin{equation}
 \frac{d}{d\delta}(B(\mathsf{v})(\delta)) = \frac{d}{d\delta}(B(\xi\mathsf{v})({\delta}/{\xi})).
@@ -652,7 +660,7 @@ D(B(\mathsf{v}))(\delta) = \frac{1}{\xi}D(B(\xi\mathsf{v}))(\frac{\delta}{\xi}),
 \xi{D}(B(\mathsf{v}))(0) = D(B(\xi\mathsf{v}))(0).
 \end{equation}
 
-   The scale factor ξ can vary from place to place. So $DA^{i}_{j}(0)$
+   The scale factor $\xi$ can vary from place to place. So $DA^{i}_{j}(0)$
    is homogeneous in $\mathsf{v}$ over manifold functions. This is
    stronger than the homogeneity required by equation (7.7).
 
@@ -807,14 +815,22 @@ Dg(0) = \sum_{i}\left(\mathsf{v}(\mathsf{u}^{i})(\mathsf{m})+\sum_{j}\varpi^{i}_
    covariant derivative for a one-form field. Because the application
    of a one-form field to a vector field yields a manifold function,
    we can evaluate the covariant derivative of such an
-   application. Let τ be a one-form field and $\mathsf{w}$ be a vector
+   application. Let $\tau$ be a one-form field and $\mathsf{w}$ be a vector
    field. Then
 
 \begin{equation}
 \begin{aligned}
 \nabla_{\mathsf{v}}(\tau(\mathsf{w})) &= \mathsf{v}\left(\sum_{j}\tau_{j}\mathsf{w}^{j}\right) \\
-&= \sum_{j}(\mathsf{v}(\tau_{j})\mathsf{w}^{j}+\tau_{j}\mathsf{v}(\mathsf{w}^{j})) \\
-&= \sum_{j}\left(\mathsf{v}(\tau_{j})\mathsf{w}^{j}+\tau_{j}\left(\tilde{\mathsf{e}}^{j}(\nabla_{\mathsf{v}}\mathsf{w})-\sum_{k}\varpi^{j}_{k}(\mathsf{v})\mathsf{w}^{k}\right)\right)\\
+&= \sum_{j} (\mathsf{v}(\tau_{j})\mathsf{w}^{j}+\tau_{j}\mathsf{v}(\mathsf{w}^{j})) \\
+&= \sum_{j}
+\left(
+ \mathsf{v} (\tau_{j}) \mathsf{w}^{j}
+ +
+ \tau_{j}
+ \left(
+  \tilde{\mathsf{e}}^{j} (\nabla_{\mathsf{v}} \mathsf{w}) - \sum_{k} \varpi^{j}_{k} (\mathsf{v}) \mathsf{w}^{k}
+ \right)
+\right) \\
 &= \sum_{j} \left(\mathsf{v}(\tau_{j})\mathsf{w}^{j}-\tau_{j}\sum_{k}\varpi^{j}_{k}(\mathsf{v})\mathsf{w}^{k}\right)+\tau(\nabla_{\mathsf{v}}\mathsf{w}) \\
 &= \sum_{j}\left(\mathsf{v}(\tau_{j})\tilde{\mathsf{e}}^{j}-\tau_{j}\sum_{k}\varpi^{j}_{k}(\mathsf{v})\tilde{\mathsf{e}}^{k}\right)(\mathsf{w})+\tau(\nabla_{\mathsf{v}}\mathsf{w}).
 \end{aligned}
@@ -837,21 +853,25 @@ Dg(0) = \sum_{i}\left(\mathsf{v}(\mathsf{u}^{i})(\mathsf{m})+\sum_{j}\varpi^{i}_
 
    As a program this is
 
-(define ((((covariant-derivative-1form Cartan) V) tau) U)
-(let ((nabla_V ((covariant-derivative-vector Cartan) V)))
-(- (V (tau U)) (tau (nabla_V U)))))
+#+begin_src scheme
+  (define ((((covariant-derivative-1form Cartan) V) tau) U)
+    (let ((nabla_V ((covariant-derivative-vector Cartan) V)))
+      (- (V (tau U)) (tau (nabla_V U)))))
+#+end_src
 
    This program extends naturally to higher-rank form fields:
 
-(define ((((covariant-derivative-form Cartan) V) tau) vs)
-(let ((k (get-rank tau))
-(nabla_V ((covariant-derivative-vector Cartan) V)))
-(- (V (apply tau vs))
-(sigma (lambda (i)
-(apply tau
-(list-with-substituted-coord vs i
-(nabla_V (list-ref vs i)))))
-0 (- k 1)))))
+#+begin_src scheme
+  (define ((((covariant-derivative-form Cartan) V) tau) vs)
+    (let ((k (get-rank tau))
+          (nabla_V ((covariant-derivative-vector Cartan) V)))
+      (- (V (apply tau vs))
+         (sigma (lambda (i)
+                  (apply tau
+                         (list-with-substituted-coord vs i
+                                                      (nabla_V (list-ref vs i)))))
+                0 (- k 1)))))
+#+end_src
 
 ** Change of Basis
 
@@ -873,10 +893,36 @@ Dg(0) = \sum_{i}\left(\mathsf{v}(\mathsf{u}^{i})(\mathsf{m})+\sum_{j}\varpi^{i}_
 
 \begin{equation}
 \begin{aligned}
-\nabla_{\mathsf{v}}\mathsf{u}(\mathsf{f}) &= \sum_{i}\mathsf{e}_{i}(\mathsf{f})\left(\mathsf{v}(\mathsf{u}^{i})+\sum_{j}\varpi^{i}_{j}(\mathsf{v})\mathrm{u}^{j}\right) \\
-&= \sum_{ijk}\mathsf{e}^{\prime}_{i}(\mathsf{f})\mathsf{J}^{i}_{j}\left(\mathsf{v}\left((\mathsf{J}^{-1})^{j}_{k}(\mathsf{u}^{\prime})^{k}\right)+\sum_{l}\varpi^{j}_{k}(\mathsf{v})(\mathsf{J}^{-1})^{k}_{l}(\mathsf{u}^{\prime})^{l}\right) \\
-&= \sum_{i}\mathsf{e}^{\prime}_{i}(\mathsf{f})\left(\mathsf{v}((\mathsf{u}^{\prime})^{i})+\sum_{jk}\mathsf{J}^{i}_{j}\mathsf{v}\left((\mathsf{J}^{-1})^{j}_{k}\right)(\mathsf{u}^{\prime})^{k} \\
-+ \sum_{jkl}\mathsf{J}^{i}_{j}\varpi^{j}_{k}(\mathsf{v})(\mathsf{J}^{-1})^{k}_{l}(\mathsf{u}^{\prime})^{l}\right) \\
+\nabla_{\mathsf{v}}\mathsf{u}(\mathsf{f})
+&= \sum_{i} \mathsf{e}_{i} (\mathsf{f})
+\left(
+ \mathsf{v} (\mathsf{u}^{i})
+ + \sum_{j} \varpi^{i}_{j} (\mathsf{v}) \mathrm{u}^{j}
+\right) \\
+&= \sum_{ijk} \mathsf{e}^{\prime}_{i} (\mathsf{f}) \mathsf{J}^{i}_{j}
+\left(
+ \mathsf{v}
+ \left(
+  (\mathsf{J}^{-1})^{j}_{k}(\mathsf{u}^{\prime})^{k}
+ \right)
+ + \sum_{l}\varpi^{j}_{k} (\mathsf{v}) (\mathsf{J}^{-1})^{k}_{l} (\mathsf{u}^{\prime})^{l}
+\right) \\
+&= \sum_{i} \mathsf{e}^{\prime}_{i} (\mathsf{f})
+\left(
+ \mathsf{v} ((\mathsf{u}^{\prime})^{i})
+ + \sum_{jk}\mathsf{J}^{i}_{j} \mathsf{v}
+ \left(
+  (\mathsf{J}^{-1})^{j}_{k}
+ \right)
+ (\mathsf{u}^{\prime})^{k}
+\right. \\
+&\left.
+ + \sum_{jkl}
+ \mathsf{J}^{i}_{j}
+ \varpi^{j}_{k} (\mathsf{v})
+ (\mathsf{J}^{-1})^{k}_{l}
+ (\mathsf{u}^{\prime})^{l}
+\right) \\
 &= \sum_{i}\mathsf{e}^{\prime}_{i}(\mathsf{f})\left(\mathsf{v}((\mathsf{u}^{\prime})^{i})+\sum_{j}(\varpi^{\prime})^{i}_{j}(\mathsf{v})(\mathsf{u}^{\prime})^{j}\right).
 \end{aligned}
 \end{equation}
@@ -1031,17 +1077,17 @@ R2-rect-point)
 
    Here we extend the idea of a parallel transport of a stick to make
    sense for arbitrary paths on the manifold. Any path can be written
-   as a map γ from the real-line manifold to the manifold
+   as a map $\gamma$ from the real-line manifold to the manifold
    $\mathsf{M}$. We construct a vector field over the map
    $\mathsf{u}_{\gamma}$ by parallel-transporting the stick to all
-   points on the path γ.
+   points on the path $\gamma$.
 
-   For any path γ there are locally directional derivatives of
+   For any path $\gamma$ there are locally directional derivatives of
    functions on $\mathsf{M}$ defined by tangent vectors to the
    curve. The vector over the map
    $\mathsf{w}_{\gamma}=d\gamma({\partial}/{\partial\mathsf{t}})$ is a
    directional derivative of functions on the manifold $M$ along the
-   path γ.
+   path $\gamma$.
 
    Our goal is to determine the equations satisfied by the vector
    field over the map $\mathsf{u}_{\gamma}$. Consider the
@@ -1058,7 +1104,7 @@ g(\delta)=\sum_{i}\left(u^{i}(t)-\sum_{j}A^{i}_{j}(\delta)u^{j}(t-\delta)\right)
 
    where the coefficient function $u^{i}$ is now a function on the
    real-line parameter manifold and where we have rewritten the basis
-   as a basis over the map γ.[fn:13] Here $g(\delta)=0$ if
+   as a basis over the map $\gamma$.[fn:13] Here $g(\delta)=0$ if
    $\mathsf{u}_{\gamma}$ is parallel-transported into itself.
 
    Taking the derivative and setting $\delta=0$ we find
@@ -1086,7 +1132,7 @@ g(\delta)=\sum_{i}\left(u^{i}(t)-\sum_{j}A^{i}_{j}(\delta)u^{j}(t-\delta)\right)
 
    where the map $\gamma:\mathsf{N}\to\mathsf{M},\mathsf{v}$ is a
    vector on $\mathsf{N}$, $\mathsf{u}_{\gamma}$ is a vector over the
-   map γ, $\mathsf{f}$ is a function on $\mathsf{M}$, and $\mathsf{n}$
+   map $\gamma$, $\mathsf{f}$ is a function on $\mathsf{M}$, and $\mathsf{n}$
    is a point in $\mathsf{N}$. Indeed, if $\mathsf{w}$ is a vector
    field on $\mathsf{M}$, $\mathsf{f}$ is a manifold function on
    $\mathsf{M}$, and if $d\gamma(\mathsf{v})=\mathsf{w}_{\gamma}$ then
@@ -1107,8 +1153,8 @@ g(\delta)=\sum_{i}\left(u^{i}(t)-\sum_{j}A^{i}_{j}(\delta)u^{j}(t-\delta)\right)
 \end{equation}
 
    We obtain the set of differential equations (7.68) for the
-   coordinates of $\mathsf{u}_{\gamma}$, the vector over the map γ,
-   that is parallel-transported along the curve γ:
+   coordinates of $\mathsf{u}_{\gamma}$, the vector over the map $\gamma$,
+   that is parallel-transported along the curve $\gamma$:
 
 \begin{equation}
 Du^{i}(t)+{\sum_{j}}^{\gamma}\varpi^{i}_{j}(d\gamma({\partial}/{\partial t}))(\mathsf{t})u^{j}(t)=0.
@@ -1130,8 +1176,8 @@ Du^{i}(t)+\sum_{j,k}\Gamma^{i}_{jk}(\gamma(\mathsf{t}))D\sigma^{k}(t)u^{j}(t)=0
 ** On a Sphere
 
    Let's figure out what the equations of parallel transport of
-   $\mathsf{u}_{\gamma}$, an arbitrary vector over the map γ, along an
-   arbitrary path γ on a sphere are. We start by constructing the
+   $\mathsf{u}_{\gamma}$, an arbitrary vector over the map $\gamma$, along an
+   arbitrary path $\gamma$ on a sphere are. We start by constructing the
    necessary manifold.
 
 (define sphere (make-manifold S^2 2 3))
@@ -1140,7 +1186,7 @@ Du^{i}(t)+\sum_{j,k}\Gamma^{i}_{jk}(\gamma(\mathsf{t}))D\sigma^{k}(t)u^{j}(t)=0
 (define S2-basis
 (coordinate-system->basis S2-spherical))
 
-   We need the path γ, which we represent as a map from the real line
+   We need the path $\gamma$, which we represent as a map from the real line
    to $\mathsf{M}$, and $\mathsf{w}$, the parallel-transported vector
    over the map:
 
@@ -1222,9 +1268,9 @@ Du^{1}(\tau)=-\frac{\cos(\alpha(\tau))}{\sin(\alpha(\tau))}(D\beta(\tau)u^{0}(\t
 Du(\tau)=f(\sigma(\tau),D\sigma(\tau))u(\tau),
 \end{equation}
 
-   where σ is the tuple of the coordinates of the path on the manifold
+   where $\sigma$ is the tuple of the coordinates of the path on the manifold
    and $u$ is the tuple of the components of the vector. The equation
-   is linear in $u$ and is driven by the path σ, as in a variational
+   is linear in $u$ and is driven by the path $\sigma$, as in a variational
    equation.
 
    We now set this up for numerical integration. Let $s(t)=(t,u(t))$
@@ -1314,7 +1360,7 @@ pi/2)
 
    In geodesic motion the velocity vector is parallel-transported by
    itself. Recall (equation 6.9) that the velocity is the differential
-   of the vector ${\partial}/{\partial\mathsf{t}}$ over the map γ. The
+   of the vector ${\partial}/{\partial\mathsf{t}}$ over the map $\gamma$. The
    equation of geodesic motion is[fn:17]
 
 \begin{equation}
@@ -1328,7 +1374,7 @@ D^{2}\sigma^{i}(t)+\sum_{jk}\Gamma^{i}_{jk}(\gamma(t))D\sigma^{j}(t)D\sigma^{k}(
 \end{equation}
 
    where $\sigma(t)$ is the coordinate path corresponding to the
-   manifold path γ.
+   manifold path $\gamma$.
 
    For example, let's consider geodesic motion on the surface of a
    unit sphere. We let gamma be a map from the real line to the
@@ -1559,7 +1605,7 @@ than pointing south, but the phenomenon is the same!
 [fn:3] The action on functions, vector fields, and one-form fields
 suffices to define the action on all tensor fields. See Appendix C.
 
-[fn:2] For some derivative operators α can be a real-valued manifold
+[fn:2] For some derivative operators $\alpha$ can be a real-valued manifold
 function.
 
 [fn:1] The directional derivative of a vector field must itself be a
