@@ -217,7 +217,7 @@ p
    Note that =v^0= and =p_2= are just symbols. The caret and underline
    characters are symbol constituents, so there is no meaning other than
    mnemonic to the structure of these symbols. However, our software can also
-   display expressions using $\TeX$, and then these decorations turn into
+   display expressions using \TeX, and then these decorations turn into
    superscripts and subscripts.
 
    Tuple arithmetic is different from the usual tensor arithmetic in that the
