@@ -9,7 +9,7 @@ The Riemann tensor encapsulates this idea.
 The Riemann curvature operator is
 
 \begin{equation}
-\mathcal{R}(\mathsf{w}, \mathsf{v}) \= [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]}.
+\mathcal{R}(\mathsf{w}, \mathsf{v}) = [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]}.
 \end{equation}
 
 The traditional Riemann tensor is[fn:1]
@@ -56,7 +56,7 @@ So, for example,[fn:2]
 ;; 1
 #+end_src
 
-Here we have computed the φ component of the result of carrying a $\partial /
+Here we have computed the $\phi$ component of the result of carrying a $\partial /
 \partial \theta$ basis vector around the parallelogram defined by $\partial /
 \partial \phi$ and $\partial / \partial \theta$. The result shows a net rotation
 in the $\phi$ direction.
@@ -144,14 +144,39 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    interval $\epsilon$, then reversing $\mathsf{w}$, and reversing $\mathsf{v}$,
    brings $\sigma$ back to where it started to second order in $\epsilon$.
 
-   The state $s = (σ, u)$ after transporting $s_0$ around the loop is[fn:5]
+   The state $s = ($\sigma$, u)$ after transporting $s_0$ around the loop is[fn:5]
 
 \begin{equation}
 \begin{aligned}
-&\left(e^{-\epsilon L_{g_v}} I\right) \circ \left(e^{-\epsilon L_{g_w}} I}\right) \circ \left(e^{\epsilon L_{g_v}} I\right) \
- \circ \left(e^{\epsilon L_{g_w}} I \right) \left(s_0 \right) \\
-&\quad=\left(e^{\epsilon L_{g_w}} e^{\epsilon L_{g_v}} e^{-\epsilon L_{g_w}} e^{-\epsilon L_{g_v}} I\right)\left(s_0\right) \\
-&\quad=\left(e^{\epsilon^2\left[L_{g_w}, L_{g_v}\right]+\cdots} I\right)\left(s_0\right).
+&\left(
+ e^{-\epsilon L_{g_v}} I
+\right)
+\circ
+\left(
+ e^{-\epsilon L_{g_w}} I
+\right)
+\circ
+\left(
+ e^{\epsilon L_{g_v}} I
+\right)
+\circ
+\left(
+ e^{\epsilon L_{g_w}} I
+\right)
+\left(s_0 \right) \\
+&\quad=
+\left(
+ e^{\epsilon L_{g_w}} e^{\epsilon L_{g_v}} e^{-\epsilon L_{g_w}} e^{-\epsilon L_{g_v}} I
+\right)
+\left( s_0 \right) \\
+&\quad=
+\left(
+ e^{\epsilon^2
+ \left[
+  L_{g_w}, L_{g_v}
+ \right] + \cdots} I
+\right)
+\left( s_0 \right).
 \end{aligned}
 \end{equation}
 
