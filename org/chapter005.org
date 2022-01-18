@@ -26,10 +26,10 @@ If we change variables $(x = g(y))$, then the form of the integral changes:
 
 We can make a coordinate-independent notion of integration in the following way.
 An interval of the real line is a 1-dimensional manifold with boundary. We can
-assign a coordinate chart χ to this manifold. Let $x = \chi(\mathsf{m})$. The
+assign a coordinate chart $\chi$ to this manifold. Let $x = \chi(\mathsf{m})$. The
 coordinate basis is associated with a coordinate-basis vector field, here
-${\partial}/{\partial \mathsf{x}}$. Let ω be a one-form on this manifold. The
-application of ω to ${\partial}/{\partial \mathsf{x}}$ is a real-valued function
+${\partial}/{\partial \mathsf{x}}$. Let $\omega$ be a one-form on this manifold. The
+application of $\omega$ to ${\partial}/{\partial \mathsf{x}}$ is a real-valued function
 on the manifold. If we compose this with the inverse chart, we get a real-valued
 function of a real variable. We can then write the usual integral of this
 function
@@ -40,7 +40,7 @@ I = \int_{a}^{b} \omega ({\partial}/{\partial \mathsf{x}}) \circ \chi^{-1}
 
 It turns out that the value of this integral is independent of the coordinate
 chart used in its definition. Consider a different coordinate chart $x\prime =
-\chi\prime (\mathsf{m}), with associated basis vector field
+\chi\prime (\mathsf{m})$, with associated basis vector field
 ${\partial}/{\partial x\prime}$. Let $g = \chi\prime \circ \chi^{-1}$. We have
 
 \begin{equation}
@@ -93,7 +93,7 @@ forms are linear in each argument. Higher-rank forms must also be antisymmetric
 under interchange of any two arguments in order to make a coordinate-free
 definition of integration analogous to equation (5.3).
 
-Consider an integral in the coordinate system χ:
+Consider an integral in the coordinate system $\chi$:
 
 \begin{equation}
 \int_{\chi (\mathsf{U})} \omega (\mathsf{X}_{0}, \mathsf{X}_{1}, \dots) \circ \chi^{-1}.
@@ -123,7 +123,7 @@ If we let $M = (D(g^{-1})) \circ \chi$ then
 \end{equation}
 
 
-using the multilinearity of $\boldsymbol{\omega}$, where $M_{i}}$ is the
+using the multilinearity of $\boldsymbol{\omega}$, where $M_{i}$ is the
 ${i}^{\text{th}}$ column of $M$. The function $\alpha$ is multilinear in the
 columns of $M$. To make a coordinate-independent integration we want the
 expression (5.10) to be the same as the integrand in
@@ -133,8 +133,8 @@ I^{\prime} = \int_{\chi^{\prime}(\mathsf{U})} \omega(\mathsf{X}^{\prime}_{0}, \m
 \end{equation}
 
 For this to be the case, $\alpha (M_{0}, M_{1}, \dots)$ must be
-$(\det(D(g))^{-1} = \det(M)$. So α is an antisymmetric function, and thus so is
-ω.
+$(\det(D(g))^{-1} = \det(M)$. So $\alpha$ is an antisymmetric function, and thus so is
+$\omega$.
 
 Thus higher-rank form fields must be antisymmetric multilinear functions from
 vector fields to manifold functions. So we have a coordinate-independent
@@ -147,22 +147,22 @@ I = I^{\prime} = \int_{\mathsf{U}} \omega
 ** Wedge Product
 
 There are several ways we can construct antisymmetric higher-rank forms. Given
-two one-form fields ω and τ we can form a two-form field $\omega \wedge \tau$ as
+two one-form fields $\omega$ and $\tau$ we can form a two-form field $\omega \wedge \tau$ as
 follows:
 
 \begin{equation}
 (\omega \wedge \tau)(\mathsf{v}, \mathsf{w}) = \omega(\mathsf{v})\tau(\mathsf{w}) - \omega(\mathsf{w})\tau(\mathsf{v}).
 \end{equation}
 
-More generally we can form the wedge of higher-rank forms. Let ω be a $k$-form
-field and τ be an $l$-form field. We can form a $(k+l)$-form field $\omega
+More generally we can form the wedge of higher-rank forms. Let $\omega$ be a $k$-form
+field and $\tau$ be an $l$-form field. We can form a $(k+l)$-form field $\omega
 \wedge \tau$ as follows:
 
 \begin{equation}
 \omega \wedge \tau = \frac{(k+l)!}{k!l!} \text{Alt}(\omega \otimes \tau)
 \end{equation}
 
-where, if η is a function on $m$ vectors,
+where, if $\eta$ is a function on $m$ vectors,
 
 \begin{equation}
 \begin{aligned}
@@ -197,7 +197,7 @@ Equation (5.17) gives us
 \end{equation}
 
 where $\text{Volume}(\mathsf{U})$ is the ordinary volume of the region
-corresponding to $\mathsf{U}$ in the Euclidean space of $\mathsf{R}^{n}}$ with
+corresponding to $\mathsf{U}$ in the Euclidean space of $\mathsf{R}^{n}$ with
 the orthonormal coordinate system $(x, y, \ldots)$.[fn:3]
 
 An example two-form (see figure 5.1) is the oriented area of a parallelogram in
@@ -205,7 +205,7 @@ the $(x,y)$ coordinate plane at the point $\mathsf{m}$ spanned by two vectors
 $\mathsf{u} = \mathsf{u}^{0}{\partial}/{\partial\mathsf{x}} +
 \mathsf{u}^{1}{\partial}/{\partial\mathsf{y}}$ and $\mathsf{v} =
 {\mathsf{v}^{0}{\partial}/{\partial\mathsf{x}} +
-\mathsf{v}^{1}}{\partial}/{\partial\mathsf{y}},$ which is given by
+\mathsf{v}^{1}}{\partial}/{\partial\mathsf{y}}$, which is given by
 
 \begin{equation}
 \mathsf{A} (\mathsf{u}, \mathsf{v}) (\mathsf{m}) = \mathsf{u}^{0} (\mathsf{m}) \mathsf{v}^{1} - \mathsf{v}^{0} (\mathsf{m}) \mathsf{u}^{1} (\mathsf{m}).
@@ -220,7 +220,7 @@ manifold in Chapter 9.
 
 Let's specialize to 3-dimensional Euclidean space. Following equation (5.18) we
 can write the coordinate-area two-form in another way: $\mathsf{A} =
-\mathsf{d}\mathsf{x} \wedge \mathsf{d}\mathsf{y}.$ As code:
+\mathsf{d}\mathsf{x} \wedge \mathsf{d}\mathsf{y}$. As code:
 
 #+begin_src scheme
 (define-coordinates (up x y z) R3-rect)
@@ -289,7 +289,7 @@ coordinate space, not volume on the manifold.
 
 Because of antisymmetry, if the rank of a form is greater than the dimension of
 the manifold then the form is identically zero. The $k$-forms on an
-$\n$-dimensional manifold form a module of dimension $\binom{n}{k}$. We can
+$n$-dimensional manifold form a module of dimension $\binom{n}{k}$. We can
 write a coordinate-basis expression for a $k$-form as
 
 \begin{equation}
@@ -303,7 +303,7 @@ The antisymmetry of the wedge product implies that
 \end{equation}
 
 from which we see that there are only $\binom{n}{k}$ independent components of
-ω.
+$\omega$.
 
 ** Exercise 5.1: Wedge Product
 
@@ -330,7 +330,7 @@ field of rank zero,[fn:5] then the differential operator increases the rank of
 the form by one. We can generalize this to $k$-form fields with the exterior
 derivative operation.
 
-Consider a one-form ω. We define[fn:6]
+Consider a one-form $\omega$. We define[fn:6]
 
 \begin{equation}
 \mathsf{d}\omega (\mathsf{v}_{1}, \mathsf{v}_{2}) = \mathsf{v}_{1} (\omega (\mathsf{v}_{2})) - \mathsf{v}_{2} (\omega(\mathsf{v}_{1})) - \omega([\mathsf{v}_{1}, \mathsf{v}_{2}]).
@@ -342,15 +342,15 @@ field, given by:[fn:7]
 \begin{equation}
 \begin{aligned}
 \mathsf{d} \omega (\mathsf{v}_{0}, \ldots, \mathsf{v}_{k}) \\
-&= \sum_{i=0}^{k} \left\{ ((-1)^{i} \mathsf{v}_{i}(\omega (\mathsf{v}_{0}, \ldots, \mathsf{v}_{i-1}, \mathsf{v}_{i+1}, \ldots, \mathsf{v}_{k}))+ \\
-\sum_{j=i+1}^{k} (-1)^{i+j} \omega (\mathsf{v}_{i}, \mathsf{v}_{j}], \mathsf{v}_{0}, \ldots, \mathsf{v}_{i-1}, \mathsf{v}_{i+1}, \ldots, \mathsf{v}_{j-1}, \mathsf{v}_{j+1}, \ldots, \mathsf{v}_{k})) \right\}.
+&= \sum_{i=0}^{k} \left\{ ((-1)^{i} \mathsf{v}_{i}(\omega (\mathsf{v}_{0}, \ldots, \mathsf{v}_{i-1}, \mathsf{v}_{i+1}, \ldots, \mathsf{v}_{k}))+ \right. \\
+&\left. \sum_{j=i+1}^{k} (-1)^{i+j} \omega (\mathsf{v}_{i}, \mathsf{v}_{j}], \mathsf{v}_{0}, \ldots, \mathsf{v}_{i-1}, \mathsf{v}_{i+1}, \ldots, \mathsf{v}_{j-1}, \mathsf{v}_{j+1}, \ldots, \mathsf{v}_{k})) \right\}.
 \end{aligned}
 \end{equation}
 
 This formula is coordinate-system independent. This is the way we compute the
 exterior derivative in our software.
 
-If the form field ω is represented in a coordinate basis
+If the form field $\omega$ is represented in a coordinate basis
 
 \begin{equation}
 \omega = \sum_{{i}_{0}=0, \ldots, {i}_{k-1}=0}^{n-1} \mathsf{a}_{{i}_{{0}}, \ldots, {{i}_{k-1}}} \mathsf{d}\mathsf{x}^{{i}_{0}} \wedge \ldots \wedge \mathsf{d}\mathsf{x}^{{i}_{k-1}}
@@ -404,8 +404,8 @@ Let
 \omega = a\mathsf{d}\mathsf{y} \wedge \mathsf{d}\mathsf{z} + b \mathsf{d}\mathsf{z} \wedge \mathsf{d}\mathsf{x} + c \mathsf{d}\mathsf{x} \wedge \mathsf{d}\mathsf{y},
 \end{equation}
 
-where $a = \alpha \circ \chi,$ $b = \beta \circ \chi,$ $c = \gamma \circ \chi,$
-and α, β, and γ are real-valued functions of three real arguments. As a program,
+where $a = \alpha \circ \chi$, $b = \beta \circ \chi$, $c = \gamma \circ \chi$,
+and $\alpha$, $\beta$, and $\gamma$ are real-valued functions of three real arguments. As a program,
 
 #+begin_src scheme
 (define omega
@@ -440,9 +440,9 @@ form fields:
 \mathsf{d}(\omega \wedge \tau) = \mathsf{d}\omega \wedge \tau + (-1)^{k} \omega \wedge \mathsf{d} \tau,
 \end{equation}
 
-where $k$ is the rank of ω.
+where $k$ is the rank of $\omega$.
 
-A form field ω that is the exterior derivative of another form field $\omega =
+A form field $\omega$ that is the exterior derivative of another form field $\omega =
 \mathsf{d}\theta$ is called exact. A form field whose exterior derivative is
 zero is called closed.
 
@@ -467,12 +467,14 @@ It is easy to show equation (5.29) for manifold functions:
 \end{aligned}
 \end{equation}
 
-Consider the general one-form field θ defined on 3-dimensional rectangular
-space. Taking two exterior derivatives of θ yields a three-form field. It is
+Consider the general one-form field $\theta$ defined on 3-dimensional rectangular
+space. Taking two exterior derivatives of $\theta$ yields a three-form field. It is
 zero:
 
+#+BEGIN_SRC scheme
 (((d (d theta)) X Y Z) R3-rect-point)
 0
+#+END_SRC
 
 Not every closed form field is an exact form field. Whether a closed form field
 is exact depends on the topology of a manifold.
