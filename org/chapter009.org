@@ -416,10 +416,12 @@ $$
     These residuals must be zero; so the numerators must be zero.[fn:4] They
     are:
 
+\begin{equation}
 \begin{aligned}
 D^2x\,(Dy)^2 &= Dx\,Dy\,D^2y \\
 D^2x\,Dx\,Dy &= (Dx)^2\,D^2y
 \end{aligned}
+\end{equation}
 
     Note that the only constraint is $D^2x\,Dy = Dx\,D^2y$, so the resulting
     Lagrange equations are dependent.
@@ -593,7 +595,7 @@ R = \sum_{ij} \mathsf{g}\left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j\right) 
 *** Exercise 9.4: Curvature of a Pseudosphere
 
     Compute the scalar curvature of the pseudosphere (see exercise 8.2). You
-    should obtain the value −2.
+    should obtain the value -2.
 
 ** General Relativity
 
@@ -615,7 +617,7 @@ R = \sum_{ij} \mathsf{g}\left(\tilde{\mathsf{e}}^i, \tilde{\mathsf{e}}^j\right) 
    are Newton's equations to lowest order in $V/c^2$:
 
 \begin{equation}
-
+D^2 \vec{x}(t) = - \mathrm{grad} \, V (\vec{x}(t)).
 \end{equation}
 
 *** Exercise 9.5: Newton's Equations
@@ -930,7 +932,7 @@ D\left(c^2 \rho R^3\right) + pD\left(R^3\right) = 0.
        negligible, so $p = 0$. Using the Robertson-Walker equations (9.30) and
        the energy conservation equation (9.32) show that the observation of an
        expanding universe is compatible with a negative curvature universe, a
-       flat universe, or a positive curvature universe: $k \in \left\{−1, 0,
+       flat universe, or a positive curvature universe: $k \in \left\{-1, 0,
        +1\right\}$.
 
 * Footnotes
@@ -964,7 +966,7 @@ tensor field that takes two vector fields. Its definition is
 
 [fn:6] Start with equation (9.26). Raise one index of both sides, and then
 contract. Notice that the trace $g_\mu^\mu = 4$, the dimension of spacetime.
-This gets $R = −\left(\frac{8 \pi G}{c^4}\right) T$ , from which we can deduce
+This gets $R = -\left(\frac{8 \pi G}{c^4}\right) T$ , from which we can deduce
 equation (9.27).
 
 [fn:5] The tensor with components $G_{\mu \nu} = R_{\mu \nu} - \frac{1}{2} R
@@ -983,7 +985,7 @@ configuration-space path $q$ to make a state-space path, with as many terms as
 needed: $\mathbf{\Gamma}[q](t) = (t, q(t), Dq(t), \ldots)$. The total time
 derivative $D_t$ is defined by $D_t F \circ \mathbf{\Gamma}[q] = D\left(F \circ
 \mathbf{\Gamma}[q]\right)$ for any state function $F$ and path $q$. The Lagrange
-equations are $\mathbf{E}$[L] \circ \Gamma[q] = 0. See [19] for more details.
+equations are $\mathbf{E}[L] \circ \Gamma[q] = 0$. See [19] for more details.
 
 [fn:2] The procedure =Lagrange-explicit= produces the accelerations of the
 coordinates. In this code the division operator (=/=) multiplies its first
