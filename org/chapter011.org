@@ -172,7 +172,7 @@ phenomenon.
    What is the class of transformations of time and space coordinates that leave
    the Maxwell-Lorentz theory invariant? The transformations that preserve the
    wave equation are exactly those that leave its characteristics invariant. We
-   consider a transformation $u = A(u^p\rime)$ of time and space coordinates:
+   consider a transformation $u = A(u^\prime)$ of time and space coordinates:
 
 \begin{equation}
 t = A^0(t^\prime, x^\prime, y^\prime, z^\prime),
@@ -329,7 +329,7 @@ x = 0 = \gamma(\beta)(x^\prime + \beta c t'),
    So $v^\prime = -v$.
 
    A consistent interpretation is that the origin of the primed system moves
-   with velocity v = βc along the ˆx-axis of the unprimed system. And the
+   with velocity $v = \beta c$ along the $\hat{x}$-axis of the unprimed system. And the
    unprimed system moves with the same velocity in the other direction, when
    viewed in terms of the primed system. What happened to the other coordinates:
    y and z? We did not need them to find this one-parameter family of Lorentz
@@ -797,7 +797,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    as seen from either frame.
 
-   As seen by the traveller, home is moving in the $−\hat{x}$ direction at 24/25
+   As seen by the traveller, home is moving in the $-\hat{x}$ direction at 24/25
    of the velocity of light. At the turning point (7 years by his time) home is
    at:
 
