@@ -44,7 +44,7 @@ independent of coordinate system. Let's see what we can build out of this.
 
    The invariant product $(Df(x)) \Delta x$ is the /directional derivative/
    of $f$ at $x$ with respect to the vector specified by the tuple of
-   components $ \Delta x$ in the coordinate system. We can generalize this
+   components $\Delta x$ in the coordinate system. We can generalize this
    idea to allow the vector at each point to depend on the point,
    making a /vector field/. Let b be a function of coordinates. We then
    have a directional derivative of $f$ at each point $x$, determined by $b$
@@ -113,7 +113,7 @@ independent of coordinate system. Let's see what we can build out of this.
 
    Equations (3.3) and (3.5) are consistent:
    \begin{align}
-   \mathsf{v}(x) (\chi^{-1}(x)) \nonumber
+   \mathsf{v}(\chi) (\chi^{-1}(x))
    &= D (\chi \circ \chi^{-1})(x) b_{\chi,\mathsf{v}}(x) \nonumber \\
    &= D(I)(x) b_{\chi, \mathsf{v}}(x) \nonumber \\
    &= b_{\chi,\mathsf{v}}(x).
@@ -314,7 +314,7 @@ independent of coordinate system. Let's see what we can build out of this.
      &= \mathsf{X}'(\mathsf{f})(\mathsf{m})(D(\chi' \circ \chi^{-1}))(\chi(\mathsf{m})).
      \end{align}
      This is the rule for the transformation of basis vector fields. The
-     second factor can be recognized as ``∂x'/∂x,'' the Jacobian.[fn:6]
+     second factor can be recognized as ``$\partial x' / \partial x$,'' the Jacobian.[fn:6]
 
      The vector field does not depend on coordinates. So, from
      equation (3.17), we have
@@ -372,7 +372,7 @@ independent of coordinate system. Let's see what we can build out of this.
    path $\sigma$ is
    \begin{align}
    D \sigma(t)
-   &=  D(\chi \circ \gamma$)(t) \nonumber \\
+   &=  D(\chi \circ \gamma)(t) \nonumber \\
    &= (\mathsf{v}(\chi) \circ \gamma)(t) \nonumber \\
    &= (\mathsf{v}(\chi) \circ \chi^{-1} \circ \chi \circ \gamma)(t) \\
    &= (b \circ \sigma)(t)
@@ -581,10 +581,10 @@ independent of coordinate system. Let's see what we can build out of this.
      Sums and scalar products of one-form fields on a manifold have
      the following properties. If $\omega$ and $\theta$ are one-form fields, and if $\mathsf{f}$
      is a real-valued manifold function, then:
-     \begin{equation}
+     \begin{align}
      (\omega + \theta)(\mathsf{v}) &= \omega(\mathsf{v}) + \theta(\mathsf{v}), \\
      (\mathsf{f} \omega) (\mathsf{v}) &= \mathsf{f} \omega(\mathsf{v}).
-     \end{equation}
+     \end{align}
 
 **** Coordinate-Basis One-Form Fields
 
@@ -604,7 +604,7 @@ independent of coordinate system. Let's see what we can build out of this.
      \tilde{\mathsf{X}}^i (\mathsf{X}_j)(\mathsf{m})
      = \mathsf{X}_j (\chi^i)(\mathsf{m})
      = \partial_j (\chi^i \circ \chi^{-1}) (\chi(\mathsf{m}))
-     &= \delta^i_j.
+     = \delta^i_j.
      \end{equation}
      The tuple of basis one-form fields $\tilde{X}(\mathsf{v})(\mathsf{m})$ is an up structure like
      that of $\chi$.
@@ -680,11 +680,11 @@ independent of coordinate system. Let's see what we can build out of this.
      coefficients of vector fields in the corresponding coordinate vector-field
      basis:
      \begin{equation}
-     \tilde{\mathsf{X}}^i(\mathsf{v}) = \mathsf{v}(\chi^i) = b^i \circ χ
+     \tilde{\mathsf{X}}^i(\mathsf{v}) = \mathsf{v}(\chi^i) = b^i \circ \chi
      \end{equation}
      or collectively,
      \begin{equation}
-     \tilde{\mathsf{X}}(\mathsf{v}) = \mathsf{v}(\chi) = b \circ χ.
+     \tilde{\mathsf{X}}(\mathsf{v}) = \mathsf{v}(\chi) = b \circ \chi.
      \end{equation}
 
      A coordinate-basis one-form field is often written $\mathsf{dx}^i$. This
