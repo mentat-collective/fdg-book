@@ -16,16 +16,16 @@ the components of a vector field over the map.
 
 **  Vector Fields Over a Map
 
-   Let μ be a map from points $\mathsf{n}$ in the manifold $\mathsf{N}$ to
-   points $\mathsf{m}$ in the manifold $\mathsf{M}$. A vector over the map μ
+   Let $\mu$ be a map from points $\mathsf{n}$ in the manifold $\mathsf{N}$ to
+   points $\mathsf{m}$ in the manifold $\mathsf{M}$. A vector over the map $\mu$
    takes directional derivatives of functions on $\mathsf{M}$ at points
-   $\mathsf{m} = \mu(\mathsf{n}). The vector over the map applied to the
+   $\mathsf{m} = \mu(\mathsf{n})$. The vector over the map applied to the
    function on $\mathsf{M}$ is a function on $\mathsf{N}$.
 
 ** Restricted Vector Fields
 
    One way to make a vector field over a map is to restrict a vector field on
-   $\mathsf{M}$ to the image of $\mathsf{N}$ over μ, as illustrated in figure
+   $\mathsf{M}$ to the image of $\mathsf{N}$ over $\mu$, as illustrated in figure
    6.1.
 
    Let $\mathsf{v}$ be a vector field on $\mathsf{M}$, and $\mathsf{f}$ a
@@ -35,7 +35,7 @@ the components of a vector field over the map.
 \mathsf{v}_{\mu}(\mathsf{f}) = \mathsf{v}(\mathsf{f}) \circ \mu,
 \end{equation}
 
-   is a vector over the map μ. Note that $\mathsf{v}_{\mu}(\mathsf{f})$ is a
+   is a vector over the map $\mu$. Note that $\mathsf{v}_{\mu}(\mathsf{f})$ is a
    function on $\mathsf{N}$, not $\mathsf{M}$:
 
 \begin{equation}
@@ -53,7 +53,7 @@ the components of a vector field over the map.
 
 ** Differential of a Map
 
-   Another way to construct a vector field over a map μ is to transport a vector
+   Another way to construct a vector field over a map $\mu$ is to transport a vector
    field from the source manifold $\mathsf{N}$ to the target manifold
    $\mathsf{M}$ with the /differential/ of the map
 
@@ -62,7 +62,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \end{equation}
 
    which takes its argument in the source manifold $\mathsf{N}$. The
-   differential of a map μ applied to a vector field $\mathsf{v}$ on
+   differential of a map $\mu$ applied to a vector field $\mathsf{v}$ on
    $\mathsf{N}$ is a vector field over the map. A procedure to compute the
    differential is:
 
@@ -72,7 +72,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
    The nomenclature of this subject is confused. The "differential of a map
    between manifolds," $d\mu$, takes one more argument than the "differential of
    a real-valued function on a manifold," $\mathsf{d}\mathsf{f}$, but when the
-   target manifold of μ is the reals and $I$ is the identity function on the
+   target manifold of $\mu$ is the reals and $I$ is the identity function on the
    reals,
 
 \begin{equation}
@@ -84,17 +84,17 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
 ** Velocity at a Time
 
-   Let μ be the map from the time line to the manifold $\mathsf{M}$, and
+   Let $\mu$ be the map from the time line to the manifold $\mathsf{M}$, and
    ${\partial}/{\partial\mathsf{t}}$ be a basis vector on the time line. Then
-   $d\mu({\partial}/{\partial\mathsf{t}})$ is the vector over the map μ that
+   $d\mu({\partial}/{\partial\mathsf{t}})$ is the vector over the map $\mu$ that
    computes the rate of change of functions on $\mathsf{M}$ along the path that
-   is the image of μ. This is the velocity vector. We can use the differential
+   is the image of $\mu$. This is the velocity vector. We can use the differential
    to assign a velocity vector to each moment, solving the problem of multiple
    vectors at a point if the path crosses itself.
 
 ** One-Form Fields Over a Map
 
-   Given a one-form ω on the manifold $\mathsf{M}$, the one-form over the map
+   Given a one-form $\omega$ on the manifold $\mathsf{M}$, the one-form over the map
    $\mu:\mathsf{N} \to \mathsf{M}$ is constructed as follows:
 
 \begin{equation}
@@ -105,7 +105,7 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
    though we have given it that shape so that the dual vector can apply to it;
    $\mathsf{u}(\mathsf{f})$ is evaluated only at images $\mathsf{m} =
    \mu(\mathsf{n})$ of points $\mathsf{n}$ in $\mathsf{N}$. If we were defining
-   $\mathsf{u}$ as a vector field we would need the inverse of μ to find the
+   $\mathsf{u}$ as a vector field we would need the inverse of $\mu$ to find the
    point $\mathsf{n} = \mu^{-1}(\mathsf{m})$, but this is not required to define
    the object $\mathsf{u}$ in a context where there is already an $\mathsf{m}$
    associated with the $\mathsf{n}$ of interest. To extend this idea to
@@ -162,8 +162,8 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
 ** Walking on a Sphere
 
-   For example, let μ map the time line to the unit sphere.[fn:2] We use
-   colatitude θ and longitude φ as coordinates on the sphere:
+   For example, let $\mu$ map the time line to the unit sphere.[fn:2] We use
+   colatitude $\theta$ and longitude $\phi$ as coordinates on the sphere:
 
 #+begin_src scheme
 (define S2 (make-manifold S^2 2 3))
@@ -215,11 +215,11 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
 ** Components of the Velocity
 
-   Let χ be a tuple of coordinates on $\mathsf{M}$, with associated basis
+   Let $\chi$ be a tuple of coordinates on $\mathsf{M}$, with associated basis
    vectors $\mathsf{X}_{i}$, and dual basis elements $\mathsf{d}\mathsf{x}^{i}$.
-   The vector basis and dual basis over the map μ are $\mathsf{X}^{\mu}_{i}$ and
+   The vector basis and dual basis over the map $\mu$ are $\mathsf{X}^{\mu}_{i}$ and
    $\mathsf{d}\mathsf{x}^{i}_{\mu}$. The components of the velocity (rates of
-   change of coordinates along the path μ) are obtained by applying the dual
+   change of coordinates along the path $\mu$) are obtained by applying the dual
    basis over the map to the velocity
 
 \begin{equation}
@@ -249,7 +249,7 @@ v^{i}(t) = \mathsf{d}\mathsf{x}^{i}_{\mu}(d\mu({\partial}/{\partial\mathsf{t}}))
 
 ** Pullback and Pushforward of a Function
 
-   The /pullback/ of a function $\mathsf{f}$ on $\mathsf{M}$ over the map μ is
+   The /pullback/ of a function $\mathsf{f}$ on $\mathsf{M}$ over the map $\mu$ is
    defined as
 
 \begin{equation}
@@ -292,7 +292,7 @@ v^{i}(t) = \mathsf{d}\mathsf{x}^{i}_{\mu}(d\mu({\partial}/{\partial\mathsf{t}}))
 d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\mathsf{n}) = \mathsf{v}(\mu^{*} \mathsf{f})(\mathsf{n}).
 \end{equation}
 
-   If we have an inverse for the map μ we can also define a /push-forward/ of
+   If we have an inverse for the map $\mu$ we can also define a /push-forward/ of
    the function $\mathsf{g}$, defined on the source manifold of the map:[fn:5]
 
 \begin{equation}
@@ -301,7 +301,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 
 ** Pushforward of a Vector Field
 
-   We can also define the /pushforward/ of a vector field over the map μ. The
+   We can also define the /pushforward/ of a vector field over the map $\mu$. The
    pushforward takes a vector field $\mathsf{v}$ defined on $\mathsf{N}$. The
    result takes directional derivatives of functions on $\mathsf{M}$ at a place
    determined by a point in $\mathsf{M}$:
@@ -374,7 +374,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 
 ** Pullback of a Form Field
 
-   We can also pull back a one-form field ω defined on $\mathsf{M}$, but an
+   We can also pull back a one-form field $\omega$ defined on $\mathsf{M}$, but an
    honest definition is rarely written. The pullback of a one-form field applied
    to a vector field is intended to be the same as the one-form field applied to
    the pushforward of the vector field.
@@ -386,7 +386,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \end{equation}
 
    but this is wrong, because the two sides are not functions of points in the
-   same manifold. The one-form field ω applies to a vector field on the manifold
+   same manifold. The one-form field $\omega$ applies to a vector field on the manifold
    $\mathsf{M}$, which takes a directional derivative of a function defined on
    $\mathsf{M}$ and is evaluated at a point on $\mathsf{M}$, but the left-hand
    side is evaluated at a point on the manifold $\mathsf{N}$.
@@ -404,7 +404,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \end{equation}
 
    Although this is accurate, it may not be effective, because computing the
-   pushforward requires the inverse of the map μ. But the inverse is available
+   pushforward requires the inverse of the map $\mu$. But the inverse is available
    when the map is the flow generated by a vector field.
 
    In fact it is possible to compute the pullback of a one-form field without
@@ -455,9 +455,9 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \mathsf{d}(\mu^{*}\theta) = \mu^{*}(\mathsf{d}\theta),
 \end{equation}
 
-   for θ a function or $k$-form field.
+   for $\theta$ a function or $k$-form field.
 
-   We can verify this by computing an example. Let μ map the rectangular plane
+   We can verify this by computing an example. Let $\mu$ map the rectangular plane
    to rectangular 3-space:
 
 #+begin_src scheme
