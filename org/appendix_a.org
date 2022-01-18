@@ -162,11 +162,13 @@ $$
    the first clause for which the corresponding predicate expression is true.
    The general form of a conditional expression is
 
+\begin{equation}
 \begin{aligned}
 \texttt{(cond }&\texttt{( } \textit{predicate-1}\quad \textit{consequent-1} \texttt{)} \\
 &\ldots \\
 &\texttt{( } \textit{predicate-n}\quad \textit{consequent-n} \texttt{))}
 \end{aligned}
+\end{equation}
 
    For convenience there is a special predicate expression =else= that can be
    used as the predicate in the last clause of a =cond=. The =if= construct
@@ -227,12 +229,14 @@ $$
 
    The general form of a =let= expression is
 
+\begin{equation}
 \begin{aligned}
 \texttt{(let (}&\texttt{( } \textit{variable-1}\quad \textit{expression-1} \texttt{)} \\
 &\ldots \\
 &\texttt{( } \textit{variable-n}\quad \textit{expression-n} \texttt{))} \\
 \qquad \textit{body} \texttt{)}
 \end{aligned}
+\end{equation}
 
    The value of the =let= expression is the value of the /body/ expression in
    the context where the variables /variable-i/ have the values of the
