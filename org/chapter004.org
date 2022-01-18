@@ -47,7 +47,7 @@ $\tilde{\mathsf{e}}^0$ and the dashed lines represent the field
 $\tilde{\mathsf{e}}^1$. The spacings of the lines are 1/3 unit. That the vectors
 pierce three of the lines representing their duals and do not pierce any of the
 lines representing the other basis elements is one way to see the relationship
-$\tilde{\mathsf{e}}^i(\mathsf{e}_j) = \delta^i_j.$
+$\tilde{\mathsf{e}}^i(\mathsf{e}_j) = \delta^i_j$.
 
 To solve for the dual basis $\tilde{\mathsf{e}}$ given the basis $\mathsf{e}$,
 we express the basis vectors $\mathsf{e}$ in terms of a coordinate basis[fn:2]
@@ -60,7 +60,7 @@ and the dual one-forms $\tilde{\mathsf{e}}$ in terms of the dual coordinate
 one-forms
 
 \begin{equation}
-\tilde{\mathsf{e}}^i(\mathsf{v}) = \sum_l {\mathsf{d}_l^i \tilde{\mathsf{X}}^l(\mathsf{v}),
+\tilde{\mathsf{e}}^i (\mathsf{v}) = \sum_l \mathsf{d}_l^i \tilde{\mathsf{X}}^l(\mathsf{v}),
 \end{equation}
 
 then
@@ -78,8 +78,9 @@ then
 Applying this at $\mathsf{m}$ we get
 
 \begin{equation}
-\tilde{\mathsf{e}}^i(\mathsf{e}_j)(\mathsf{m}) = \delta_j^i = \sum_k {\mathsf{d}_k^i(\mathsf{m}) \
-\mathsf{c}_j^k(\mathsf{m}).
+\tilde{\mathsf{e}}^i (\mathsf{e}_j) (\mathsf{m})
+= \delta_j^i
+= \sum_k \mathsf{d}_k^i (\mathsf{m}) \mathsf{c}_j^k(\mathsf{m}).
 \end{equation}
 
 So the $\mathsf{d}$ coefficients can be determined from the $\mathsf{c}$
@@ -99,7 +100,7 @@ vector field $\mathsf{v}$ relative to a basis $\mathsf{e}$, by applying the dual
 basis form fields $\tilde{\mathsf{e}}$ to the vector field. Let
 
 \begin{equation}
-\mathsf{v}(\mathsf{f}) = \sum_i {\mathsf{e}_i(\mathsf{f}) \mathsf{b}^i}.
+\mathsf{v}(\mathsf{f}) = \sum_i \mathsf{e}_i (\mathsf{f}) \mathsf{b}^i.
 \end{equation}
 
 Then
@@ -163,27 +164,31 @@ coefficients by applying the dual basis:
    we want to reexpress it in terms of another basis $\mathsf{e^\prime}$. We have
 
 \begin{equation}
-\mathsf{v}(\mathsf{f}) = \sum_i{\mathsf{e}_i(\mathsf{f})\mathsf{b}^i} \
-= \sum_i{\mathsf{e^\prime}_j(\mathsf{f})\mathsf{b^\prime}^j}.
+\mathsf{v} (\mathsf{f})
+= \sum_i \mathsf{e}_i (\mathsf{f}) \mathsf{b}^i
+= \sum_i \mathsf{e}^\prime_j (\mathsf{f})
+\mathsf{b}^{\prime j}.
 \end{equation}
 
    The coefficients $\mathsf{b^\prime}$ can be obtained from $\mathsf{v}$ by
    applying the dual basis
 
 \begin{equation}
-\mathsf{b^\prime}^j = \mathsf{\tilde{e}^\prime}^j(\mathsf{v}) = \sum_i{\mathsf{\tilde{e}^\prime}^j(\mathsf{e}_i)\mathsf{b}^i}.
+\mathsf{b}^{\prime j}
+= \mathsf{\tilde{e}^{\prime} j}(\mathsf{v})
+= \sum_i \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i)\mathsf{b}^i.
 \end{equation}
 
    Let
 
 \begin{equation}
-\mathsf{J}_i^j = \mathsf{\tilde{e}^\prime}^j(\mathsf{e}_i),
+\mathsf{J}_i^j = \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i),
 \end{equation}
 
    then
 
 \begin{equation}
-\mathsf{b^\prime}^j = \sum_i{\mathsf{J}_i^j \mathsf{b}^i},
+\mathsf{b}^{\prime j} = \sum_i{\mathsf{J}_i^j \mathsf{b}^i},
 \end{equation}
 
    and
@@ -304,7 +309,7 @@ Because of equation (4.18) we can deduce
    R_z(\phi)R_x(\theta)R_z(\psi)$, where $R_x$ and $R_z$ are functions that take
    an angle and produce the matrices representing rotations about the $x$ and
    $z$ axes, respectively. We can visualize $\theta$ as the colatitude of the
-   pole from the $\hat{z}$-axis, $\phi$ as the longitude, and $\psia$ as the
+   pole from the $\hat{z}$-axis, $\phi$ as the longitude, and $\psi$ as the
    rotation around the pole.
 
    Given a rotation specified by Euler angles, how do we change the Euler angle
@@ -537,7 +542,7 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    To illustrate the meaning of the commutator, consider the evolution around a
    small loop with sides made from the integral curves of two vector fields
    $\mathsf{v}$ and $\mathsf{w}$. We will first follow $\mathsf{v}$, then
-   $\mathsf{w}$, then $−\mathsf{v}$, and then $−\mathsf{w}$:
+   $\mathsf{w}$, then $-\mathsf{v}$, and then $-\mathsf{w}$:
 
 \begin{equation}
 \left(e^{\epsilon \mathsf{v}} e^{\epsilon \mathsf{w}} \
@@ -601,13 +606,14 @@ down-tuple structure of basis vectors. The product of the two contracts to make
 a scaled vector, along which we translate by one unit.
 
 [fn:7] For non-commuting operators $A$ and $B$,
-
+\begin{equation}
 \begin{aligned}
 e^{A} e^{B} e^{-A} e^{-B} & \\
 =&\left(1+A+\frac{A^{2}}{2}+\cdots\right)\left(1+B+\frac{B^{2}}{2}+\cdots\right) \\
 & \times\left(1-A+\frac{A^{2}}{2}+\cdots\right)\left(1-B+\frac{B^{2}}{2}+\cdots\right) \\
 =& 1+[A, B]+\cdots,
 \end{aligned}
+\end{equation}
 
 to second order in $A$ and $B$. All higher-order terms can be written in terms
 of higher-order commutators of $A$ and $B$. An example of a higher-order
