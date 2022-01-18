@@ -241,7 +241,7 @@ We can also apply ~h~ to a point defined in terms of its polar coordinates:
 A curve may be specified in different coordinate systems. For example, a
 cardioid constructed by rolling a circle of radius a around another circle
 of the same radius is described in polar coordinates by the equation
-$$r = 2a(1 + cos(θ)).$$
+$$r = 2a(1 + cos(\theta)).$$
 We can convert this to rectangular coordinates by evaluating the residual
 in rectangular coordinates.
 #+begin_src scheme
@@ -257,10 +257,10 @@ in rectangular coordinates.
 The numerator of this expression is the equivalent residual in rectangular
 coordinates. If we rearrange terms and square it we get the traditional
 formula for the cardioid
-$$(x^ + y^2 − 2ax)^2 = 4a^2 (x^2 + y^2).$$
+$$(x^ + y^2 - 2ax)^2 = 4a^2 (x^2 + y^2).$$
 *** a.
 The rectangular coordinate equation for the Lemniscate of Bernoulli is
-$$(x^2 + y^2)^2 = 2a^2(x^2 − y^2).$$
+$$(x^2 + y^2)^2 = 2a^2(x^2 - y^2).$$
 Find the expression in polar coordinates.
 *** b.
 Describe a helix space curve in both rectangular and cylindrical coordinates.
