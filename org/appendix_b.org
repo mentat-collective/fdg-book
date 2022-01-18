@@ -463,7 +463,7 @@ Df(x)\Delta{x} = 3x^2 \Delta{x}.
 
    So $Df(x)$ multiplied by $\Delta x$ gives us the term in $f(x + \Delta x)$
    that is linear in $\Delta x$, providing a good approximation to $f(x + \Delta
-   x) − f(x)$ when $\Delta x$ is small.
+   x) - f(x)$ when $\Delta x$ is small.
 
    Derivatives of compositions obey the chain rule:
 
@@ -491,7 +491,7 @@ D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
    #+end_src
 
    Arithmetic is extended to allow manipulation of operators. A typical operator
-   is $(D + I)(D − I) = D^2 − I$, where $I$ is the identity operator, subtracts
+   is $(D + I)(D - I) = D^2 - I$, where $I$ is the identity operator, subtracts
    a function from its second derivative. Such an operator can be constructed
    and used in Scheme as follows:
 
@@ -841,7 +841,7 @@ e^{x+y}
 notation we often format =up= tuples as vertical arrangements of components and
 =down= tuples as horizontal arrangements of components. However, we could just
 as well have written this tuple as $\left[\left(\cos \theta, \sin \theta\right),
-\left(−\sin \theta, \cos \theta\right)\right]$.
+\left(-\sin \theta, \cos \theta\right)\right]$.
 
 [fn:1] The procedure =print-expression= can be used in a program to print a
 simplified version of an expression. The default printer in the user interface
