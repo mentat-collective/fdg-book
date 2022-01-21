@@ -1,8 +1,8 @@
 * Chapter 1: Introduction
 
   #+begin_quote
-  Philosophy is written in that great book which ever lies before our eyes—I mean
-  the Universe—but we cannot understand it if we do not learn the language and
+  Philosophy is written in that great book which ever lies before our eyes---I mean
+  the Universe---but we cannot understand it if we do not learn the language and
   grasp the symbols in which it is written. This book is written in the
   mathematical language, and the symbols are triangles, circles, and other
   geometrical figures without whose help it is impossible to comprehend a single
@@ -19,8 +19,8 @@
 
   At the North Pole inscribe a line in the ice perpendicular to the Greenwich
   Meridian. Hold a stick parallel to that line and walk down the Greenwich
-  Meridian keeping the stick parallel to itself as you walk. (The phrase “parallel
-  to itself” is a way of saying that as you walk you keep its orientation
+  Meridian keeping the stick parallel to itself as you walk. (The phrase "parallel
+  to itself" is a way of saying that as you walk you keep its orientation
   unchanged. The stick will be aligned East-West, perpendicular to your direction
   of travel.) When you get to the Equator the stick will be parallel to the
   Equator. Turn East, and walk along the Equator, keeping the stick parallel to
@@ -58,7 +58,7 @@
   of the stick when walking loops on the surface, connecting the static shape of
   the surface with the dynamical behavior of the balls. It turns out that the
   dynamical evolution of the balls may be viewed as parallel transport of the
-  ball’s velocity vector in the direction of the velocity vector. This motion by
+  ball's velocity vector in the direction of the velocity vector. This motion by
   parallel transport of the velocity is called /geodesic motion/.
 
   So there are deep connections between the dynamics of particles and the geometry
@@ -72,7 +72,7 @@
   case of systems with no potential energy the Euler-Lagrange equations are
   equivalent to the geodesic equations on the configuration manifold. In fact, the
   coefficients of terms in the Lagrange equations are Christoffel coefficients,
-  which define parallel transport on the manifold. Let’s look into this a bit.
+  which define parallel transport on the manifold. Let's look into this a bit.
 
 ** Lagrange Equations
 
@@ -90,9 +90,9 @@
    A Lagrangian for a free particle of mass m and velocity v is just its kinetic
    energy, $mv^2/2$. The procedure =Lfree= implements the free Lagrangian:[fn:3]
 
-   #+begin_src scheme
-(define ((Lfree mass) state)
-  (* 1/2 mass (square (velocity state))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((Lfree mass) state)
+       (* 1/2 mass (square (velocity state))))
    #+end_src
 
    For us the dynamical state of a system of particles is a tuple of time,
@@ -112,13 +112,13 @@
    space. (The $\hat{z}$ axis goes through the North Pole, and the Equator is in
    the plane $z = 0$.)
 
-   #+begin_src scheme
-(define ((sphere->R3 R) state)
-  (let ((q (coordinate state)))
-    (let ((theta (ref q 0)) (phi (ref q 1)))
-      (up (* R (sin theta) (cos phi)) ; x
-          (* R (sin theta) (sin phi)) ; y
-          (* R (cos theta))))))       ; z
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((sphere->R3 R) state)
+       (let ((q (coordinate state)))
+         (let ((theta (ref q 0)) (phi (ref q 1)))
+           (up (* R (sin theta) (cos phi)) ; x
+               (* R (sin theta) (sin phi)) ; y
+               (* R (cos theta))))))       ; z
    #+end_src
 
    The coordinate transformation maps the generalized coordinates on the sphere
@@ -127,28 +127,28 @@
    these make up the state transformation. The procedure =F->C= implements the
    derivation of a transformation of states from a coordinate transformation:
 
-   #+begin_src scheme
-(define ((F->C F) state)
-  (up (time state)
-      (F state)
-      (+ (((partial 0) F) state)
-         (* (((partial 1) F) state)
-            (velocity state)))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((F->C F) state)
+       (up (time state)
+           (F state)
+           (+ (((partial 0) F) state)
+              (* (((partial 1) F) state)
+                 (velocity state)))))
    #+end_src
 
    A Lagrangian governing free motion on a sphere of radius $R$ is then the
    composition of the free Lagrangian with the transformation of states.
 
-   #+begin_src scheme
-(define (Lsphere m R)
-  (compose (Lfree m) (F->C (sphere->R3 R))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define (Lsphere m R)
+       (compose (Lfree m) (F->C (sphere->R3 R))))
    #+end_src
 
    So the value of the Lagrangian at an arbitrary dynamical state is:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-((Lsphere 'm 'R)
- (up 't (up 'theta 'phi) (up 'thetadot 'phidot)))
+     ((Lsphere 'm 'R)
+      (up 't (up 'thetadot 'phi) (up 'thetadot 'phidot)))
    #+end_src
 
    or, in infix notation:
@@ -160,7 +160,7 @@
 
 ** The Metric
 
-   Let’s now take a step into the geometry. A surface has a metric which tells
+   Let's now take a step into the geometry. A surface has a metric which tells
    us how to measure sizes and angles at every point on the surface. (Metrics
    are introduced in Chapter 9.)
 
@@ -184,10 +184,12 @@
    the point. Notice that $\mathsf{g}(\mathsf{u}, \mathsf{u})$ is a weighted sum
    of the squares of the components of $\mathsf{u}$. In fact, if we identify
 
+   \begin{equation}
    \begin{aligned}
    &\mathsf{d} \theta(\mathsf{v})=\dot{\theta} \\
    &\mathsf{d} \phi(\mathsf{v})=\dot{\phi},
    \end{aligned}
+   \end{equation}
 
    then the coefficients in the metric are the same as the coefficients in the
    value of the Lagrangian, equation (1.1), apart from a factor of $m/2$.
@@ -207,9 +209,9 @@
 
    We can capture this geometric statement as a program:
 
-   #+begin_src scheme
-(define ((L2 mass metric) place velocity)
-  (* 1/2 mass ((metric velocity velocity) place)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((L2 mass metric) place velocity)
+       (* 1/2 mass ((metric velocity velocity) place)))
    #+end_src
 
    This program gives the Lagrangian in a coordinate-independent, geometric way.
@@ -222,11 +224,11 @@
    constructed by contracting the basis with the components of the velocity.
    Thus, we can form a coordinate representation of the Lagrangian.
 
-   #+begin_src scheme
-(define ((Lc mass metric coordsys) state)
-  (let ((x (coordinates state)) (v (velocities state))
-        (e (coordinate-system->vector-basis coordsys)))
-    ((L2 mass metric) ((point coordsys) x) (* e v))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((Lc mass metric coordsys) state)
+       (let ((x (coordinates state)) (v (velocities state))
+             (e (coordinate-system->vector-basis coordsys)))
+         ((L2 mass metric) ((point coordsys) x) (* e v))))
    #+end_src
 
    The manifold point $\mathsf{m}$ represented by the coordinates $x$ is given
@@ -239,10 +241,10 @@
    $\mathsf{e}$ have as many components as the dimension of the space so their
    product is interpreted as a contraction.
 
-   Let’s make a general metric on a 2-dimensional real manifold:[fn:4]
+   Let's make a general metric on a 2-dimensional real manifold:[fn:4]
 
-   #+begin_src scheme
-(define the-metric (literal-metric 'g R2-rect))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define the-metric (literal-metric 'g R2-rect))
    #+end_src
 
    The metric is expressed in rectangular coordinates, so the coordinate system
@@ -251,17 +253,17 @@
 
    We can now make the Lagrangian for the system:
 
-   #+begin_src scheme
-(define L (Lc 'm the-metric R2-rect))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define L (Lc 'm the-metric R2-rect))
    #+end_src
 
    And we can apply our Lagrangian to an arbitrary state:
 
-   #+begin_src scheme
-(L (up 't (up 'x 'y) (up 'vx 'vy)))
-;; (+ (* 1/2 m (g_00 (up x y)) (expt vx 2))
-;;    (* m (g_01 (up x y)) vx vy)
-;;    (* 1/2 m (g_11 (up x y)) (expt vy 2)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (L (up 't (up 'x 'y) (up 'vx 'vy)))
+     ;; (+ (* 1/2 m (g_00 (up x y)) (expt vx 2))
+     ;;    (* m (g_01 (up x y)) vx vy)
+     ;;    (* 1/2 m (g_11 (up x y)) (expt vy 2)))
    #+end_src
 
    Compare this result with equation (1.3).
@@ -273,8 +275,8 @@
    1-dimensional real line to the configuration manifold. We introduce maps
    between manifolds in Chapter 6.) Consider an arbitrary path:[fn:6]
 
-   #+begin_src scheme
-(define gamma (literal-manifold-map 'q R1-rect R2-rect))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define gamma (literal-manifold-map 'q R1-rect R2-rect))
    #+end_src
 
    The values of $\gamma$ are points on the manifold, not a coordinate
@@ -285,26 +287,26 @@
    $\mathbb{R}^2$ to its coordinate representation we use =((chart R2-rect) m)=.
    (The procedures point and chart are introduced in Chapter 2.) Thus
 
-   #+begin_src scheme
-((chart R2-rect) (gamma ((point R1-rect) 't)))
-;; (up (qˆ0 t) (qˆ1 t))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     ((chart R2-rect) (gamma ((point R1-rect) 't)))
+     ;; (up (qˆ0 t) (qˆ1 t))
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define coordinate-path
-  (compose (chart R2-rect) gamma (point R1-rect)))
+     (define coordinate-path
+       (compose (chart R2-rect) gamma (point R1-rect)))
 
-(coordinate-path 't)
-;; (up (qˆ0 t) (qˆ1 t))
+     (coordinate-path 't)
+     ;; (up (qˆ0 t) (qˆ1 t))
    #+end_src
 
    Now we can compute the residuals of the Euler-Lagrange equations, but we get
    a large messy expression that we will not show.[fn:7] However, we will save it to
    compare with the residuals of the geodesic equations.
 
-   #+begin_src scheme
-(define Lagrange-residuals
-  (((Lagrange-equations L) coordinate-path) 't))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define Lagrange-residuals
+       (((Lagrange-equations L) coordinate-path) 't))
    #+end_src
 
 ** Geodesic Equations
@@ -354,24 +356,24 @@
 
    We can get and save the geodesic equation residuals by:
 
-   #+begin_src scheme
-(define geodesic-equation-residuals
-  (((((covariant-derivative Cartan gamma) d/dt)
-     ((differential gamma) d/dt))
-    (chart R2-rect))
-   ((point R1-rect) 't)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define geodesic-equation-residuals
+       (((((covariant-derivative Cartan gamma) d/dt)
+          ((differential gamma) d/dt))
+         (chart R2-rect))
+        ((point R1-rect) 't)))
    #+end_src
 
    where =d/dt= is a vector field on the real line[fn:8] and =Cartan= is a way
    of encapsulating the geometry, as specified by the Christoffel coefficients.
    The Christoffel coefficients are computed from the metric:
 
-   #+begin_src scheme
-(define Cartan
-  (Christoffel->Cartan
-   (metric->Christoffel-2
-    the-metric
-    (coordinate-system->basis R2-rect))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define Cartan
+       (Christoffel->Cartan
+        (metric->Christoffel-2
+         the-metric
+         (coordinate-system->basis R2-rect))))
    #+end_src
 
    The two messy residual results that we did not show are related by the
@@ -379,16 +381,16 @@
    "lowering" them using the mass and the metric, we see that the residuals are
    equal:
 
-   #+begin_src scheme
-(define metric-components
-  (metric->components
-   the-metric
-   (coordinate-system->basis R2-rect)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define metric-components
+       (metric->components
+        the-metric
+        (coordinate-system->basis R2-rect)))
 
-(- Lagrange-residuals
-   (* (* 'm (metric-components (gamma ((point R1-rect) 't))))
-      geodesic-equation-residuals))
-;; (down 0 0)
+     (- Lagrange-residuals
+        (* (* 'm (metric-components (gamma ((point R1-rect) 't))))
+           geodesic-equation-residuals))
+     ;; (down 0 0)
    #+end_src
 
    This establishes that for a 2-dimensional space the Euler-Lagrange equations
@@ -452,5 +454,5 @@ in Appendix A.
 it, is given in the prologue: Programming and Understanding. More details can be
 found in Appendix B
 
-[fn:1] It is customary to shorten “Euler-Lagrange equations” to “Lagrange
-equations.” We hope Leonhard Euler is not disturbed.
+[fn:1] It is customary to shorten "Euler-Lagrange equations" to "Lagrange
+equations." We hope Leonhard Euler is not disturbed.

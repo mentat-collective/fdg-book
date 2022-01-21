@@ -83,7 +83,7 @@ independent of the coordinates used to represent them. So if we can represent
 the physical laws in terms of tensors we have built in the coordinate-system
 independence.
 
-Let’s test whether the geometric function $\mathsf{R}$, which we have called the
+Let's test whether the geometric function $\mathsf{R}$, which we have called the
 Riemann tensor (see equation 8.2), is indeed a tensor field. A real-valued
 geometric function is a tensor if it is linear (over the functions) in each of
 its arguments. We can try it for 3-dimensional rectangular coordinates:

@@ -24,7 +24,7 @@ Press, 1997.
 
 [8] Galileo Galilei, /Il Saggiatore (The Assayer)/, 1623.
 
-[9] S. W. Hawking and G. F. R. Ellis, /The Large Scale Structure of Space–Time/,
+[9] S. W. Hawking and G. F. R. Ellis, /The Large Scale Structure of Space--Time/,
 Cambridge University Press, 1973.
 
 [10] IEEE Std 1178-1990, /IEEE Standard for the Scheme Programming Language/,

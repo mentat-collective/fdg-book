@@ -9,7 +9,7 @@ The Riemann tensor encapsulates this idea.
 The Riemann curvature operator is
 
 \begin{equation}
-\mathcal{R}(\mathsf{w}, \mathsf{v}) \= [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]}.
+\mathcal{R}(\mathsf{w}, \mathsf{v}) = [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]}.
 \end{equation}
 
 The traditional Riemann tensor is[fn:1]
@@ -27,7 +27,7 @@ point.
 
 The Riemann curvature is computed by
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define ((Riemann-curvature nabla) w v)
   (- (commutator (nabla w) (nabla v))
      (nabla (commutator w v))))
@@ -42,7 +42,7 @@ the result of =((Riemann-curvature nabla) w v)= is a procedure that takes a
 vector field and produces a vector field so we can implement the Riemann tensor
 as
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define ((Riemann nabla) omega u w v)
   (omega (((Riemann-curvature nabla) w v) u)))
 #+end_src
@@ -56,7 +56,7 @@ So, for example,[fn:2]
 ;; 1
 #+end_src
 
-Here we have computed the φ component of the result of carrying a $\partial /
+Here we have computed the $\phi$ component of the result of carrying a $\partial /
 \partial \theta$ basis vector around the parallelogram defined by $\partial /
 \partial \phi$ and $\partial / \partial \theta$. The result shows a net rotation
 in the $\phi$ direction.
@@ -84,17 +84,17 @@ The following are the nonzero coefficients:
    transport. The coordinates of the vector to be transported are governed by
    the differential equations (see equation 7.72)
 
-\begin{equation}
-D u^i(t)=-\sum_j \varpi_j^i(\mathsf{v})\left(\chi^{-1}(\sigma(t))\right) u^j(t)
-\end{equation}
+   \begin{equation}
+   D u^i(t)=-\sum_j \varpi_j^i(\mathsf{v})\left(\chi^{-1}(\sigma(t))\right) u^j(t)
+   \end{equation}
 
    and the coordinates as a function of time, $\sigma = \chi \circ \gamma \circ
    \chi_\mathsf{R}^{-1}$, of the path $\gamma$, are governed by the differential
    equations[fn:3]
 
-\begin{equation}
-D\sigma(t) = \mathsf{v}(\chi)\left(\chi^{-1}(\sigma(t))\right).
-\end{equation}
+   \begin{equation}
+   D\sigma(t) = \mathsf{v}(\chi)\left(\chi^{-1}(\sigma(t))\right).
+   \end{equation}
 
    We have to integrate these equations (8.4, 8.5) together to transport the
    vector over the map $\mathsf{u}_\gamma$ a finite distance along the vector
@@ -103,32 +103,32 @@ D\sigma(t) = \mathsf{v}(\chi)\left(\chi^{-1}(\sigma(t))\right).
    Let $s(t)=(\sigma(t), u(t))$ be a state tuple, combining $\sigma$ the
    coordinates of $\gamma$, and $u$ the coordinates of $\mathsf{u}_\gamma$. Then
 
-\begin{equation}
-Ds(t) = \left(D\sigma(t), Du(t)\right) = g(s(t)),
-\end{equation}
+   \begin{equation}
+   Ds(t) = \left(D\sigma(t), Du(t)\right) = g(s(t)),
+   \end{equation}
 
    where $g$ is the tuple of right-hand sides of equations (8.4, 8.5).
 
    The differential equations describing the evolution of a function $h$ of state
    $s$ along the state path are
 
-\begin{equation}
-D(h \circ s) = (Dh \circ s)(g \circ s) = L_g h \circ s,
-\end{equation}
+   \begin{equation}
+   D(h \circ s) = (Dh \circ s)(g \circ s) = L_g h \circ s,
+   \end{equation}
 
    defining the operator $L_g$.
 
    Exponentiation gives a finite evolution:[fn:4]
 
-\begin{equation}
-h(s(t+\epsilon)) = \left(e^{\epsilon L_g} h\right)\left(s(t)\right).
-\end{equation}
+   \begin{equation}
+   h(s(t+\epsilon)) = \left(e^{\epsilon L_g} h\right)\left(s(t)\right).
+   \end{equation}
 
    The finite parallel transport of the vector with components $u$ is
 
-\begin{equation}
-u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
-\end{equation}
+   \begin{equation}
+   u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
+   \end{equation}
 
    where the selector $U(\sigma, u) = u$, and the initial state is $s(t) =
    (\sigma(t), u(t))$.
@@ -144,22 +144,47 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    interval $\epsilon$, then reversing $\mathsf{w}$, and reversing $\mathsf{v}$,
    brings $\sigma$ back to where it started to second order in $\epsilon$.
 
-   The state $s = (σ, u)$ after transporting $s_0$ around the loop is[fn:5]
+   The state $s = ($\sigma$, u)$ after transporting $s_0$ around the loop is[fn:5]
 
-\begin{equation}
-\begin{aligned}
-&\left(e^{-\epsilon L_{g_v}} I\right) \circ \left(e^{-\epsilon L_{g_w}} I}\right) \circ \left(e^{\epsilon L_{g_v}} I\right) \
- \circ \left(e^{\epsilon L_{g_w}} I \right) \left(s_0 \right) \\
-&\quad=\left(e^{\epsilon L_{g_w}} e^{\epsilon L_{g_v}} e^{-\epsilon L_{g_w}} e^{-\epsilon L_{g_v}} I\right)\left(s_0\right) \\
-&\quad=\left(e^{\epsilon^2\left[L_{g_w}, L_{g_v}\right]+\cdots} I\right)\left(s_0\right).
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   &\left(
+    e^{-\epsilon L_{g_v}} I
+   \right)
+   \circ
+   \left(
+    e^{-\epsilon L_{g_w}} I
+   \right)
+   \circ
+   \left(
+    e^{\epsilon L_{g_v}} I
+   \right)
+   \circ
+   \left(
+    e^{\epsilon L_{g_w}} I
+   \right)
+   \left(s_0 \right) \\
+   &\quad=
+   \left(
+    e^{\epsilon L_{g_w}} e^{\epsilon L_{g_v}} e^{-\epsilon L_{g_w}} e^{-\epsilon L_{g_v}} I
+   \right)
+   \left( s_0 \right) \\
+   &\quad=
+   \left(
+    e^{\epsilon^2
+    \left[
+     L_{g_w}, L_{g_v}
+    \right] + \cdots} I
+   \right)
+   \left( s_0 \right).
+   \end{aligned}
+   \end{equation}
 
    So the lowest-order change in the transported vector is
 
-\begin{equation}
-\epsilon^2 U \left(\left(\left[L_{g_w}, L_{g_v}\right] I\right)(s_0)\right),
-\end{equation}
+   \begin{equation}
+   \epsilon^2 U \left(\left(\left[L_{g_w}, L_{g_v}\right] I\right)(s_0)\right),
+   \end{equation}
 
    where $U(\sigma, u) = u$.
 
@@ -168,9 +193,9 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
    $\epsilon$. We must account for the commutator. (See figure 4.2.) In the
    general case the lowest order change in the transported vector is
 
-\begin{equation}
-\epsilon^2 U \left(\left(\left(\left[L_{g_w}, L_{g_v}\right] - L_{g_{[w, v]}}\right) I\right)(s_0)\right),
-\end{equation}
+   \begin{equation}
+   \epsilon^2 U \left(\left(\left(\left[L_{g_w}, L_{g_v}\right] - L_{g_{[w, v]}}\right) I\right)(s_0)\right),
+   \end{equation}
 
    This is what the Riemann tensor computation gives, scaled by $\epsilon^2$.
 
@@ -179,49 +204,49 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     We can verify this in two dimensions. We need to make the structure
     representing a state:
 
-    #+begin_src scheme
-(define (make-state sigma u) (vector sigma u))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define (make-state sigma u) (vector sigma u))
 
-(define (Sigma state) (ref state 0))
+      (define (Sigma state) (ref state 0))
 
-(define (U-select state) (ref state 1))
+      (define (U-select state) (ref state 1))
     #+end_src
 
     And now we get to the meat of the matter: First we find the rate of change
     of the components of the vector $\mathsf{u}$ as we carry it along the vector
     field $\mathsf{v}$.[fn:6]
 
-    #+begin_src scheme
-(define ((Du v) state)
-  (let ((CF (Cartan->forms general-Cartan-2)))
-    (* -1
-       ((CF v) (Chi-inverse (Sigma state)))
-       (U-select state))))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((Du v) state)
+        (let ((CF (Cartan->forms general-Cartan-2)))
+          (* -1
+             ((CF v) (Chi-inverse (Sigma state)))
+             (U-select state))))
     #+end_src
 
     We also need to determine the rate of change of the coordinates of the
     integral curve of $\mathsf{v}$.
 
-    #+begin_src scheme
-(define ((Dsigma v) state)
-  ((v Chi) (Chi-inverse (Sigma state))))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((Dsigma v) state)
+        ((v Chi) (Chi-inverse (Sigma state))))
     #+end_src
 
     Putting these together to make the derivative of the state vector
 
-    #+begin_src scheme
-(define ((g v) state)
-  (make-state ((Dsigma v) state) ((Du v) state)))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((g v) state)
+        (make-state ((Dsigma v) state) ((Du v) state)))
     #+end_src
 
     gives us just what we need to construct the differential operator for
     evolution of the combined state:
 
-    #+begin_src scheme
-(define (L v)
-  (define ((l h) state)
-    (* ((D h) state) ((g v) state)))
-  (make-operator l))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define (L v)
+        (define ((l h) state)
+          (* ((D h) state) ((g v) state)))
+        (make-operator l))
     #+end_src
 
     So now we can demonstrate that the lowest-order change resulting from
@@ -229,19 +254,19 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     is computed by the Riemann curvature.
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(let ((U (literal-vector-field 'U-rect R2-rect))
-      (W (literal-vector-field 'W-rect R2-rect))
-      (V (literal-vector-field 'V-rect R2-rect))
-      (sigma (up 'sigma0 'sigma1)))
-  (let ((nabla (covariant-derivative general-Cartan-2))
-        (m (Chi-inverse sigma)))
-    (let ((s (make-state sigma ((U Chi) m))))
-      (- (((- (commutator (L V) (L W))
-              (L (commutator V W)))
-           U-select)
-          s)
-         (((((Riemann-curvature nabla) W V) U) Chi) m)))))
-;; (up 0 0)
+      (let ((U (literal-vector-field 'U-rect R2-rect))
+            (W (literal-vector-field 'W-rect R2-rect))
+            (V (literal-vector-field 'V-rect R2-rect))
+            (sigma (up 'sigma0 'sigma1)))
+        (let ((nabla (covariant-derivative general-Cartan-2))
+              (m (Chi-inverse sigma)))
+          (let ((s (make-state sigma ((U Chi) m))))
+            (- (((- (commutator (L V) (L W))
+                    (L (commutator V W)))
+                 U-select)
+                s)
+               (((((Riemann-curvature nabla) W V) U) Chi) m)))))
+      ;; (up 0 0)
     #+end_src
 
 *** Geometrically
@@ -251,136 +276,136 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     transported. We can simplify this so that it is entirely built on manifold
     objects, eliminating the state. After a long algebraic story we find that
 
-\begin{equation}
-\begin{aligned}
-&((\mathcal{R}(\mathsf{w}, \mathsf{v}))(\mathsf{u}))(\mathsf{f}) \\
-&\quad=\mathsf{e}(\mathsf{f})\{(\mathsf{w}(\varpi(\mathsf{v}))-\mathsf{v}(\varpi(\mathsf{w}))-\varpi([\mathsf{w}, \mathsf{v}])) \tilde{\mathsf{e}}(\mathsf{u}) \\
-&\quad+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}
-\end{aligned}
-\end{equation}
+    \begin{equation}
+    \begin{aligned}
+    &((\mathcal{R}(\mathsf{w}, \mathsf{v}))(\mathsf{u}))(\mathsf{f}) \\
+    &\quad=\mathsf{e}(\mathsf{f})\{(\mathsf{w}(\varpi(\mathsf{v}))-\mathsf{v}(\varpi(\mathsf{w}))-\varpi([\mathsf{w}, \mathsf{v}])) \tilde{\mathsf{e}}(\mathsf{u}) \\
+    &\quad+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}
+    \end{aligned}
+    \end{equation}
 
     or as a program:
 
-    #+begin_src scheme
-(define ((((curvature-from-transport Cartan) w v) u) f)
-  (let* ((CF (Cartan->forms Cartan))
-         (basis (Cartan->basis Cartan))
-         (fi (basis->1form-basis basis))
-         (ei (basis->vector-basis basis)))
-    (* (ei f)
-       (+ (* (- (- (w (CF v)) (v (CF w)))
-                (CF (commutator w v)))
-             (fi u))
-          (- (* (CF w) (* (CF v) (fi u)))
-             (* (CF v) (* (CF w) (fi u))))))))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((((curvature-from-transport Cartan) w v) u) f)
+        (let* ((CF (Cartan->forms Cartan))
+               (basis (Cartan->basis Cartan))
+               (fi (basis->1form-basis basis))
+               (ei (basis->vector-basis basis)))
+          (* (ei f)
+             (+ (* (- (- (w (CF v)) (v (CF w)))
+                      (CF (commutator w v)))
+                   (fi u))
+                (- (* (CF w) (* (CF v) (fi u)))
+                   (* (CF v) (* (CF w) (fi u))))))))
     #+end_src
 
     This computes the same operator as the traditional Riemann curvature
     operator:
 
-    #+begin_src scheme
-(define (test coordsys Cartan)
-  (let ((m (typical-point coordsys))
-        (u (literal-vector-field 'u-coord coordsys))
-        (w (literal-vector-field 'w-coord coordsys))
-        (v (literal-vector-field 'v-coord coordsys))
-        (f (literal-manifold-function 'f-coord coordsys)))
-    (let ((nabla (covariant-derivative Cartan)))
-      (- (((((curvature-from-transport Cartan) w v) u) f) m)
-         (((((Riemann-curvature nabla) w v) u) f) m)))))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define (test coordsys Cartan)
+        (let ((m (typical-point coordsys))
+              (u (literal-vector-field 'u-coord coordsys))
+              (w (literal-vector-field 'w-coord coordsys))
+              (v (literal-vector-field 'v-coord coordsys))
+              (f (literal-manifold-function 'f-coord coordsys)))
+          (let ((nabla (covariant-derivative Cartan)))
+            (- (((((curvature-from-transport Cartan) w v) u) f) m)
+               (((((Riemann-curvature nabla) w v) u) f) m)))))
     #+end_src
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(test R2-rect general-Cartan-2)
-;; 0
+      (test R2-rect general-Cartan-2)
+      ;; 0
     #+end_src
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(test R2-polar general-Cartan-2)
-;; 0
+      (test R2-polar general-Cartan-2)
+      ;; 0
     #+end_src
 
 *** Terms of the Riemann Curvature
 
     Since the Riemann curvature is defined as in equation (8.1),
 
-\begin{equation}
-\mathcal{R}(\mathsf{w}, \mathsf{v}) = [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]},
-\end{equation}
+    \begin{equation}
+    \mathcal{R}(\mathsf{w}, \mathsf{v}) = [\nabla_\mathsf{w}, \nabla_\mathsf{v}] - \nabla_{[\mathsf{w}, \mathsf{v}]},
+    \end{equation}
 
     it is natural[fn:7] to identify these terms with the corresponding terms in
 
-\begin{equation}
-\left(\left(\left[L_{g_w}, L_{g_v}\right] - L_{g_{[w,v]}}\right)U\right)(s_0).
-\end{equation}
+    \begin{equation}
+    \left(\left(\left[L_{g_w}, L_{g_v}\right] - L_{g_{[w,v]}}\right)U\right)(s_0).
+    \end{equation}
 
     Unfortunately, this does not work, as demonstrated below:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(let ((U (literal-vector-field 'U-rect R2-rect))
-      (V (literal-vector-field 'V-rect R2-rect))
-      (W (literal-vector-field 'W-rect R2-rect))
-      (nabla (covariant-derivative general-Cartan-2))
-      (sigma (up 'sigma0 'sigma1)))
-  (let ((m (Chi-inverse sigma)))
-    (let ((s (make-state sigma ((U Chi) m))))
-      (- (((commutator (L W) (L V)) U-select) s)
-         ((((commutator (nabla W) (nabla V)) U) Chi)
-          m)))))
-;; a nonzero mess
+      (let ((U (literal-vector-field 'U-rect R2-rect))
+            (V (literal-vector-field 'V-rect R2-rect))
+            (W (literal-vector-field 'W-rect R2-rect))
+            (nabla (covariant-derivative general-Cartan-2))
+            (sigma (up 'sigma0 'sigma1)))
+        (let ((m (Chi-inverse sigma)))
+          (let ((s (make-state sigma ((U Chi) m))))
+            (- (((commutator (L W) (L V)) U-select) s)
+               ((((commutator (nabla W) (nabla V)) U) Chi)
+                m)))))
+      ;; a nonzero mess
     #+end_src
 
     The obvious identification does not work, but neither does the other one!
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(let ((U (literal-vector-field 'U-rect R2-rect))
-      (V (literal-vector-field 'V-rect R2-rect))
-      (W (literal-vector-field 'W-rect R2-rect))
-      (nabla (covariant-derivative general-Cartan-2))
-      (sigma (up 'sigma0 'sigma1)))
-  (let ((m (Chi-inverse sigma)))
-    (let ((s (make-state sigma ((U Chi) m))))
-      (- (((commutator (L W) (L V)) U-select) s)
-         ((((nabla (commutator W V)) U) Chi)
-          m)))))
-;; a nonzero mess
+      (let ((U (literal-vector-field 'U-rect R2-rect))
+            (V (literal-vector-field 'V-rect R2-rect))
+            (W (literal-vector-field 'W-rect R2-rect))
+            (nabla (covariant-derivative general-Cartan-2))
+            (sigma (up 'sigma0 'sigma1)))
+        (let ((m (Chi-inverse sigma)))
+          (let ((s (make-state sigma ((U Chi) m))))
+            (- (((commutator (L W) (L V)) U-select) s)
+               ((((nabla (commutator W V)) U) Chi)
+                m)))))
+      ;; a nonzero mess
     #+end_src
 
-    Let’s compute the two parts of the Riemann curvature operator and see how
+    Let's compute the two parts of the Riemann curvature operator and see how
     this works out. First, recall
 
-\begin{equation}
-\begin{aligned}
-\nabla_\mathsf{v} \mathsf{u}(\mathsf{f}) &= \sum_i \mathsf{e}_i(\mathsf{f})\left(\mathsf{v}\left(\tilde{\mathsf{e}}^i(\mathsf{u})\right) \
-+ \sum_j \varpi_j^i(\mathsf{v}) \tilde{\mathsf{e}}^j(\mathsf{u})\right) \\
-&=\mathsf{e}(\mathsf{f})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) \
-+ \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})),
-\end{aligned}
-\end{equation}
+    \begin{equation}
+    \begin{aligned}
+    \nabla_\mathsf{v} \mathsf{u}(\mathsf{f}) &= \sum_i \mathsf{e}_i(\mathsf{f})\left(\mathsf{v}\left(\tilde{\mathsf{e}}^i(\mathsf{u})\right) \
+    + \sum_j \varpi_j^i(\mathsf{v}) \tilde{\mathsf{e}}^j(\mathsf{u})\right) \\
+    &=\mathsf{e}(\mathsf{f})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) \
+    + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})),
+    \end{aligned}
+    \end{equation}
 
-    where the second form uses tuple arithmetic. Now let’s consider the first
+    where the second form uses tuple arithmetic. Now let's consider the first
     part of the Riemann curvature operator:
 
-\begin{equation}
-\begin{aligned}
-\left[\nabla_\mathsf{w}, \nabla_\mathsf{v} \right] \mathsf{u} \\
-=& \nabla_\mathsf{w} \nabla_\mathsf{v} \mathsf{u} - \nabla_\mathsf{v} \nabla_\mathsf{w} \mathsf{u} \\
-=& \mathsf{e}\{\mathsf{w}(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})) \
-+ \varpi(\mathsf{w})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
-&-\mathsf{e}\{\mathsf{v}(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u}))+\varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})) \
-+ \varpi(\mathsf{v})(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
-=& \mathsf{e}\{[\mathsf{w}, \mathsf{v}] \tilde{\mathsf{e}}(\mathsf{u})\\
-&+\mathsf{w}(\varpi(\mathsf{v})) \tilde{\mathsf{e}}(\mathsf{u}) - \mathsf{v}(\varpi(\mathsf{w})) \tilde{\mathsf{e}}(\mathsf{u}) \\
-&+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}.
-\end{aligned}
-\end{equation}
+    \begin{equation}
+    \begin{aligned}
+    \left[\nabla_\mathsf{w}, \nabla_\mathsf{v} \right] \mathsf{u} \\
+    =& \nabla_\mathsf{w} \nabla_\mathsf{v} \mathsf{u} - \nabla_\mathsf{v} \nabla_\mathsf{w} \mathsf{u} \\
+    =& \mathsf{e}\{\mathsf{w}(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})) \
+    + \varpi(\mathsf{w})(\mathsf{v}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
+    &-\mathsf{e}\{\mathsf{v}(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u}))+\varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})) \
+    + \varpi(\mathsf{v})(\mathsf{w}(\tilde{\mathsf{e}}(\mathsf{u})) + \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u}))\} \\
+    =& \mathsf{e}\{[\mathsf{w}, \mathsf{v}] \tilde{\mathsf{e}}(\mathsf{u})\\
+    &+\mathsf{w}(\varpi(\mathsf{v})) \tilde{\mathsf{e}}(\mathsf{u}) - \mathsf{v}(\varpi(\mathsf{w})) \tilde{\mathsf{e}}(\mathsf{u}) \\
+    &+\varpi(\mathsf{w}) \varpi(\mathsf{v}) \tilde{\mathsf{e}}(\mathsf{u})-\varpi(\mathsf{v}) \varpi(\mathsf{w}) \tilde{\mathsf{e}}(\mathsf{u})\}.
+    \end{aligned}
+    \end{equation}
 
     The second term of the Riemann curvature operator is
 
-\begin{equation}
-\nabla_{[\mathsf{w}, \mathsf{v}]} \mathsf{u} = \mathsf{e}\left\{[\mathsf{w}, \mathsf{v}]\tilde{\mathsf{e}}(\mathsf{u}) \
-+ \varpi\left([\mathsf{w}, \mathsf{v}]\right)\tilde{\mathsf{e}}(u)\right\}.
-\end{equation}
+    \begin{equation}
+    \nabla_{[\mathsf{w}, \mathsf{v}]} \mathsf{u} = \mathsf{e}\left\{[\mathsf{w}, \mathsf{v}]\tilde{\mathsf{e}}(\mathsf{u}) \
+    + \varpi\left([\mathsf{w}, \mathsf{v}]\right)\tilde{\mathsf{e}}(u)\right\}.
+    \end{equation}
 
     The difference of these is the Riemann curvature operator. Notice that the
     first term in each cancels, and the rest gives equation (8.13).
@@ -390,16 +415,16 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     One measure of the curvature is the Ricci tensor, which is computed from the
     Riemann tensor by
 
-\begin{equation}
-R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u}, \mathsf{e}_i, \mathsf{v}\right).
-\end{equation}
+    \begin{equation}
+    R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u}, \mathsf{e}_i, \mathsf{v}\right).
+    \end{equation}
 
     Expressed as a program:
 
-    #+begin_src scheme
-(define ((Ricci nabla basis) u v)
-  (contract (lambda (ei wi) ((Riemann nabla) wi u ei v))
-            basis))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((Ricci nabla basis) u v)
+        (contract (lambda (ei wi) ((Riemann nabla) wi u ei v))
+                  basis))
     #+end_src
 
     Einstein's field equation (9.27) for gravity, which we will encounter later,
@@ -417,30 +442,30 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
     coordinate along the asymptote and $\theta$ is the angle of revolution. We
     embed the pseudosphere in rectangular 3-dimensional space with
 
-    #+begin_src scheme
-(define (pseudosphere q)
-  (let ((t (ref q 0)) (theta (ref q 1)))
-    (up (* (sech t) (cos theta))
-        (* (sech t) (sin theta))
-        (- t (tanh t)))))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define (pseudosphere q)
+        (let ((t (ref q 0)) (theta (ref q 1)))
+          (up (* (sech t) (cos theta))
+              (* (sech t) (sin theta))
+              (- t (tanh t)))))
     #+end_src
 
     The structure of Christoffel coefficients for the pseudosphere is
 
-    #+begin_src scheme
-(down
- (down (up (/ (+ (* 2 (expt (cosh t) 2) (expt (sinh t) 2))
-                 (* -2 (expt (sinh t) 4)) (expt (cosh t) 2)
-                 (* -2 (expt (sinh t) 2)))
-              (+ (* (cosh t) (expt (sinh t) 3))
-                 (* (cosh t) (sinh t))))
-           0)
-       (up 0
-           (/ (* -1 (sinh t)) (cosh t))))
- (down (up 0
-           (/ (* -1 (sinh t)) (cosh t)))
-       (up (/ (cosh t) (+ (expt (sinh t) 3) (sinh t)))
-           0)))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (down
+       (down (up (/ (+ (* 2 (expt (cosh t) 2) (expt (sinh t) 2))
+                       (* -2 (expt (sinh t) 4)) (expt (cosh t) 2)
+                       (* -2 (expt (sinh t) 2)))
+                    (+ (* (cosh t) (expt (sinh t) 3))
+                       (* (cosh t) (sinh t))))
+                 0)
+             (up 0
+                 (/ (* -1 (sinh t)) (cosh t))))
+       (down (up 0
+                 (/ (* -1 (sinh t)) (cosh t)))
+             (up (/ (cosh t) (+ (expt (sinh t) 3) (sinh t)))
+                 0)))
     #+end_src
 
     Note that this is independent of $\theta$.
@@ -453,9 +478,9 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
    particular manifold. A connection has a property called /torsion/, which is
    computed as follows:
 
-\begin{equation}
-\mathcal{T}(\mathsf{u}, \mathsf{v})=\nabla_{\mathsf{u}} \mathsf{v}-\nabla_{\mathsf{v}} \mathsf{u}-[\mathsf{u}, \mathsf{v}].
-\end{equation}
+   \begin{equation}
+   \mathcal{T}(\mathsf{u}, \mathsf{v})=\nabla_{\mathsf{u}} \mathsf{v}-\nabla_{\mathsf{v}} \mathsf{u}-[\mathsf{u}, \mathsf{v}].
+   \end{equation}
 
    The torsion takes two vector fields and produces a vector field. The torsion
    depends on the covariant derivative, which is constructed from the
@@ -463,13 +488,13 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
 
    We account for this dependency by parameterizing the program by =nabla=.
 
-   #+begin_src scheme
-(define ((torsion-vector nabla) u v)
-  (- (- ((nabla u) v) ((nabla v) u))
-     (commutator u v)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((torsion-vector nabla) u v)
+       (- (- ((nabla u) v) ((nabla v) u))
+          (commutator u v)))
 
-(define ((torsion nabla) omega u v)
-  (omega ((torsion-vector nabla) u v)))
+     (define ((torsion nabla) omega u v)
+       (omega ((torsion-vector nabla) u v)))
    #+end_src
 
    The torsion for the connection for the 2-sphere specified by the Christoffel
@@ -477,24 +502,24 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
    the torsion to the basis vector fields:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(for-each
- (lambda (x)
-   (for-each
-    (lambda (y)
-      (print-expression
-       ((((torsion-vector (covariant-derivative sphere-Cartan))
-          x y)
-         (literal-manifold-function 'f S2-spherical))
-        ((point S2-spherical) (up 'theta0 'phi0)))))
-    (list d/dtheta d/dphi)))
- (list d/dtheta d/dphi))
-;; 0
-;; 0
-;; 0
-;; 0
+     (for-each
+      (lambda (x)
+        (for-each
+         (lambda (y)
+           (print-expression
+            ((((torsion-vector (covariant-derivative sphere-Cartan))
+               x y)
+              (literal-manifold-function 'f S2-spherical))
+             ((point S2-spherical) (up 'theta0 'phi0)))))
+         (list d/dtheta d/dphi)))
+      (list d/dtheta d/dphi))
+     ;; 0
+     ;; 0
+     ;; 0
+     ;; 0
    #+end_src
 
-*** Torsion Doesn’t Affect Geodesics
+*** Torsion Doesn't Affect Geodesics
 
     There are multiple connections that give the same geodesic curves. Among
     these connections there is always one with zero torsion. Thus, if you care
@@ -503,26 +528,26 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
     Consider a basis $\mathsf{e}$ and its dual $\tilde{\mathsf{e}}$. The
     components of the torsion are
 
-\begin{equation}
-\tilde{\mathsf{e}}\left(\mathsf{T}(\mathsf{e}_i, \mathsf{e}_j)\right) = \Gamma_{ij}^k + \Gamma_{ji}^k + \Gamma_{ij}^k,
-\end{equation}
+    \begin{equation}
+    \tilde{\mathsf{e}}\left(\mathsf{T}(\mathsf{e}_i, \mathsf{e}_j)\right) = \Gamma_{ij}^k + \Gamma_{ji}^k + \Gamma_{ij}^k,
+    \end{equation}
 
-   where $\mathsf{d}_{ij}^k$ are the structure constants of the basis. See
-   equations (4.37, 4.38). For a commuting basis the structure constants are
-   zero, and the components of the torsion are the antisymmetric part of
-   $\Gamma$ with respect to the lower indices.
+    where $\mathsf{d}_{ij}^k$ are the structure constants of the basis. See
+    equations (4.37, 4.38). For a commuting basis the structure constants are
+    zero, and the components of the torsion are the antisymmetric part of
+    $\Gamma$ with respect to the lower indices.
 
-   Recall the geodesic equation (7.79):
+    Recall the geodesic equation (7.79):
 
-\begin{equation}
-D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
-\end{equation}
+    \begin{equation}
+    D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
+    \end{equation}
 
-   Observe that the lower indices of $\Gamma$ are contracted with two copies of
-   the velocity. Because the use of $\Gamma$ is symmetrical here, any asymmetry
-   of $\Gamma$ in its lower indices is irrelevant to the geodesics. Thus one can
-   study the geodesics of any connection by first symmetrizing the connection,
-   eliminating torsion. The resulting equations will be simpler.
+    Observe that the lower indices of $\Gamma$ are contracted with two copies of
+    the velocity. Because the use of $\Gamma$ is symmetrical here, any asymmetry
+    of $\Gamma$ in its lower indices is irrelevant to the geodesics. Thus one can
+    study the geodesics of any connection by first symmetrizing the connection,
+    eliminating torsion. The resulting equations will be simpler.
 
 ** Geodesic Deviation
 
@@ -536,16 +561,16 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
    Let there be a one-parameter family of geodesics, with parameter $s$, and let
    $\mathsf{T}$ be the vector field of tangent vectors to those geodesics:
 
-\begin{equation}
-\nabla_\mathsf{T} \mathsf{T} = 0.
-\end{equation}
+   \begin{equation}
+   \nabla_\mathsf{T} \mathsf{T} = 0.
+   \end{equation}
 
    We can parameterize travel along the geodesics with parameter $t$: a geodesic
    curve $\gamma_s(t) = \phi_t^\mathsf{T}(\mathsf{m}_s)$ where
 
-\begin{equation}
-\mathsf{f} \circ \phi_t^\mathsf{T}(\mathsf{m}_s) = \left(e^{tT}\mathsf{f}\right)(\mathsf{m}_s).
-\end{equation}
+   \begin{equation}
+   \mathsf{f} \circ \phi_t^\mathsf{T}(\mathsf{m}_s) = \left(e^{tT}\mathsf{f}\right)(\mathsf{m}_s).
+   \end{equation}
 
    Let $U = \partial / \partial s$ be the vector field corresponding to the
    displacement of neighboring geodesics. Locally, $(t, s)$ is a coordinate
@@ -555,34 +580,34 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
    The geodesic deviation vector field is defined as:
 
-\begin{equation}
-\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}).
-\end{equation}
+   \begin{equation}
+   \nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}).
+   \end{equation}
 
    If the connection has zero torsion, the geodesic deviation can be related to
    the Riemann curvature:
 
-\begin{equation}
-\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}),
-\end{equation}
+   \begin{equation}
+   \nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}),
+   \end{equation}
 
    as follows, using equation (8.21),
 
-\begin{equation}
-\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}),
-\end{equation}
+   \begin{equation}
+   \nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) = \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}),
+   \end{equation}
 
    because both the torsion is zero and $[\mathsf{T}, \mathsf{U}] = 0$.
    Continuing
 
-\begin{equation}
-\begin{aligned}
-\nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) &= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) \\
-&= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) + \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) \\
-&= \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}) \\
-&= -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}).
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \nabla_\mathsf{T}(\nabla_\mathsf{T} \mathsf{U}) &= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) \\
+   &= \nabla_\mathsf{T}(\nabla_\mathsf{U} \mathsf{T}) + \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) \\
+   &= \nabla_\mathsf{U}(\nabla_\mathsf{T} \mathsf{T}) - \mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}) \\
+   &= -\mathcal{R}(\mathsf{U}, \mathsf{T})(\mathsf{T}).
+   \end{aligned}
+   \end{equation}
 
    In the last line the first term was dropped because $\mathsf{T}$ satisfies
    the geodesic equation (8.24).
@@ -595,18 +620,18 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
    geodesics at the same value of the parameter $t$. So the velocity of
    separation of the two geodesics is
 
-\begin{equation}
-(\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \delta(s, t, \Delta s)\hat{s}
-\end{equation}
+   \begin{equation}
+   (\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \delta(s, t, \Delta s)\hat{s}
+   \end{equation}
 
    where $\hat{s}$ is a unit vector in the direction of increasing $s$. So
    $\nabla_\mathsf{T} U$ is the factor of increase of velocity with increase of
    separation. Similarly, the geodesic deviation can be interpreted as the
    factor of increase of acceleration with increase of separation:
 
-\begin{equation}
-\nabla{\mathsf{T}}(\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \partial_1 \delta(s, t, \Delta s)\hat{s}.
-\end{equation}
+   \begin{equation}
+   \nabla{\mathsf{T}}(\nabla_\mathsf{T} \mathsf{U}) = \partial_1 \partial_1 \delta(s, t, \Delta s)\hat{s}.
+   \end{equation}
 
 *** Longitude Lines on a Sphere
 
@@ -618,8 +643,8 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     We can verify that every longitude line is a geodesic:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((omega (((covariant-derivative Cartan) T) T)) m)
-;; 0
+      ((omega (((covariant-derivative Cartan) T) T)) m)
+      ;; 0
     #+end_src
 
     where =omega= is an arbitrary one-form field.
@@ -627,26 +652,26 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     Now let =U= be =d/dphi=, then =U= commutes with =T=:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(((commutator U T) f) m)
-;; 0
+      commutator(((commutator U T) f) m)
+      ;; 0
     #+end_src
 
     The torsion for the usual connection for the sphere is zero:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(let ((X (literal-vector-field 'X-sphere S2-spherical))
-      (Y (literal-vector-field 'Y-sphere S2-spherical)))
-  ((((torsion-vector nabla) X Y) f) m))
-;; 0
+      (let ((X (literal-vector-field 'X-sphere S2-spherical))
+            (Y (literal-vector-field 'Y-sphere S2-spherical)))
+        ((((torsion-vector nabla) X Y) f) m))
+      ;; 0
     #+end_src
 
     So we can compute the geodesic deviation using =Riemann=
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((+ (omega ((nabla T) ((nabla T) U)))
-    ((Riemann nabla) omega T U T))
- m)
-;; 0
+      ((+ (omega ((nabla T) ((nabla T) U)))
+          ((Riemann nabla) omega T U T))
+       m)
+      ;; 0
     #+end_src
 
     confirming equation (8.29).
@@ -660,13 +685,13 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     the distance is purely in the $\phi$ direction, so
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((dphi ((nabla T) U)) m)
-;; (/ (cos theta0) (sin theta0))
+      ((dphi ((nabla T) U)) m)
+      ;; (/ (cos theta0) (sin theta0))
     #+end_src
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((dphi ((nabla T) ((nabla T) U))) m)
-;; -1
+      ((dphi ((nabla T) ((nabla T) U))) m)
+      ;; -1
     #+end_src
 
     Let's interpret these results. On a sphere of radius $R$ the distance at
@@ -675,21 +700,21 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     $\theta$ is uniformly increasing with time, the magnitude of the velocity is
     just the $\theta$-derivative of this distance:
 
-    #+begin_src scheme
-(define ((delta R) phi theta Delta-phi)
-  (* R (sin theta) Delta-phi))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define ((delta R) phi theta Delta-phi)
+        (* R (sin theta) Delta-phi))
     #+end_src
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(((partial 1) (delta ’R)) 'phi0 'theta0 'Delta-phi)
-;; (* Delta-phi R (cos theta0))
+      (((partial 1) (delta 'R)) 'phi0 'theta0 'Delta-phi)
+      ;; (* Delta-phi R (cos theta0))
     #+end_src
 
     The direction of the velocity is the unit vector in the $\phi$ direction:
 
-    #+begin_src scheme
-(define phi-hat
-  (* (/ 1 (sin theta)) d/dphi))
+    #+begin_src scheme :results value raw :exports both :cache yes
+      (define phi-hat
+        (* (/ 1 (sin theta)) d/dphi))
     #+end_src
 
     This comes from the fact that the separation of lines of longitude is
@@ -699,11 +724,11 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     We can measure the $\phi$ component with $d\phi$:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((dphi (* (((partial 1) (delta 'R))
-           'phi0 'theta0 'Delta-phi)
-          phi-hat))
- m)
-;; (/ (* Delta-phi R (cos theta0)) (sin theta0))
+      ((dphi (* (((partial 1) (delta 'R))
+                 'phi0 'theta0 'Delta-phi)
+                phi-hat))
+       m)
+      ;; (/ (* Delta-phi R (cos theta0)) (sin theta0))
     #+end_src
 
     This agrees with $\nabla_\mathsf{T} \mathsf{U} \Delta \phi$ for the unit
@@ -713,20 +738,20 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     Similarly, the magnitude of the acceleration is
 
     #+begin_src scheme :results value raw :exports both :cache yes
-(((partial 1) ((partial 1) (delta 'R)))
- 'phi0 'theta0 'Delta-phi)
-;; (* -1 Delta-phi R (sin theta0))
+      (((partial 1) ((partial 1) (delta 'R)))
+       'phi0 'theta0 'Delta-phi)
+      ;; (* -1 Delta-phi R (sin theta0))
     #+end_src
 
     and the acceleration vector is the product of this result with $\hat{\phi}$.
     Measuring this with $d\phi$ we get:
 
     #+begin_src scheme :results value raw :exports both :cache yes
-((dphi (* (((partial 1) ((partial 1) (delta 'R)))
-           'phi0 'theta0 'Delta-phi)
-          phi-hat))
- m)
-;; (* -1 Delta-phi R)
+      ((dphi (* (((partial 1) ((partial 1) (delta 'R)))
+                 'phi0 'theta0 'Delta-phi)
+                phi-hat))
+       m)
+      ;; (* -1 Delta-phi R)
     #+end_src
 
     And this agrees with the calculation of $\nabla_\mathsf{T} \nabla_\mathsf{T}
@@ -743,108 +768,108 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
    A system with a symmetric connection, $\Gamma_{jk}^i = \Gamma_{jk}^i$, is
    torsion free.[fn:9]
 
-   #+begin_src scheme
-(define nabla
-  (covariant-derivative
-   (Christoffel->Cartan
-    (symmetrize-Christoffel
-     (literal-Christoffel-2 ’C R4-rect)))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define nabla
+       (covariant-derivative
+        (Christoffel->Cartan
+         (symmetrize-Christoffel
+          (literal-Christoffel-2 'C R4-rect)))))
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((torsion nabla) omega X Y)
- (typical-point R4-rect))
-;; 0
+     (((torsion nabla) omega X Y)
+      (typical-point R4-rect))
+     ;; 0
    #+end_src
 
    The Bianchi identities are defined in terms of a cyclic-summation operator,
    which is most easily described as a Scheme procedure:
 
-   #+begin_src scheme
-(define ((cyclic-sum f) x y z)
-  (+ (f x y z)
-     (f y z x)
-     (f z x y)))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define ((cyclic-sum f) x y z)
+       (+ (f x y z)
+          (f y z x)
+          (f z x y)))
    #+end_src
 
    The first Bianchi identity is
 
-\begin{equation}
-\mathsf{R}(\omega, \mathsf{x}, \mathsf{y}, \mathsf{z}) \
-+ \mathsf{R}(\omega, \mathsf{y}, \mathsf{z}, \mathsf{x}) \
-+ \mathsf{R}(\omega, \mathsf{z}, \mathsf{x}, \mathsf{y}) = 0,
-\end{equation}
+   \begin{equation}
+   \mathsf{R}(\omega, \mathsf{x}, \mathsf{y}, \mathsf{z}) \
+   + \mathsf{R}(\omega, \mathsf{y}, \mathsf{z}, \mathsf{x}) \
+   + \mathsf{R}(\omega, \mathsf{z}, \mathsf{x}, \mathsf{y}) = 0,
+   \end{equation}
 
    or, as a program:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((cyclic-sum
-   (lambda (x y z)
-     ((Riemann nabla) omega x y z)))
-  X Y Z)
- (typical-point R4-rect))
-;; 0
+     (((cyclic-sum
+        (lambda (x y z)
+          ((Riemann nabla) omega x y z)))
+       X Y Z)
+      (typical-point R4-rect))
+     ;; 0
    #+end_src
 
    The second Bianchi identity is
 
-\begin{equation}
-\nabla_\mathsf{x} \mathsf{R}(\omega, \mathsf{v}, \mathsf{y}, \mathsf{z}) \
-+ \nabla_\mathsf{y} \mathsf{R}(\omega, \mathsf{v}, \mathsf{z}, \mathsf{x}) \
-+ \nabla_\mathsf{z} \mathsf{R}(\omega, \mathsf{v}, \mathsf{x}, \mathsf{y}) = 0
-\end{equation}
+   \begin{equation}
+   \nabla_\mathsf{x} \mathsf{R}(\omega, \mathsf{v}, \mathsf{y}, \mathsf{z}) \
+   + \nabla_\mathsf{y} \mathsf{R}(\omega, \mathsf{v}, \mathsf{z}, \mathsf{x}) \
+   + \nabla_\mathsf{z} \mathsf{R}(\omega, \mathsf{v}, \mathsf{x}, \mathsf{y}) = 0
+   \end{equation}
 
    or, as a program:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((cyclic-sum
-   (lambda (x y z)
-     (((nabla x) (Riemann nabla))
-      omega V y z)))
-  X Y Z)
- (typical-point R4-rect))
-;; 0
+     (((cyclic-sum
+        (lambda (x y z)
+          (((nabla x) (Riemann nabla))
+           omega V y z)))
+       X Y Z)
+      (typical-point R4-rect))
+     ;; 0
    #+end_src
 
    Things get more complicated when there is torsion. We can make a general
    connection, which has torsion:
 
-   #+begin_src scheme
-(define nabla
-  (covariant-derivative
-   (Christoffel->Cartan
-    (literal-Christoffel-2 ’C R4-rect))))
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (define nabla
+       (covariant-derivative
+        (Christoffel->Cartan
+         (literal-Christoffel-2 'C R4-rect))))
 
-(define R (Riemann nabla))
-(define T (torsion-vector nabla))
+     (define R (Riemann nabla))
+     (define T (torsion-vector nabla))
 
-(define (TT omega x y)
-  (omega (T x y)))
+     (define (TT omega x y)
+       (omega (T x y)))
    #+end_src
 
    The first Bianchi identity is now:[fn:10]
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((cyclic-sum
-   (lambda (x y z)
-     (- (R omega x y z)
-        (+ (omega (T (T x y) z))
-           (((nabla x) TT) omega y z)))))
-  X Y Z)
- (typical-point R4-rect))
-;; 0
+     (((cyclic-sum
+        (lambda (x y z)
+          (- (R omega x y z)
+             (+ (omega (T (T x y) z))
+                (((nabla x) TT) omega y z)))))
+       X Y Z)
+      (typical-point R4-rect))
+     ;; 0
    #+end_src
 
    and the second Bianchi identity for a general connection is
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((cyclic-sum
-   (lambda (x y z)
-     (+ (((nabla x) R) omega V y z)
-        (R omega V (T x y) z))))
-  X Y Z)
- (typical-point R4-rect))
-;; 0
+     (((cyclic-sum
+        (lambda (x y z)
+          (+ (((nabla x) R) omega V y z)
+             (R omega V (T x y) z))))
+       X Y Z)
+      (typical-point R4-rect))
+     ;; 0
    #+end_src
 
 * Footnotes
@@ -854,23 +879,23 @@ mathematical notation than as Scheme programs.
 
 [fn:9] Setup for this section:
 
-#+begin_src scheme
-(define omega (literal-1form-field 'omega-rect R4-rect))
-(define X (literal-vector-field 'X-rect R4-rect))
-(define Y (literal-vector-field 'Y-rect R4-rect))
-(define Z (literal-vector-field 'Z-rect R4-rect))
-(define V (literal-vector-field 'V-rect R4-rect))
+#+begin_src scheme :results value raw :exports both :cache yes
+  (define omega (literal-1form-field 'omega-rect R4-rect))
+  (define X (literal-vector-field 'X-rect R4-rect))
+  (define Y (literal-vector-field 'Y-rect R4-rect))
+  (define Z (literal-vector-field 'Z-rect R4-rect))
+  (define V (literal-vector-field 'V-rect R4-rect))
 #+end_src
 
 [fn:8] The setup for this example is:
 
-#+begin_src scheme
-(define-coordinates (up theta phi) S2-spherical)
-(define T d/dtheta)
-(define U d/dphi)
-(define m ((point S2-spherical) (up 'theta0 'phi0)))
-(define Cartan (Christoffel->Cartan S2-Christoffel))
-(define nabla (covariant-derivative Cartan))
+#+begin_src scheme :results value raw :exports both :cache yes
+  (define-coordinates (up theta phi) S2-spherical)
+  (define T d/dtheta)
+  (define U d/dphi)
+  (define m ((point S2-spherical) (up 'theta0 'phi0)))
+  (define Cartan (Christoffel->Cartan S2-Christoffel))
+  (define nabla (covariant-derivative Cartan))
 #+end_src
 
 [fn:7] People often say "Geodesic evolution is exponentiation of the covariant
@@ -879,18 +904,18 @@ derivative." But this is wrong. The evolution is by exponentiation of $L_g$.
 [fn:6] The setup for this experiment is a bit complicated. We need to make a
 manifold with a general connection.
 
-#+begin_src scheme
-(define Chi-inverse (point R2-rect))
-(define Chi (chart R2-rect))
+#+begin_src scheme :results value raw :exports both :cache yes
+  (define Chi-inverse (point R2-rect))
+  (define Chi (chart R2-rect))
 #+end_src
 
 We now make the Cartan forms from the most general 2-dimensional Christoffel
 coefficient structure:
 
-#+begin_src scheme
-(define general-Cartan-2
-  (Christoffel->Cartan
-   (literal-Christoffel-2 'Gamma R2-rect)))
+#+begin_src scheme :results value raw :exports both :cache yes
+  (define general-Cartan-2
+    (Christoffel->Cartan
+     (literal-Christoffel-2 'Gamma R2-rect)))
 #+end_src
 
 [fn:5] The parallel-transport operators are evolution operators, and therefore
