@@ -95,7 +95,7 @@ the manifold.
 
    Lowering a vector field with respect to a metric is a simple program:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((lower metric) u)
        (define (omega v) (metric v u))
        (procedure->1form-field omega))
@@ -104,7 +104,7 @@ the manifold.
    But raising a one-form field to make a vector field is a bit more
    complicated:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (raise metric basis)
        (let ((gi (metric:invert metric basis)))
          (lambda (omega)
@@ -116,7 +116,7 @@ the manifold.
    where =contract= is the trace over a basis of a two-argument function that
    takes a vector field and a one-form field as its arguments.[fn:1]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (contract proc basis)
        (let ((vector-basis (basis->vector-basis basis))
              (1form-basis (basis->1form-basis basis)))
@@ -181,7 +181,7 @@ the manifold.
    So, for example, we can compute the Christoffel coefficients for the sphere
    from the metric for the sphere. First, we need the metric:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((g-sphere R) u v)
        (* (square R)
           (+ (* (dtheta u) (dtheta v))
@@ -256,7 +256,7 @@ the manifold.
    twice: The kinetic energy is proportional to the squared length of the
    velocity vector.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (metric->Lagrangian metric coordsys)
        (define (L state)
          (let ((q (ref state 1)) (qd (ref state 2)))
@@ -361,7 +361,7 @@ the manifold.
     We can show this is true for a 2-dimensional system with a general metric.
     We define the Lagrangians in terms of this metric:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define L2
         (metric->Lagrangian (literal-metric 'm R2-rect)
                             R2-rect))
@@ -394,7 +394,7 @@ the manifold.
     We can show this dependence explicitly, for a simple system. Consider the
     simplest possible system, a geodesic (straight line) in a plane:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (L1 state)
         (sqrt (square (velocity state))))
     #+end_src
@@ -531,7 +531,7 @@ the manifold.
     the rectangular axes. See equations (4.29, 4.30, 4.31). We can use the dual
     basis to define a metric on SO(3).
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (SO3-metric v1 v2)
         (+ (* (e^x v1) (e^x v2))
            (* (e^y v1) (e^y v2))
@@ -546,7 +546,7 @@ the manifold.
     The 2-dimensional surface of a 3-dimensional sphere can be embedded in three
     dimensions with a metric that depends on the radius:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define M (make-manifold S^2-type 2 3))
       (define spherical
         (coordinate-system-at 'spherical 'north-pole M))
@@ -574,7 +574,7 @@ the manifold.
     contracts the result over a basis to make a trace. It is useful for getting
     the Ricci scalar from the Ricci tensor, given a metric and a basis.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((trace2down metric basis) tensor)
         (let ((inverse-metric-tensor
                (metric:invert metric-tensor basis)))
@@ -659,7 +659,7 @@ the manifold.
     The time-time component of the Ricci tensor derived from the metric (9.24)
     is the Laplacian of the potential, to lowest order.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (Newton-metric M G c V)
         (let ((a
                (+ 1 (* (/ 2 (square c))
@@ -691,7 +691,7 @@ the manifold.
 
     The leading terms of the mess are
 
-    #+begin_src scheme :eval none
+    #+begin_src scheme :results value raw :exports both :cache yes
       partial(+ (((partial 0) ((partial 0) V)) (up x y z))
                 (((partial 1) ((partial 1) V)) (up x y z))
                 (((partial 2) ((partial 2) V)) (up x y z)))
@@ -704,7 +704,7 @@ the manifold.
     time-time component of the stress-energy tensor $T_{00}$ be the matter
     density $\rho$. Here is a program for the stress-energy tensor:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (Tdust rho)
         (define (T w1 w2)
           (* rho (w1 d/dt) (w2 d/dt)))
@@ -735,7 +735,7 @@ the manifold.
     In spherical coordinates around a nonrotating gravitating body the metric of
     Schwarzschild spacetime is given as:[fn:8]
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define-coordinates (up t r theta phi) spacetime-sphere)
 
       (define (Schwarzschild-metric M G c)
@@ -761,7 +761,7 @@ the manifold.
     is a geodesic, so it should satisfy the geodesic equations. Here is the
     equation of a circular path along the zero longitude line.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (prime-meridian r omega)
         (compose (point spacetime-sphere)
                  (lambda (t) (up t r (* omega t) 0))
@@ -786,7 +786,7 @@ the manifold.
     longitude. Here is the result of adding an exponential variation of size
     =epsilon=:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (prime-meridian+X r epsilon X)
         (compose
          (point spacetime-sphere)
@@ -801,7 +801,7 @@ the manifold.
 
     Plugging this into the geodesic equation yields a structure of residuals:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (geodesic-equation+X-residuals eps X)
         (let ((gamma (prime-meridian+X 'r eps X)))
           (((((covariant-derivative Cartan gamma) d/dtau)
@@ -813,7 +813,7 @@ the manifold.
     The characteristic equation in the eigenvalue =lambda= can be obtained as the
     numerator of the expression:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (determinant
        (submatrix (((* (partial 1) (partial 0))
                     geodesic-equation+X-residuals)
@@ -829,7 +829,7 @@ the manifold.
     The Einstein tensor $G_{\mu \nu}$ (see footnote 5) can be expressed as a
     program:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (Einstein coordinate-system metric-tensor)
         (let* ((basis (coordinate-system->basis coordinate-system))
                (connection
@@ -863,7 +863,7 @@ the manifold.
     time-dependent scale of the universe. These are called the Robertson-Walker
     equations. Friedmann's metric is:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (FLRW-metric c k R)
         (define-coordinates (up t r theta phi) spacetime-sphere)
         (let ((a (/ (square (compose R t)) (- 1 (* k (square r)))))
@@ -882,7 +882,7 @@ the manifold.
 
     The associated stress-energy tensor is
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (Tperfect-fluid rho p c metric)
         (define-coordinates (up t r theta phi) spacetime-sphere)
         (let* ((basis (coordinate-system->basis spacetime-sphere))
@@ -939,7 +939,7 @@ the manifold.
 [fn:8] The spacetime manifold is built from $\mathbf{R}^4$ with the addition of
 appropriate coordinate systems:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define spacetime (make-manifold R^n 4))
   (define spacetime-rect
     (coordinate-system-at 'rectangular 'origin spacetime))
@@ -951,7 +951,7 @@ appropriate coordinate systems:
 uses =drop2=, which converts a tensor field that takes two one-form fields into a
 tensor field that takes two vector fields. Its definition is
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define ((drop2 metric-tensor basis) tensor)
     (lambda (v1 v2)
       (contract
@@ -990,7 +990,7 @@ equations are $\mathbf{E}[L] \circ \Gamma[q] = 0$. See [19] for more details.
 coordinates. In this code the division operator (=/=) multiplies its first
 argument on the left by the inverse of its second argument.
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define (Lagrange-explicit L)
     (let ((P ((partial 2) L))
           (F ((partial 1) L)))

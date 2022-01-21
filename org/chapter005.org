@@ -222,7 +222,7 @@ equation 5.2).
    can write the coordinate-area two-form in another way: $\mathsf{A} =
    \mathsf{d}\mathsf{x} \wedge \mathsf{d}\mathsf{y}$. As code:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up x y z) R3-rect)
 
      (define u (+ (* 'u^0 d/dx) (* 'u^1 d/dy)))
@@ -237,7 +237,7 @@ equation 5.2).
    If we use cylindrical coordinates and define cylindrical vector fields we get
    the analogous answer in cylindrical coordinates:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up r theta z) R3-cyl)
 
      (define a (+ (* 'a^0 d/dr) (* 'a^1 d/dtheta)))
@@ -256,7 +256,7 @@ equation 5.2).
    coordinate basis is a three-form that measures our usual idea of coordinate
    volumes in $\mathsf{R}^{3}$ with a Euclidean metric:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      d(define u (+ (* 'u^0 d/dx) (* 'u^1 d/dy) (* 'u^2 d/dz)))
      d(define v (+ (* 'v^0 d/dx) (* 'v^1 d/dy) (* 'v^2 d/dz)))
      d(define w (+ (* 'w^0 d/dx) (* 'w^1 d/dy) (* 'w^2 d/dz)))
@@ -371,7 +371,7 @@ equation 5.2).
    the computation indicated by equation (5.26) in three dimensions with a general
    one-form field:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define a (literal-manifold-function 'alpha R3-rect))
      (define b (literal-manifold-function 'beta R3-rect))
      (define c (literal-manifold-function 'gamma R3-rect))
@@ -381,7 +381,7 @@ equation 5.2).
 
    The test will require two arbitrary vector fields
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define X (literal-vector-field 'X-rect R3-rect))
      (define Y (literal-vector-field 'Y-rect R3-rect))
    #+end_src
@@ -407,7 +407,7 @@ equation 5.2).
    where $a = \alpha \circ \chi$, $b = \beta \circ \chi$, $c = \gamma \circ \chi$,
    and $\alpha$, $\beta$, and $\gamma$ are real-valued functions of three real arguments. As a program,
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define omega
        (+ (* a (wedge dy dz))
           (* b (wedge dz dx))
@@ -416,7 +416,7 @@ equation 5.2).
 
    Here we need another vector field because our result will be a three-form field.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Z (literal-vector-field 'Z-rect R3-rect))
    #+end_src
 
@@ -560,14 +560,14 @@ equation 5.2).
    We can test this. By Stokes's Theorem, the integrands are related by an exterior
    derivative. We need some vectors to test our forms:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define v (literal-vector-field 'v-rect R2-rect))
      (define w (literal-vector-field 'w-rect R2-rect))
    #+end_src
 
    We can now test our integrands:[fn:10]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define alpha (literal-function 'alpha R2->R))
      (define beta (literal function 'beta R2->R))
    #+end_src
@@ -620,7 +620,7 @@ equation 5.2).
    $x\mbox{-}y$ components, and each such component will pick up contributions from
    the normal component of the flux $w$. Formalizing this as code we have
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define a (literal-manifold-function 'a-rect R3-rect))
      (define b (literal-manifold-function 'b-rect R3-rect))
      (define c (literal-manifold function 'c-rect R3-rect))
@@ -640,7 +640,7 @@ equation 5.2).
 
    or:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define production-in-volume-element
        (* (+ (d/dx a) (d/dy b) (d/dz c))
           (wedge dx dy dz)))
@@ -651,7 +651,7 @@ equation 5.2).
    volume in the interior. We check this by applying the difference to arbitrary
    vector fields at an arbitrary point:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define X (literal-vector-field 'X-rect R3-rect))
      (define Y (literal-vector-field 'Y-rect R3-rect))
      (define Z (literal-vector-field 'Z-rect R3-rect))

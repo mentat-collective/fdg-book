@@ -159,18 +159,18 @@ derivative on form fields.[fn:3]
    and the coordinate system disappears. They will not be needed in
    the final version.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Lie-directional coordsys order)
        (let ((Phi (phi coordsys order)))
          (F->directional-derivative (F-Lie Phi))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (((F-Lie phi) v) delta)
        (pushforward-vector ((phi v) delta) ((phi v) (- delta))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((phi coordsys order) v) delta) m)
        ((point coordsys)
         (series:sum (((exp (* delta v)) (chart coordsys)) m)
@@ -200,7 +200,7 @@ derivative on form fields.[fn:3]
 
    Verifying this computation
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (let ((v (literal-vector-field 'v-rect R3-rect))
            (w (literal-vector-field 'w-rect R3-rect))
            (f (literal-manifold-function 'f-rect R3-rect)))
@@ -214,7 +214,7 @@ derivative on form fields.[fn:3]
    at zero ensures that first order is enough. So we can safely
    define:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((Lie-derivative-vector V) Y)
      (commutator V Y))
    #+end_src
@@ -395,7 +395,7 @@ derivative on form fields.[fn:3]
    We can verify this in 3-dimensional rectangular space for a general
    one-form field:[fn:4]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((- ((Lie-derivative V) (d theta))
           (d ((Lie-derivative V) theta)))
        X Y)
@@ -405,7 +405,7 @@ derivative on form fields.[fn:3]
 
    and for the general two-form field:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((- ((Lie-derivative V) (d omega))
           (d ((Lie-derivative V) omega)))
        X Y Z)
@@ -423,7 +423,7 @@ derivative on form fields.[fn:3]
 
    Again, for our general one-form field $\theta$:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((((- (commutator (Lie-derivative X) (Lie-derivative Y))
            (Lie-derivative (commutator X Y)))
         theta)
@@ -434,7 +434,7 @@ derivative on form fields.[fn:3]
 
    and for the two-form field $\omega$:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((((- (commutator (Lie-derivative X) (Lie-derivative Y))
            (Lie-derivative (commutator X Y)))
         omega)
@@ -469,7 +469,7 @@ derivative on form fields.[fn:3]
    {y\partial}/{\partial\mathsf{x}}$, the circular vector field. We
    recall
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Jz (- (* x d/dy) (* y d/dx)))
    #+end_src
 
@@ -477,7 +477,7 @@ derivative on form fields.[fn:3]
    $\mathsf{J}_{z}$ to ${\partial}/{\partial\mathsf{y}}$. We examine
    how the result affects a general function on the manifold:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (series:for-each print-expression
                       ((((exp (* 'a (Lie-derivative Jz))) d/dy)
                         (literal-manifold-function 'f-rect R3-rect))
@@ -526,32 +526,32 @@ derivative on form fields.[fn:3]
 
    We can verify Cartan's formula in a simple case with a program:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define X (literal-vector-field 'X-rect R3-rect))
      (define Y (literal-vector-field 'Y-rect R3-rect))
      (define Z (literal-vector-field 'Z-rect R3-rect))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define a (literal-manifold-function 'alpha R3-rect))
      (define b (literal-manifold-function 'beta R3-rect))
      (define c (literal-manifold function 'gamma R3-rect))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define omega
        (+ (* a (wedge dx dy))
           (* b (wedge dy dz))
           (* c (wedge dz dx))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((L1 X) omega)
        (+ ((interior-product X) (d omega))
           (d ((interior-product X) omega))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((- (((Lie-derivative X) omega) Y Z)
          (((L1 X) omega) Y Z))
       ((point R3-rect) (up 'x0 'y0 'z0)))
@@ -707,14 +707,14 @@ derivative on form fields.[fn:3]
    given order with a given coordinate system. These will be
    unnecessary in the final version.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (covariant-derivative-vector omega coordsys order)
        (let ((Phi (phi coordsys order)))
          (F->directional-derivative
           (F-parallel omega Phi coordsys))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((((F-parallel omega phi coordsys) v) delta) u) f) m)
        (let ((basis (coordinate-system->basis coordsys)))
          (let ((etilde (basis->1form-basis basis))
@@ -744,7 +744,7 @@ derivative on form fields.[fn:3]
 
    As a program, the covariant derivative is:[fn:6]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((covariant-derivative-vector Cartan) V) U) f)
        (let ((basis (Cartan->basis Cartan))
              (Cartan-forms (Cartan->forms Cartan)))
@@ -883,7 +883,7 @@ derivative on form fields.[fn:3]
 
    As a program this is
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((covariant-derivative-1form Cartan) V) tau) U)
        (let ((nabla_V ((covariant-derivative-vector Cartan) V)))
          (- (V (tau U)) (tau (nabla_V U)))))
@@ -891,7 +891,7 @@ derivative on form fields.[fn:3]
 
    This program extends naturally to higher-rank form fields:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((covariant-derivative-form Cartan) V) tau) vs)
        (let ((k (get-rank tau))
              (nabla_V ((covariant-derivative-vector Cartan) V)))
@@ -989,7 +989,7 @@ derivative on form fields.[fn:3]
    The transformation rule for $\varpi$ is implemented in the
    following program:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Cartan-transform Cartan basis-prime)
        (let ((basis (Cartan->basis Cartan))
              (forms (Cartan->forms Cartan))
@@ -1016,7 +1016,7 @@ derivative on form fields.[fn:3]
    coordinates in the plane.[fn:9] We can choose Christoffel
    coefficients for rectangular coordinates that are all zero:[fn:10]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-rect-Christoffel
        (make-Christoffel
         (let ((zero (lambda (m) 0)))
@@ -1033,7 +1033,7 @@ derivative on form fields.[fn:3]
    Chapter 9 that these Christoffel coefficients are a natural choice
    for the plane. From these we obtain the Cartan form:[fn:11]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-rect-Cartan
        (Christoffel->Cartan R2-rect-Christoffel))
    #+end_src
@@ -1041,7 +1041,7 @@ derivative on form fields.[fn:3]
    And from equation (7.63) we can get the corresponding Cartan form
    for polar coordinates:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-polar-Cartan
        (Cartan-transform R2-rect-Cartan R2-polar-basis))
    #+end_src
@@ -1052,7 +1052,7 @@ derivative on form fields.[fn:3]
    ${\partial}/{\partial\theta}$ applied to an arbitrary manifold
    function is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define circular (- (* x d/dy) (* y d/x)))
 
      (define f (literal-manifold-function 'f-rect R2-rect))
@@ -1068,7 +1068,7 @@ derivative on form fields.[fn:3]
    Note that this is the same thing as
    ${\partial}/{\partial\mathsf{y}}$ applied to the function:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((d/dy f) R2-rect-point)
      ;; /(((partial 1) f-rect) (up x0 y0))/
    #+end_src
@@ -1086,7 +1086,7 @@ derivative on form fields.[fn:3]
    Note that we get the same answer if we use polar coordinates to
    compute the covariant derivative:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((((covariant-derivative R2-polar-Cartan) d/dx) J) f)
       R2-rect-point)
      ;; /(((partial 1) f-rect) (up x0 y0))/
@@ -1101,12 +1101,12 @@ derivative on form fields.[fn:3]
    Of course, this is a pretty special situation. Let's try something
    more general:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define V (literal-vector-field 'V-rect R2-rect))
      (define W (literal-vector-field 'W-rect R2-rect))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((((- (covariant-derivative R2-rect-Cartan)
             (covariant-derivative R2-polar-Cartan))
          V)
@@ -1228,7 +1228,7 @@ derivative on form fields.[fn:3]
    arbitrary path $\gamma$ on a sphere are. We start by constructing the
    necessary manifold.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define sphere (make-manifold S^2 2 3))
      (define S2-spherical
        (coordinate-system-at 'spherical 'north-pole sphere))
@@ -1240,7 +1240,7 @@ derivative on form fields.[fn:3]
    to $\mathsf{M}$, and $\mathsf{w}$, the parallel-transported vector
    over the map:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define gamma
        (compose (point S2-spherical)
                 (up (literal-function 'alpha)
@@ -1254,12 +1254,12 @@ derivative on form fields.[fn:3]
    gamma. To make this we multiply the structure of literal component
    functions by the vector basis structure.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define basis-over-gamma
        (basis->basis-over-map gamma S2-basis))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define u_gamma
        (* (up (compose (literal-function 'u^0)
                        (chart R1-rect))
@@ -1271,7 +1271,7 @@ derivative on form fields.[fn:3]
    We specify a connection by giving the Christoffel
    coefficients.[fn:14]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define S2-Christoffel
        (make-Christoffel
         (let ((zero (lambda (point) 0)))
@@ -1282,18 +1282,18 @@ derivative on form fields.[fn:3]
         S2-basis))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define sphere-Cartan (Christoffel->Cartan S2-Christoffel))
    #+end_src
 
    Finally, we compute the residual of the equation (7.71) that
    governs parallel transport for this situation:[fn:15]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates t R1-rect)
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (s:map/r
       (lambda (omega)
         ((omega
@@ -1355,7 +1355,7 @@ derivative on form fields.[fn:3]
    derivative suitable for numerical integration. Such a state
    derivative takes a state and produces the derivative of the state.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (g gamma Cartan)
        (let ((omega
               ((Cartan->forms
@@ -1373,7 +1373,7 @@ derivative on form fields.[fn:3]
    equator and follows the great circle that makes a given tilt angle
    with the equator.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((transform tilt) coords)
        (let ((colat (red coords 0))
              (long (ref coord 1)))
@@ -1386,7 +1386,7 @@ derivative on form fields.[fn:3]
                (up colatp long p))))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (tilted-path tilt)
        (define (coords t)
          ((transform tilt) (up :pi/2 t)))
@@ -1404,7 +1404,7 @@ derivative on form fields.[fn:3]
    advancing by $\pi/2$ we walk around the circle a quarter of the way
    and at that point the transported vector points south:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((state-advancer (g (tilted-path 1) sphere-Cartan))
       (up 0 (* ((D (transform 1)) (up :pi/2 0)) (up 1 0)))
       pi/2)
@@ -1416,7 +1416,7 @@ derivative on form fields.[fn:3]
    numbers are not so pleasant, and the transported vector no longer
    points south:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((state-advancer (g (tilted-path 1) (sphere-Cartan))
                       (up 0 (* ((D (transform 1)) (up :pi/2 0)) (up 1 0)))
                       1)
@@ -1427,7 +1427,7 @@ derivative on form fields.[fn:3]
    southward-pointing vector after parallel-transporting along the
    equator:[fn:16]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (* ((D (transform 1)) (up :pi/2 1)) (up 1 0))
      ;; /(up .7651502649370375 .9117920272004736)/
    #+end_src
@@ -1457,7 +1457,7 @@ derivative on form fields.[fn:3]
    sphere, with colatitude alpha and longitude beta, as before. The
    geodesic equation is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (show-expression
       (((((covariant-derivative sphere-Cartan gamma)
           d/dt)
@@ -1479,12 +1479,12 @@ derivative on form fields.[fn:3]
    free-particle Lagrangian and the state transformation induced by
    the coordinate constraint:[fn:18]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Lfree s)
        (* 1/2 (square (velocity s))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (sphere->R3 s)
        (let ((q (coordinate s)))
          (let ((theta (ref q 0)) (phi (ref q 1)))
@@ -1493,14 +1493,14 @@ derivative on form fields.[fn:3]
                (cos theta)))))
    #+end_src
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Lsphere
        (compose Lfree (F->C sphere->R3)))
    #+end_src
 
    Then the Lagrange equations are:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (show-expression
       (((Lagrange-equations Lsphere)
         (up (literal-function 'alpha)
@@ -1531,7 +1531,7 @@ derivative on form fields.[fn:3]
     Hamiltonian formulation. The Hamiltonian is obtained from the
     Lagrangian by a Legendre transformation:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define Hsphere
         (Lagrangian->Hamiltonian Lsphere))
     #+end_src
@@ -1539,7 +1539,7 @@ derivative on form fields.[fn:3]
     We can get the coordinate representation of the Hamiltonian vector
     field as follows:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       ((phase-space-derivative Hsphere)
        (up 't (up 'theta 'phi) (down 'p_theta 'p_phi)))
       ;; /(up 1/
@@ -1554,7 +1554,7 @@ derivative on form fields.[fn:3]
     time, two dimensions of position on the sphere, and two dimensions
     of momentum:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define state-space
         (make-manifold R^n 5))
       (define states

@@ -59,7 +59,7 @@ directly recognize, and there are compound expressions of several kinds.
    procedures.[fn:4] For example, the procedure that squares its input can be
    written:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (lambda (x) (* x x))
    #+end_src
 
@@ -88,7 +88,7 @@ directly recognize, and there are compound expressions of several kinds.
    We can use the define construct to give a name to any object. For example, if
    we make the definitions[fn:5]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define pi 3.141592653589793)
 
      (define square (lambda (x) (* x x)))
@@ -106,7 +106,7 @@ directly recognize, and there are compound expressions of several kinds.
    Procedure definitions may be expressed more conveniently using "syntactic
    sugar." The squaring procedure may be defined
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (square x) (* x x))
    #+end_src
 
@@ -134,7 +134,7 @@ directly recognize, and there are compound expressions of several kinds.
    Using the syntactic sugar shown above, we can write the definition more
    conveniently. The following are both equivalent to the definition above:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (compose f g)
        (lambda (x)
          (f (g x))))
@@ -149,7 +149,7 @@ directly recognize, and there are compound expressions of several kinds.
    produce a value. For example, a procedure that implements the absolute value
    function may be written:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (abs x)
        (cond ((< x 0) (- x))
              ((= x 0) x)
@@ -176,7 +176,7 @@ directly recognize, and there are compound expressions of several kinds.
    to be made. For example, because we have to do something special only when
    the argument is negative, we could have defined =abs= as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      define(define (abs x)
              (if (< x 0)
                  (- x)

@@ -111,7 +111,7 @@ Then
 
 Define two general vector fields:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define e0
     (+ (* (literal-manifold-function 'e0x R2-rect) d/dx)
        (* (literal-manifold-function 'e0y R2-rect) d/dy)))
@@ -123,7 +123,7 @@ Define two general vector fields:
 
 We use these as a vector basis and compute the dual:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define e-vector-basis (down e0 e1))
   (define e-dual-basis
     (vector-basis->dual e-vector-basis R2-polar))
@@ -212,7 +212,7 @@ coefficients by applying the dual basis:
 
    We can write
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Jacobian to-basis from-basis)
        (s:map/r (basis->1form-basis to-basis)
                 (basis->vector-basis from-basis)))
@@ -466,7 +466,7 @@ coefficients by applying the dual basis:
    Define the vector fields =Jx=, =Jy=, and =Jz= that generate rotations about
    the three rectangular axes in three dimensions:[fn:5]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Jz (- (* x d/dy) (* y d/dx)))
      (define Jx (- (* y d/dz) (* z d/dy)))
      (define Jy (- (* z d/dx) (* x d/dz)))
@@ -621,7 +621,7 @@ commutator is $[A, [A, B]]$.
 
 [fn:6] Using
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define Euler-angles (coordinate-system-at 'Euler 'Euler-patch SO3))
   (define Euler-angles-chi-inverse (point Euler-angles))
   (define-coordinates (up theta phi psi) Euler-angles)
@@ -631,7 +631,7 @@ commutator is $[A, [A, B]]$.
 
 [fn:5] Using
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define R3-rect (coordinate-system-at 'rectangular 'origin R3))
   (define-coordinates (up x y z) R3-rect)
   (define R3-rect-point ((point R3-rect) (up 'x0 'y0 'z0)))

@@ -39,12 +39,12 @@
   There are computational objects that we can use to model manifolds.
   For example, we can make an object that represents the
   plane[fn:2]
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define R2 (make-manifold R^n 2))
 #+end_src
 and give it the name ~R2~. One useful patch of the plane is the one
 that contains the origin and covers the entire plane[fn:3].
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define U (patch 'origin R2))
 #+end_src
 
@@ -76,14 +76,14 @@ that contains the origin and covers the entire plane[fn:3].
 
    We can have both rectangular and polar coordinates on a patch
    of the plane identified by the origin[fn:5][fn:6]:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ;; Some charts on the patch U
      (define R2-rect (coordinate-system 'rectangular U))
      (define R2-polar (coordinate-system 'polar/cylindrical U))
    #+end_src
    For each of the coordinate systems above we obtain the coordinate
    functions and their inverses:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-rect-chi (chart R2-rect))
      (define R2-rect-chi-inverse (point R2-rect))
      (define R2-polar-chi (chart R2-polar))
@@ -91,20 +91,20 @@ that contains the origin and covers the entire plane[fn:3].
    #+end_src
    The coordinate transformations are then just compositions. The
    polar coordinates of a rectangular point are:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((compose R2-polar-chi R2-rect-chi-inverse)
       (up 'x0 'y0))
      ;;(up (sqrt (+ (expt x0 2) (expt y0 2))) (atan y0 x0))
    #+end_src
    And the rectangular coordinates of a polar point are:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((compose R2-rect-chi R2-polar-chi-inverse)
       (up 'r0 'theta0))
      ;;(up (* r0 (cos theta0)) (* r0 (sin theta0)))
    #+end_src
    And we can obtain the Jacobian of the polar-to-rectangular transformation
    by taking its derivative[fn:7]:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((D (compose R2-rect-chi R2-polar-chi-inverse))
       (up 'r0 'theta0))
      ;;(down (up (cos theta0) (sin theta0))
@@ -160,21 +160,21 @@ that contains the origin and covers the entire plane[fn:3].
 
    We define a manifold function by specifying its behavior in rectangular
    coordinates[fn:8]:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define f
        (compose (literal-function 'f-rect R2->R) R2-rect-chi)
    #+end_src
    where ~R2->R~ is a signature for functions hat map an up structure
    of two reals to a real:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2->R (-> (UP Real Real) Real))
    #+end_src
    We can specify a typical manifold point using its rectangular coordinates:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-rect-point (R2-rect-chi-inverse (up 'x0 'y0))))
    #+end_src
    We can describe the /same point/ using its polar coordinates:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define corresponding-polar-point
        (R2-polar-chi-inverse
         (up (sqrt (+ (square 'x0) (square 'y0)))
@@ -183,11 +183,11 @@ that contains the origin and covers the entire plane[fn:3].
    ~(f R2-rect-point)~ and ~(f corresponding-polar-point)~ agree,
    even though the point has been specified in two different coordinate
    systems:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      R2-rect-point(f R2-rect-point)
      ;;(f-rect (up x0 y0))
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (f corresponding-polar-point)
      ;;(f-rect (up x0 y0))
    #+end_src
@@ -197,35 +197,35 @@ that contains the origin and covers the entire plane[fn:3].
    coordinate functions associated with a coordinate system. Here we
    name the coordinate functions for the ~R2-rect~ coordinate system
    ~x~ and ~y~ and for the ~R2-polar~ coordinate system ~r~ and ~theta~.
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up x y) R2-rect)
      (define-coordinates (up r theta) R2-polar)
    #+end_src
    This allows us to extract the coordinates from a point, independent
    of the coordinate system used to specify the point.
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (x R2-rect-chi-inverse(R2-rect-chi-inverse (up 'x0 'y0)))
      ;;x0
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (x (R2-polar-chi-inverse (up 'r0 'theta0)))
      ;;(* r0 (cos theta0))
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (r (R2-polar-chi-inverse (up 'r0 'theta0)))
      ;;r0
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (r R2-rect-chi-inverse(R2-rect-chi-inverse (up 'x0 'y0)))
      ;;(sqrt (+ (expt x0 2) (expt y0 2)))
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (theta (R2-rect-chi-inverse (up 'x0 'y0)))
      ;;(atan y0 x0)
    #+end_src
    We can work with the coordinate functions in a natural manner,
    defining new manifold functions in terms of them[fn:9]:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define h (+ (* x (square r)) (cube y)))
 
      (h R2-rect-point)
@@ -233,7 +233,7 @@ that contains the origin and covers the entire plane[fn:3].
      ;;   (expt y0 3))
    #+end_src
    We can also apply ~h~ to a point defined in terms of its polar coordinates:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (h (R2-polar-chi-inverse (up 'r0 'theta0)))
      ;;(+ (* (expt r0 3) (expt (sin theta0) 3))
      ;;   (* (expt r0 3) (cos theta0)))
@@ -246,7 +246,7 @@ that contains the origin and covers the entire plane[fn:3].
    $$r = 2a(1 + cos(\theta)).$$
    We can convert this to rectangular coordinates by evaluating the residual
    in rectangular coordinates.
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up r theta) R2-polar)
 
      ((- r (* 2 'a (+ 1 (cos theta))))
@@ -285,7 +285,7 @@ that contains the origin and covers the entire plane[fn:3].
 
    We can compute the colatitude and longitude of a point on the sphere
    corresponding to a point on the plane with the following incantation:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((compose
        (chart S2-spherical)
        (point S2-Riemann)
@@ -314,7 +314,7 @@ way---either computing the cosine of ~r~ or being treated as ~(compose cos r)~
 depending on what ~r~ is.
 
 [fn:8] Alternatively, we can define the same function in a shorthand
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define f (literal-manifold-function 'f-rect R2-rect))
 #+end_src
 
@@ -323,7 +323,7 @@ depending on what ~r~ is.
 derivatives of functions with structured input or output.
 
 [fn:6] We can avoid explicitly naming the patch:
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define R2-rect (coordinate-system-at 'rectangular 'origin R2))
 #+end_src
 

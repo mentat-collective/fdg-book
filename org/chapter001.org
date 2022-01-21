@@ -90,7 +90,7 @@
    A Lagrangian for a free particle of mass m and velocity v is just its kinetic
    energy, $mv^2/2$. The procedure =Lfree= implements the free Lagrangian:[fn:3]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((Lfree mass) state)
        (* 1/2 mass (square (velocity state))))
    #+end_src
@@ -112,7 +112,7 @@
    space. (The $\hat{z}$ axis goes through the North Pole, and the Equator is in
    the plane $z = 0$.)
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((sphere->R3 R) state)
        (let ((q (coordinate state)))
          (let ((theta (ref q 0)) (phi (ref q 1)))
@@ -127,7 +127,7 @@
    these make up the state transformation. The procedure =F->C= implements the
    derivation of a transformation of states from a coordinate transformation:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((F->C F) state)
        (up (time state)
            (F state)
@@ -139,7 +139,7 @@
    A Lagrangian governing free motion on a sphere of radius $R$ is then the
    composition of the free Lagrangian with the transformation of states.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Lsphere m R)
        (compose (Lfree m) (F->C (sphere->R3 R))))
    #+end_src
@@ -209,7 +209,7 @@
 
    We can capture this geometric statement as a program:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((L2 mass metric) place velocity)
        (* 1/2 mass ((metric velocity velocity) place)))
    #+end_src
@@ -224,7 +224,7 @@
    constructed by contracting the basis with the components of the velocity.
    Thus, we can form a coordinate representation of the Lagrangian.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((Lc mass metric coordsys) state)
        (let ((x (coordinates state)) (v (velocities state))
              (e (coordinate-system->vector-basis coordsys)))
@@ -243,7 +243,7 @@
 
    Let's make a general metric on a 2-dimensional real manifold:[fn:4]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define the-metric (literal-metric 'g R2-rect))
    #+end_src
 
@@ -253,13 +253,13 @@
 
    We can now make the Lagrangian for the system:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define L (Lc 'm the-metric R2-rect))
    #+end_src
 
    And we can apply our Lagrangian to an arbitrary state:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (L (up 't (up 'x 'y) (up 'vx 'vy)))
      ;; (+ (* 1/2 m (g_00 (up x y)) (expt vx 2))
      ;;    (* m (g_01 (up x y)) vx vy)
@@ -275,7 +275,7 @@
    1-dimensional real line to the configuration manifold. We introduce maps
    between manifolds in Chapter 6.) Consider an arbitrary path:[fn:6]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define gamma (literal-manifold-map 'q R1-rect R2-rect))
    #+end_src
 
@@ -287,7 +287,7 @@
    $\mathbb{R}^2$ to its coordinate representation we use =((chart R2-rect) m)=.
    (The procedures point and chart are introduced in Chapter 2.) Thus
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((chart R2-rect) (gamma ((point R1-rect) 't)))
      ;; (up (qˆ0 t) (qˆ1 t))
    #+end_src
@@ -304,7 +304,7 @@
    a large messy expression that we will not show.[fn:7] However, we will save it to
    compare with the residuals of the geodesic equations.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Lagrange-residuals
        (((Lagrange-equations L) coordinate-path) 't))
    #+end_src
@@ -356,7 +356,7 @@
 
    We can get and save the geodesic equation residuals by:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define geodesic-equation-residuals
        (((((covariant-derivative Cartan gamma) d/dt)
           ((differential gamma) d/dt))
@@ -368,7 +368,7 @@
    of encapsulating the geometry, as specified by the Christoffel coefficients.
    The Christoffel coefficients are computed from the metric:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define Cartan
        (Christoffel->Cartan
         (metric->Christoffel-2
@@ -381,7 +381,7 @@
    "lowering" them using the mass and the metric, we see that the residuals are
    equal:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define metric-components
        (metric->components
         the-metric

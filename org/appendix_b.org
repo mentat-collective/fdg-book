@@ -56,7 +56,7 @@ behavior of systems.
 
    In Scheme we can write this as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (d x1 y1 x2 y2)
        (sqrt (+ (square (- x2 x1)) (square (- y2 y1)))))
    #+end_src
@@ -231,7 +231,7 @@ behavior of systems.
    components $x$ and $y$. The momentum is a down tuple of the momentum
    components $p_x$ and $p_y$. In Scheme this is written:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define s (up 't (up 'x 'y) (down 'p_x 'p_y)))
    #+end_src
 
@@ -584,7 +584,7 @@ behavior of systems.
    both kinds of functions are compatible for contraction with a tuple of
    increments to the arguments. Scheme comes in handy here:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (h s)
        (g (ref s 0) (ref s 1)))
    #+end_src
@@ -666,7 +666,7 @@ behavior of systems.
    In Scheme we must make explicit choices. We usually assume that phase-space
    state functions are functions of the tuple. For example,
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define H
        (literal-function
         'H
@@ -712,14 +712,14 @@ behavior of systems.
 
    In Scheme we can write
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (helix t)
        (up (cos t) (sin t) t))
    #+end_src
 
    or just
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define helix (up cos sin identity))
    #+end_src
 
@@ -757,7 +757,7 @@ behavior of systems.
 
    In Scheme:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (g x y)
        (up (square (+ x y)) (cube (- y x)) (exp (+ x y))))
    #+end_src
@@ -791,7 +791,7 @@ behavior of systems.
     For example, we could write implementations of the functions that occur in
     exercise B.1 as follows:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (f x y)
         (* (square x) (cube y)))
 
@@ -812,7 +812,7 @@ behavior of systems.
     For example, we may define procedures that implement the functions above as
     follows:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (f v)
         (let ((x (ref v 0))
               (y (ref v 1)))

@@ -445,7 +445,7 @@ phenomenon.
 
    We represent a 4-tuple as a flat up-tuple of components.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (make-4tuple ct space)
        (up ct (ref space 0) (ref space 1) (ref space 2)))
 
@@ -456,7 +456,7 @@ phenomenon.
 
    The invariant interval is then
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (proper-space-interval 4tuple)
        (sqrt (- (square (4tuple->space 4tuple))
                 (square (4tuple->ct 4tuple)))))
@@ -469,7 +469,7 @@ phenomenon.
    It is often convenient for the interval to be real for time-like intervals,
    where light can traverse the spatial distance in less than the time interval.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (proper-time-interval 4tuple)
        (sqrt (- (square (4tuple->ct 4tuple))
                 (square (4tuple->space 4tuple)))))
@@ -477,7 +477,7 @@ phenomenon.
 
    The general boost $B$ is
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((general-boost beta) xi-p)
        (let ((gamma (expt (- 1 (square beta)) -1/2)))
          (let ((factor (/ (- gamma 1) (square beta))))
@@ -506,7 +506,7 @@ phenomenon.
    $\boldsymbol{\beta}$ is zero. An alternate way to specify a boost is through
    the magnitude of $v/c$ and a direction:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((general-boost2 direction v/c) 4tuple-prime)
        (let ((delta-ct-prime (4tuple->ct 4tuple-prime))
              (delta-x-prime (4tuple->space 4tuple-prime)))
@@ -555,7 +555,7 @@ phenomenon.
 
    The extended rotation can be implemented:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((extended-rotation R) xi)
        (make-4tuple
         (4tuple->ct xi)
@@ -636,7 +636,7 @@ phenomenon.
    other. The two procedures that are required to implement this strategy
    are[fn:6]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((coordinates->event ancestor-frame this-frame
                                   boost-direction v/c origin)
               coords)
@@ -656,7 +656,7 @@ phenomenon.
    With these two procedures, the procedure =make-SR-frame= constructs a new
    relativistic frame by a Poincaré transformation from a given frame.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define make-SR-frame
        (frame-maker coordinates->event event->coordinates))
    #+end_src
@@ -670,7 +670,7 @@ phenomenon.
     a dimensionless measure of the speed $v_a / c$. We also specify that the
     4-tuple origin of this new frame coincides with the origin of =home=.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define A
         (make-SR-frame 'A home
                        (up 1 0 0)
@@ -680,7 +680,7 @@ phenomenon.
 
     Frame =B= is built on frame =A= similarly, boosted by $v_b/c$.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define B
         (make-SR-frame 'B A
                        (up 1 0 0)
@@ -706,7 +706,7 @@ phenomenon.
     resulting velocity is represented as a fraction of the speed of light.) This
     is a useful result, so:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (add-v/cs va/c vb/c)
         (/ (+ va/c vb/c)
            (+ 1 (* va/c vb/c))))
@@ -722,7 +722,7 @@ phenomenon.
    The experiment begins at the start event, which we arbitrarily place at the
    origin of the home frame.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define start-event
        ((point home)
         (make-SR-coordinates home (up 0 0 0 0))))
@@ -732,7 +732,7 @@ phenomenon.
    event and proceeds at 24/25 of the speed of light in the $\hat{x}$ direction.
    We define a frame for the traveller, by boosting from the home frame.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define outgoing
        (make-SR-frame 'outgoing       ; for debugging
                       home            ; base frame
@@ -750,7 +750,7 @@ phenomenon.
    multiplied by 25 years to get the $\hat{x}$ coordinate of the traveller in
    the home frame at the turning point.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define traveller-at-turning-point-event
        ((point home)
         (make-SR-coordinates home
@@ -827,7 +827,7 @@ phenomenon.
    of the velocity of light. At the turning point (7 years by his time) home is
    at:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define home-at-outgoing-turning-point-event
        ((point outgoing)
         (make-SR-coordinates outgoing
@@ -859,7 +859,7 @@ phenomenon.
 
    After 50 years of home time the traveller reunites with the homebody:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define end-event
        ((point home)
         (make-SR-coordinates home (up (* :c 50) 0 0 0))))
@@ -907,7 +907,7 @@ phenomenon.
 
    At the turning point of the traveller the homebody is at
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define home-at-incoming-turning-point-event
        ((point incoming)
         (make-SR-coordinates incoming

@@ -138,7 +138,7 @@
 
    This expression is equivalent to a computer program:[fn:6]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((Lagrange-equations Lagrangian) w)
        (- (D (compose ((partial 2) Lagrangian) (Gamma w)))
           (compose ((partial 1) Lagrangian) (Gamma w))))
@@ -150,7 +150,7 @@
    procedure =(Gamma w)= is constructed from the configuration-space path
    procedure =w= by the procedure =Gamma=:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((Gamma w) t)
        (up t (w t) ((D w) t)))
    #+end_src
@@ -169,7 +169,7 @@
 
    for mass $m$ and spring constant $k$. this lagrangian is implemented by
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((L-harmonic m k) local)
        (let ((q (coordinate local))
              (v (velocity local)))

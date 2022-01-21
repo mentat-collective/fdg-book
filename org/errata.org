@@ -21,7 +21,7 @@
 
    Page 44: Note that you need to install the =R2-rect= coordinate system:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up x y) R2-rect)
    #+end_src
 
@@ -29,20 +29,20 @@
 
    Page 60: This page restates:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up x y z) R3-rect)
    #+end_src
 
    But assumes that the =R3-rect-point= binding still exists from the previous
    chapter:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R3-rect-point ((point R3-rect) (up 'x0 'y0 'z0)))
    #+end_src
 
    Page 60: I was concerned that
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up r theta z) R3-cyl)
    #+end_src
 
@@ -50,7 +50,7 @@
    rectangular coordinates. I know that these are equivalent for all intents and
    purposes... just noting that maybe
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up r theta z-cyl) R3-cyl)
    #+end_src
 
@@ -63,7 +63,7 @@
    Page 67 uses =R2-rect-point= without ever defining it. The definition is, of
    course,
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define R2-rect-point ((point R2-rect) (up 'x0 'y0)))
    #+end_src
 
@@ -72,7 +72,7 @@
    Page 75: the definition of =S2= references the nonexistent manifold family
    =S^2= instead of =S^2-type=:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define S2 (make-manifold S^2 2 3))
    #+end_src
 
@@ -84,7 +84,7 @@
    the page is written for =R3= but the result is for =R2=. If you run the code
    in the book, you get:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((((partial 1) f-rect) (up 1 0 0))
       (* a (((partial 0) f-rect) (up 1 0 0)))
       (* -1/2 (expt a 2) (((partial 1) f-rect) (up 1 0 0)))
@@ -94,7 +94,7 @@
 
    While the book shows:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((((partial 0) f-rect) (up 1 0))
       (* -1 a (((partial 1) f-rect) (up 1 0)))
       (* -1/2 (expt a 2) (((partial 1) f-rect) (up 1 0)))
@@ -108,20 +108,20 @@
    Page 103: I believe the code listing at the end of the page subs in =J= where
    =circular= belongs. The code shown is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((((covariant-derivative R2-polar-Cartan) d/dx) J) f) R2-rect-point)
    #+end_src
 
    The correct version is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((((covariant-derivative R2-polar-Cartan) d/dx) circular) f) R2-rect-point)
    #+end_src
 
    Page 107: the definition of =S2-Christoffel= will not work without
    =S2-spherical= coordinates installed:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up theta phi) S2-spherical)
    #+end_src
 
@@ -133,20 +133,20 @@
    Page 116: The code beginning here requires the =S2-spherical= coordinate
    system:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up theta phi) S2-spherical)
    #+end_src
 
    Page 127 states "Where =omega= is an arbitrary one-form field." It would be
    nice to add this definition to the setup in footnote 8:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define omega (literal-oneform-field 'omega S2-spherical))
    #+end_src
 
    The torsion example on page 127 uses an =f= that has not yet been defined:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (let ((X (literal-vector-field 'X-sphere S2-spherical))
            (Y (literal-vector-field 'Y-sphere S2-spherical)))
        ((((torsion-vector nabla) X Y) f) m))
@@ -154,7 +154,7 @@
 
    This can be fixed by adding the following to footnote 8's setup instructions:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define f (literal-manifold-function f S2-spherical))
    #+end_src
 
@@ -168,7 +168,7 @@
    Page 136: The code beginning here requires the =S2-spherical= coordinate
    system and =S2-basis=:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up theta phi) S2-spherical)
      (define S2-basis (coordinate-system->basis S2-spherical))
    #+end_src
@@ -184,7 +184,7 @@
    system to be installed. =spacetime-rect-basis= is also used in the first code
    block on this page without definition:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up t x y z) spacetime-rect)
      (define spacetime-rect-basis (coordinate-system->basis spacetime-rect))
    #+end_src
@@ -193,14 +193,14 @@
    defined. =V= was declared inline above in the definition of =nabla=, and
    should be explicitly defined like so:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define V (literal-function 'V (-> (UP Real Real Real) Real)))
    #+end_src
 
    Page 147: the expression after "If we evaluate the right-hand side expression
    we obtain" actually returns
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      expt(+ (* 1/2 (expt :c 4) rho)
             (* 2 (expt :c 2) rho (V (up x y z)))
             (* 2 rho (expt (V (up x y z)) 2)))
@@ -208,7 +208,7 @@
 
    instead of the stated return value:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      expt(* 1/2 (expt :c 4) rho)
    #+end_src
 
@@ -220,14 +220,14 @@
    Page 159: the setup block should define =SR-basis=, as it is used in the last
    example of the section, on page 160:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define SR-basis (coordinate-system->basis SR))
    #+end_src
 
    If the setup block defined =SR-basis= then the =SR-vector-basis= definition
    on page 160 could become:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define SR-vector-basis (basis->vector-basis SR-basis))
    #+end_src
 
@@ -238,7 +238,7 @@
    Including the =c^2= term explicitly would require, I believe, the following
    substitutions (along with result substitutions for the forms below):
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ;; page 159
      (define (g-Minkowski u v)
        (+ (* -1 (square ':c) (dct u) (dct v))
@@ -306,7 +306,7 @@
    frame defined in the library is =the-ether=; I would recommend including one
    of the the following definitions as setup:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define home
        ((frame-maker base-frame-point base-frame-chart)
         'home 'home))

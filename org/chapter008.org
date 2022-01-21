@@ -27,7 +27,7 @@ point.
 
 The Riemann curvature is computed by
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define ((Riemann-curvature nabla) w v)
   (- (commutator (nabla w) (nabla v))
      (nabla (commutator w v))))
@@ -42,7 +42,7 @@ the result of =((Riemann-curvature nabla) w v)= is a procedure that takes a
 vector field and produces a vector field so we can implement the Riemann tensor
 as
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
 (define ((Riemann nabla) omega u w v)
   (omega (((Riemann-curvature nabla) w v) u)))
 #+end_src
@@ -204,7 +204,7 @@ The following are the nonzero coefficients:
     We can verify this in two dimensions. We need to make the structure
     representing a state:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (make-state sigma u) (vector sigma u))
 
       (define (Sigma state) (ref state 0))
@@ -216,7 +216,7 @@ The following are the nonzero coefficients:
     of the components of the vector $\mathsf{u}$ as we carry it along the vector
     field $\mathsf{v}$.[fn:6]
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((Du v) state)
         (let ((CF (Cartan->forms general-Cartan-2)))
           (* -1
@@ -227,14 +227,14 @@ The following are the nonzero coefficients:
     We also need to determine the rate of change of the coordinates of the
     integral curve of $\mathsf{v}$.
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((Dsigma v) state)
         ((v Chi) (Chi-inverse (Sigma state))))
     #+end_src
 
     Putting these together to make the derivative of the state vector
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((g v) state)
         (make-state ((Dsigma v) state) ((Du v) state)))
     #+end_src
@@ -242,7 +242,7 @@ The following are the nonzero coefficients:
     gives us just what we need to construct the differential operator for
     evolution of the combined state:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (L v)
         (define ((l h) state)
           (* ((D h) state) ((g v) state)))
@@ -286,7 +286,7 @@ The following are the nonzero coefficients:
 
     or as a program:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((((curvature-from-transport Cartan) w v) u) f)
         (let* ((CF (Cartan->forms Cartan))
                (basis (Cartan->basis Cartan))
@@ -303,7 +303,7 @@ The following are the nonzero coefficients:
     This computes the same operator as the traditional Riemann curvature
     operator:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (test coordsys Cartan)
         (let ((m (typical-point coordsys))
               (u (literal-vector-field 'u-coord coordsys))
@@ -421,7 +421,7 @@ The following are the nonzero coefficients:
 
     Expressed as a program:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((Ricci nabla basis) u v)
         (contract (lambda (ei wi) ((Riemann nabla) wi u ei v))
                   basis))
@@ -442,7 +442,7 @@ The following are the nonzero coefficients:
     coordinate along the asymptote and $\theta$ is the angle of revolution. We
     embed the pseudosphere in rectangular 3-dimensional space with
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define (pseudosphere q)
         (let ((t (ref q 0)) (theta (ref q 1)))
           (up (* (sech t) (cos theta))
@@ -452,7 +452,7 @@ The following are the nonzero coefficients:
 
     The structure of Christoffel coefficients for the pseudosphere is
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (down
        (down (up (/ (+ (* 2 (expt (cosh t) 2) (expt (sinh t) 2))
                        (* -2 (expt (sinh t) 4)) (expt (cosh t) 2)
@@ -488,7 +488,7 @@ The following are the nonzero coefficients:
 
    We account for this dependency by parameterizing the program by =nabla=.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((torsion-vector nabla) u v)
        (- (- ((nabla u) v) ((nabla v) u))
           (commutator u v)))
@@ -700,7 +700,7 @@ The following are the nonzero coefficients:
     $\theta$ is uniformly increasing with time, the magnitude of the velocity is
     just the $\theta$-derivative of this distance:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define ((delta R) phi theta Delta-phi)
         (* R (sin theta) Delta-phi))
     #+end_src
@@ -712,7 +712,7 @@ The following are the nonzero coefficients:
 
     The direction of the velocity is the unit vector in the $\phi$ direction:
 
-    #+begin_src scheme
+    #+begin_src scheme :results value raw :exports both :cache yes
       (define phi-hat
         (* (/ 1 (sin theta)) d/dphi))
     #+end_src
@@ -768,7 +768,7 @@ The following are the nonzero coefficients:
    A system with a symmetric connection, $\Gamma_{jk}^i = \Gamma_{jk}^i$, is
    torsion free.[fn:9]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define nabla
        (covariant-derivative
         (Christoffel->Cartan
@@ -785,7 +785,7 @@ The following are the nonzero coefficients:
    The Bianchi identities are defined in terms of a cyclic-summation operator,
    which is most easily described as a Scheme procedure:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((cyclic-sum f) x y z)
        (+ (f x y z)
           (f y z x)
@@ -834,7 +834,7 @@ The following are the nonzero coefficients:
    Things get more complicated when there is torsion. We can make a general
    connection, which has torsion:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define nabla
        (covariant-derivative
         (Christoffel->Cartan
@@ -879,7 +879,7 @@ mathematical notation than as Scheme programs.
 
 [fn:9] Setup for this section:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define omega (literal-1form-field 'omega-rect R4-rect))
   (define X (literal-vector-field 'X-rect R4-rect))
   (define Y (literal-vector-field 'Y-rect R4-rect))
@@ -889,7 +889,7 @@ mathematical notation than as Scheme programs.
 
 [fn:8] The setup for this example is:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define-coordinates (up theta phi) S2-spherical)
   (define T d/dtheta)
   (define U d/dphi)
@@ -904,7 +904,7 @@ derivative." But this is wrong. The evolution is by exponentiation of $L_g$.
 [fn:6] The setup for this experiment is a bit complicated. We need to make a
 manifold with a general connection.
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define Chi-inverse (point R2-rect))
   (define Chi (chart R2-rect))
 #+end_src
@@ -912,7 +912,7 @@ manifold with a general connection.
 We now make the Cartan forms from the most general 2-dimensional Christoffel
 coefficient structure:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define general-Cartan-2
     (Christoffel->Cartan
      (literal-Christoffel-2 'Gamma R2-rect)))

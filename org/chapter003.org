@@ -127,7 +127,7 @@ independent of coordinate system. Let's see what we can build out of this.
    the vector field.
 
    We implement the definition of a vector field (3.4) as:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (components->vector-field components coordsys)
        (define (v f)
          (compose (* (D (compose f (point coordsys)))
@@ -142,7 +142,7 @@ independent of coordinate system. Let's see what we can build out of this.
    coordinates to real values, we can make a vector field. For example,
    a general vector field can be defined by giving components
    relative to the coordinate system ~R2-rect~ by
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define v
        (components->vector-field
         (up (literal-function 'b^0 R2->R)
@@ -156,7 +156,7 @@ independent of coordinate system. Let's see what we can build out of this.
    to an arbitrary manifold function it gives the directional derivative
    of that manifold function in the direction specified by the
    components ~b^0~ and ~b^1~:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((v (literal-manifold-function 'f-rect R2-rect)) R2-rect-point)
      ;; (+ (* (((partial 0) f-rect) (up x0 y0)) (b?0 (up x0 y0)))
      ;;    (* (((partial 1) f-rect) (up x0 y0)) (b?1 (up x0 y0))))
@@ -165,7 +165,7 @@ independent of coordinate system. Let's see what we can build out of this.
 
    We can recover the coordinate components of the vector field
    by applying the vector field to the coordinate chart:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((v (chart R2-rect)) R2-rect-point)
      ;; (up (b?0 (up x y)) (b?1 (up x y)))
    #+end_src
@@ -188,7 +188,7 @@ independent of coordinate system. Let's see what we can build out of this.
 
      Given a vector field ~v~ and a coordinate system coordsys we can
      construct the coordinate representation of the vector field.[fn:3]
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define (coordinatize v coordsys)
          (define ((coordinatized-v f) x)
            (let ((b (compose (v (chart coordsys))
@@ -198,7 +198,7 @@ independent of coordinate system. Let's see what we can build out of this.
      #+end_src
      We can apply a coordinatized vector field to a function of coordinates
      to get the same answer as before.
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (((coordinatize v R2-rect) (literal-function 'f-rect R2->R))
         (up 'x0 'y0))
        ;; (+ (* (((partial 0) f-rect) (up x0 y0)) (b?0 (up x0 y0)))
@@ -288,17 +288,17 @@ independent of coordinate system. Let's see what we can build out of this.
    ~define-coordinates~ also makes the traditional named basis vectors.
    Using these we can examine the application of a rectangular
    basis vector to a polar coordinate function:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define-coordinates (up x y) R2-rect)
      (define-coordinates (up r theta) R2-polar)
    #+end_src
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((d/dx (square r)) R2-rect-point)
      ;; (* 2 x0)
    #+end_src
    More general functions and vectors can be made as combinations
    of these simple pieces:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (((+ d/dx (* 2 d/dy)) (+ (square r) (* 3 x))) R2-rect-point)
      ;; (+ 3 (* 2 x0) (* 4 y0))
    #+end_src
@@ -435,12 +435,12 @@ independent of coordinate system. Let's see what we can build out of this.
 
    For example, a vector field \textsf{circular} that generates a rotation
    about the origin is:[fn:8]
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define circular (- (* x d/dy) (* y d/dx)))
    #+end_src
    We can exponentiate the circular vector field, to generate an
    evolution in a circle around the origin starting at ~(1, 0)~:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (series:for-each print-expression
                       (((exp (* 't circular)) (chart R2-rect))
                        ((point R2-rect) (up 1 0)))
@@ -463,7 +463,7 @@ independent of coordinate system. Let's see what we can build out of this.
    \end{equation}
    We can approximate the evolution operator by summing the
    series up to a given order:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((((evolution order) delta-t v) f) m)
        (series:sum
         (((exp (* delta-t v)) f) m)
@@ -471,7 +471,7 @@ independent of coordinate system. Let's see what we can build out of this.
    #+end_src
    We can evolve circular from the initial point up to the parameter
    ~t~, and accumulate the first six terms as follows:
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      ((((evolution 6) 'delta-t circular) (chart R2-rect))
       ((point R2-rect) (up 1 0)))
      ;; (up (+ (* -1/720 (expt delta-t 6))
@@ -627,7 +627,7 @@ independent of coordinate system. Let's see what we can build out of this.
      \end{equation}
      This follows from the dual relationship (3.41). We can see this as
      a program:[fn:12]
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define omega
          (components->1form-field
           (down (literal-function 'a
@@ -636,12 +636,12 @@ independent of coordinate system. Let's see what we can build out of this.
                                     1 R2->R))
           R2-rect))
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((omega (down d/dx d/dy)) R2-rect-point)
        ;; (down (a_0 (up x0 y0)) (a_1 (up x0 y0)))
      #+end_src
      We provide a shortcut for this construction:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define omega (literal-1form-field 'a R2-rect))
      #+end_src
 
@@ -652,7 +652,7 @@ independent of coordinate system. Let's see what we can build out of this.
      The coefficients $\mathsf{c}_i = \mathsf{df}(\mathsf{X}_i) = \mathsf{X}_i(\mathsf{f}) = \partial_i(\mathsf{f} \circ \chi^{-1}) \circ \chi$ are the partial
      derivatives of the coordinate representation of $\mathsf{f}$ in the coordinate
      system of the basis:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (((d (literal-manifold-function 'f-rect R2-rect))
          (coordinate-system->vector-basis R2-rect))
         R2-rect-point)
@@ -663,7 +663,7 @@ independent of coordinate system. Let's see what we can build out of this.
      coordinates of the representation of the function, the result is
      complicated by the chain rule:
 
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (((d (literal-manifold-function 'f-polar R2-polar))
          (coordinate-system->vector-basis R2-rect))
         ((point R2-polar) (up 'r 'theta)))
@@ -698,14 +698,14 @@ independent of coordinate system. Let's see what we can build out of this.
 
      We can illlustrate the duality of the coordinate-basis vector
      fields and the coordinate-basis one-form fields:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define-coordinates (up x y) R2-rect)
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dx d/dy) R2-rect-point)
        ;; 0
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dx d/dx) R2-rect-point)
        ;; 0
      #+end_src
@@ -713,26 +713,26 @@ independent of coordinate system. Let's see what we can build out of this.
      We can use the coordinate-basis one-form fields to extract the
      coefficients of ~circular~ on the rectangular vector basis:
 
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dx circular) R2-rect-point)
        ;; (* -1 y0)
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dy circular) R2-rect-point)
        ;; x0
      #+end_src
      But we can also find the coefficients on the polar vector basis:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dr circular) R2-rect-point)
        ;; 0
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((dtheta circular) R2-rect-point)
        ;; 1
      #+end_src
      So ~circular~ is the same as ~d/dtheta~, as we can see by applying
      them both to the general function ~f~:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define f (literal-manifold-function 'f-rect R2-rect))
        (((- circular d/dtheta) f) R2-rect-point)
        0
@@ -798,13 +798,13 @@ independent of coordinate system. Let's see what we can build out of this.
      \omega(\mathsf{v}) = (a \circ \chi) (b \circ \chi).
      \end{equation}
      As a program:
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define omega (literal-1form-field 'a R2-rect))
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        (define v (literal-vector-field 'b R2-rect))
      #+end_src
-     #+begin_src scheme
+     #+begin_src scheme :results value raw :exports both :cache yes
        ((omega v) R2-rect-point)
        ;; (+ (* (b^0 (up x y)) (a_0 (up x0 y0)))
        ;;    (* (b^1 (up x y)) (a_1 (up x0 y0))))

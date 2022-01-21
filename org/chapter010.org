@@ -88,7 +88,7 @@ respectively.
 
    is computed by
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (gradient metric basis)
        (compose (raise metric basis) d))
    #+end_src
@@ -135,7 +135,7 @@ respectively.
 
    which can be computed with
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (curl metric orthonormal-basis)
        (let ((star (Hodge-star metric orthonormal-basis))
              (sharp (raise metric orthonormal-basis))
@@ -172,7 +172,7 @@ respectively.
 
    It is easily computed:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (divergence metric orthonormal-basis)
        (let ((star (Hodge-star metric orthonormal-basis))
              (flat (lower metric)))
@@ -182,7 +182,7 @@ respectively.
    The divergence is defined even if we don't have a metric, but have only a
    connection. In that case the divergence can be computed with
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (((divergence Cartan) v) point)
        (let ((basis (Cartan->basis Cartan))
              (nabla (covariant-derivative Cartan)))
@@ -199,7 +199,7 @@ respectively.
    The Laplacian is, as expected, the composition of the divergence and the
    gradient:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Laplacian metric orthonormal-basis)
        (compose (divergence metric orthonormal-basis)
                 (gradient metric orthonormal-basis)))
@@ -211,7 +211,7 @@ respectively.
    operators in spherical coordinates. We start with a 3-dimensional manifold,
    and we set up the conditions for spherical coordinates.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define spherical R3-rect)
 
      (define-coordinates (up r theta phi) spherical)
@@ -222,7 +222,7 @@ respectively.
 
    The geometry is specified by the metric:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (spherical-metric v1 v2)
        (+ (* (dr v1) (dr v2))
           (* (square r)
@@ -234,7 +234,7 @@ respectively.
    We also need an orthonormal basis for the spherical coordinates. The
    coordinate basis is orthogonal but not normalized.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define e_0 d/dr)
 
      (define e_1 (* (/ 1 r) d/dtheta))
@@ -271,7 +271,7 @@ respectively.
    To get the formulas for curl and divergence we need a vector field with
    components with respect to the normalized basis.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define v
        (+ (* (literal-manifold-function 'v^0 spherical) e_0)
           (* (literal-manifold-function 'v^1 spherical) e_1)
@@ -335,7 +335,7 @@ respectively.
    The kinematics of special relativity can be formulated on a flat
    4-dimensional spacetime manifold.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define SR R4-rect)
      (define-coordinates (up ct x y z) SR)
      (define an-event ((point SR) (up 'ct0 'x0 'y0 'z0)))
@@ -361,7 +361,7 @@ respectively.
 
    As a program:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (g-Minkowski u v)
        (+ (* -1 (dct u) (dct v))
           (* (dx u) (dx v))
@@ -393,7 +393,7 @@ respectively.
 
    We need an orthonormal basis for the spacetime:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define SR-vector-basis (coordinate-system->vector-basis SR))
    #+end_src
 
@@ -409,7 +409,7 @@ respectively.
 
    So, the Laplacian of a scalar field is the wave equation!
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define p (literal-manifold-function 'phi SR))
    #+end_src
 
@@ -433,7 +433,7 @@ respectively.
    transformations the individual components are mixed. The Faraday tensor
    is:[fn:4]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Faraday Ex Ey Ez Bx By Bz)
        (+ (* Ex (wedge dx dct))
           (* Ey (wedge dy dct))
@@ -447,7 +447,7 @@ respectively.
    fields, negating the components that will involve time. The result is called
    the /Maxwell tensor/:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Maxwell Ex Ey Ez Bx By Bz)
        (+ (* -1 Bx (wedge dx dct))
           (* -1 By (wedge dy dct))
@@ -459,7 +459,7 @@ respectively.
 
    We make a Hodge dual operator for this situation:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define SR-star (Hodge-star g-Minkowski SR-basis))
    #+end_src
 
@@ -478,7 +478,7 @@ respectively.
    from motion of charges. In this formulation we combine the charge density and
    the current to make a one-form field:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (J charge-density Ix Iy Iz)
        (- (* (/ 1 :c) (+ (* Ix dx) (* Iy dy) (* Iz dz)))
           (* charge-density dct)))
@@ -490,7 +490,7 @@ respectively.
    To develop Maxwell's equations we need a general Faraday field and a general
    current-density field:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define F
        (Faraday (literal-manifold-function 'Ex SR)
                 (literal-manifold-function 'Ey SR)
@@ -683,7 +683,7 @@ respectively.
    We can compute this in coordinates. We construct arbitrary $\vec{E}$ and
    $\vec{B}$ vector fields and an arbitrary velocity:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define E
        (up (literal-manifold-function 'Ex SR)
            (literal-manifold-function 'Ey SR)
@@ -724,7 +724,7 @@ respectively.
    terms of the Faraday tensor. The desired component is specified by a
    one-form.
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Force charge F 4velocity component)
        (* -1 charge
           (contract (lambda (a b)
@@ -751,7 +751,7 @@ respectively.
    direction we can see how the $\hat{y}$ component of the force involves both
    the electric and magnetic field:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (Ux beta)
        (+ (* (/ 1 (sqrt (- 1 (square beta)))) d/dct)
           (* (/ beta (sqrt (- 1 (square beta)))) d/dx)))

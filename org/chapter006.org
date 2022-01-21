@@ -44,7 +44,7 @@ the components of a vector field over the map.
 
    We can implement this definition as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((vector-field->vector-field-over-map mu:N->M) v-on-m)
        (procedure->vector-field
         (lambda (f-on-M)
@@ -66,7 +66,7 @@ the components of a vector field over the map.
    $\mathsf{N}$ is a vector field over the map. A procedure to compute the
    differential is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (((differential mu) v) f)
      (v (compose f mu)))
    #+end_src
@@ -116,7 +116,7 @@ the components of a vector field over the map.
    The procedure that constructs a $k$-form over the map from a $k$-form
    is:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((form-field->form-field-over-map mu:N->M) w-on-M)
        (define (make-fake-vector-field V-over-mu n)
          (define ((u f) m)
@@ -167,7 +167,7 @@ the components of a vector field over the map.
    For example, let $\mu$ map the time line to the unit sphere.[fn:2] We use
    colatitude $\theta$ and longitude $\phi$ as coordinates on the sphere:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define S2 (make-manifold S^2 2 3))
      (define S2-spherical
        (coordinate-system at 'spherical 'north-pole S2))
@@ -177,7 +177,7 @@ the components of a vector field over the map.
 
    A general path on the sphere is:[fn:3]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define mu
        (compose (point S2-spherical)
                 (up (literal-function 'theta)
@@ -187,7 +187,7 @@ the components of a vector field over the map.
 
    The basis over the map is constructed from the basis on the sphere:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define S2-basis-over-mu
        (basis->basis-over-map mu S2-basis))
 
@@ -276,7 +276,7 @@ the components of a vector field over the map.
 
    This is implemented as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((pullback-function mu:N->M) f-on-m)
      (compose f-on-M mu:N->M))
    #+end_src
@@ -344,7 +344,7 @@ the components of a vector field over the map.
 
    This is implemented as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((pushforward-vector mu:N->M mu^-1:M->N) v-on-N)
        (procedure->vector-field
         (lambda (f)
@@ -371,7 +371,7 @@ the components of a vector field over the map.
 
    This is implemented as:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define (pullback-vector-field mu:N->M mu^-1:M->N)
        (pushforward-vector mu^-1:M->N mu:N->M))
    #+end_src
@@ -427,7 +427,7 @@ the components of a vector field over the map.
 
    This is implemented as follows:[fn:7]
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define ((pullback-form mu:N->M) omega-on-M)
        (let ((k (get-rank omega-on-M)))
          (if (= k 0)
@@ -464,14 +464,14 @@ the components of a vector field over the map.
    We can verify this by computing an example. Let $\mu$ map the rectangular plane
    to rectangular 3-space:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define mu (literal-manifold-map 'MU R2-rect R3-rect))
    #+end_src
 
    First, let's compare the pullback of the exterior derivative of a
    function with the exterior derivative of the pullback of the function:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define f (literal-manifold-function 'f-rect R3-rect))
      (define X (literal-vector-field 'X-rect R2-rect))
    #+end_src
@@ -485,7 +485,7 @@ the components of a vector field over the map.
    More generally, we can consider what happens to a form field. For a one-form
    field the result is as expected:
 
-   #+begin_src scheme
+   #+begin_src scheme :results value raw :exports both :cache yes
      (define theta (literal-1form-field 'THETA R3-rect))
      (define Y (literal-vector-field 'Y-rect R2-rect))
    #+end_src
@@ -545,7 +545,7 @@ logic.
 
 [fn:3] We provide a shortcut to make literal manifold maps:
 
-#+begin_src scheme
+#+begin_src scheme :results value raw :exports both :cache yes
   (define mu (literal-manifold-map 'mu R1-rect S2-spherical))
 #+end_src
 
