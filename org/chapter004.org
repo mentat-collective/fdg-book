@@ -112,21 +112,21 @@ Then
 Define two general vector fields:
 
 #+begin_src scheme
-(define e0
-  (+ (* (literal-manifold-function 'e0x R2-rect) d/dx)
-     (* (literal-manifold-function 'e0y R2-rect) d/dy)))
+  (define e0
+    (+ (* (literal-manifold-function 'e0x R2-rect) d/dx)
+       (* (literal-manifold-function 'e0y R2-rect) d/dy)))
 
-(define e1
-  (+ (* (literal-manifold-function 'e1x R2-rect) d/dx)
-     (* (literal-manifold-function 'e1y R2-rect) d/dy)))
+  (define e1
+    (+ (* (literal-manifold-function 'e1x R2-rect) d/dx)
+       (* (literal-manifold-function 'e1y R2-rect) d/dy)))
 #+end_src
 
 We use these as a vector basis and compute the dual:
 
 #+begin_src scheme
-(define e-vector-basis (down e0 e1))
-(define e-dual-basis
-  (vector-basis->dual e-vector-basis R2-polar))
+  (define e-vector-basis (down e0 e1))
+  (define e-dual-basis
+    (vector-basis->dual e-vector-basis R2-polar))
 #+end_src
 
 The procedure vector-basis->dual requires an auxiliary coordinate system (here
@@ -137,8 +137,8 @@ $\mathsf{e}$ and $\tilde{\mathsf{e}}$ satisfy the dual relationship (equation
 3.41) by applying the dual basis to the vector basis:
 
 #+begin_src scheme :results value raw :exports both :cache yes
-((e-dual-basis e-vector-basis) R2-rect-point)
-;; (up (down 1 0) (down 0 1))
+  ((e-dual-basis e-vector-basis) R2-rect-point)
+  ;; (up (down 1 0) (down 0 1))
 #+end_src
 
 Note that the dual basis was computed relative to the polar coordinate system:
@@ -149,13 +149,13 @@ Or we can make a general vector field with this basis and then pick out the
 coefficients by applying the dual basis:
 
 #+begin_src scheme :results value raw :exports both :cache yes
-(define v
-  (* (up (literal-manifold-function 'b^0 R2-rect)
-         (literal-manifold-function 'b^1 R2-rect))
-     e-vector-basis))
+  (define v
+    (* (up (literal-manifold-function 'b^0 R2-rect)
+           (literal-manifold-function 'b^1 R2-rect))
+       e-vector-basis))
 
-((e-dual-basis v) R2-rect-point)
-;; (up (bˆ0 (up x0 y0)) (bˆ1 (up x0 y0)))
+  ((e-dual-basis v) R2-rect-point)
+  ;; (up (bˆ0 (up x0 y0)) (bˆ1 (up x0 y0)))
 #+end_src
 
 ** Change of Basis
@@ -163,89 +163,89 @@ coefficients by applying the dual basis:
    Suppose that we have a vector field v expressed in terms of one basis $\mathsf{e}$ and
    we want to reexpress it in terms of another basis $\mathsf{e^\prime}$. We have
 
-\begin{equation}
-\mathsf{v} (\mathsf{f})
-= \sum_i \mathsf{e}_i (\mathsf{f}) \mathsf{b}^i
-= \sum_i \mathsf{e}^\prime_j (\mathsf{f})
-\mathsf{b}^{\prime j}.
-\end{equation}
+   \begin{equation}
+   \mathsf{v} (\mathsf{f})
+   = \sum_i \mathsf{e}_i (\mathsf{f}) \mathsf{b}^i
+   = \sum_i \mathsf{e}^\prime_j (\mathsf{f})
+   \mathsf{b}^{\prime j}.
+   \end{equation}
 
    The coefficients $\mathsf{b^\prime}$ can be obtained from $\mathsf{v}$ by
    applying the dual basis
 
-\begin{equation}
-\mathsf{b}^{\prime j}
-= \mathsf{\tilde{e}^{\prime} j}(\mathsf{v})
-= \sum_i \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i)\mathsf{b}^i.
-\end{equation}
+   \begin{equation}
+   \mathsf{b}^{\prime j}
+   = \mathsf{\tilde{e}^{\prime} j}(\mathsf{v})
+   = \sum_i \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i)\mathsf{b}^i.
+   \end{equation}
 
    Let
 
-\begin{equation}
-\mathsf{J}_i^j = \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i),
-\end{equation}
+   \begin{equation}
+   \mathsf{J}_i^j = \mathsf{\tilde{e}}^{\prime j}(\mathsf{e}_i),
+   \end{equation}
 
    then
 
-\begin{equation}
-\mathsf{b}^{\prime j} = \sum_i{\mathsf{J}_i^j \mathsf{b}^i},
-\end{equation}
+   \begin{equation}
+   \mathsf{b}^{\prime j} = \sum_i{\mathsf{J}_i^j \mathsf{b}^i},
+   \end{equation}
 
    and
 
-\begin{equation}
-\mathsf{e}_i(\mathsf{f}) = \sum_j{\mathsf{e^\prime}_j(\mathsf{f})\mathsf{J}_i^j}.
-\end{equation}
+   \begin{equation}
+   \mathsf{e}_i(\mathsf{f}) = \sum_j{\mathsf{e^\prime}_j(\mathsf{f})\mathsf{J}_i^j}.
+   \end{equation}
 
    The Jacobian $\mathsf{J}$ is a structure of manifold functions. Using tuple arithmetic,
    we can write
 
-\begin{equation}
-\mathsf{b^\prime} = \mathsf{J}\mathsf{b}
-\end{equation}
+   \begin{equation}
+   \mathsf{b^\prime} = \mathsf{J}\mathsf{b}
+   \end{equation}
 
    and
 
-\begin{equation}
-\mathsf{e}(\mathsf{f}) = \mathsf{e^\prime}(\mathsf{f})\mathsf{J}.
-\end{equation}
+   \begin{equation}
+   \mathsf{e}(\mathsf{f}) = \mathsf{e^\prime}(\mathsf{f})\mathsf{J}.
+   \end{equation}
 
    We can write
 
    #+begin_src scheme
-(define (Jacobian to-basis from-basis)
-  (s:map/r (basis->1form-basis to-basis)
-           (basis->vector-basis from-basis)))
+     (define (Jacobian to-basis from-basis)
+       (s:map/r (basis->1form-basis to-basis)
+                (basis->vector-basis from-basis)))
    #+end_src
 
    The polar components are:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define b-polar
-  (* (Jacobian (coordinate-system->basis R2-polar)
-               (coordinate-system->basis R2-rect))
-     b-rect))
+     (define b-polar
+       (* (Jacobian (coordinate-system->basis R2-polar)
+                    (coordinate-system->basis R2-rect))
+          b-rect))
 
-(b-polar ((point R2-rect) (up 'x0 'y0)))
-;; (up
-;;  (/ (+ (* x0 (bˆ0 (up x0 y0))) (* y0 (bˆ1 (up x0 y0))))
-;;     (sqrt (+ (expt x0 2) (expt y0 2))))
-;;  (/ (+ (* x0 (bˆ1 (up x0 y0))) (* -1 y0 (bˆ0 (up x0 y0))))
-;;     (+ (expt x0 2) (expt y0 2))))
+     (b-polar ((point R2-rect) (up 'x0 'y0)))
+     ;; (up
+     ;;  (/ (+ (* x0 (bˆ0 (up x0 y0))) (* y0 (bˆ1 (up x0 y0))))
+     ;;     (sqrt (+ (expt x0 2) (expt y0 2))))
+     ;;  (/ (+ (* x0 (bˆ1 (up x0 y0))) (* -1 y0 (bˆ0 (up x0 y0))))
+     ;;     (+ (expt x0 2) (expt y0 2))))
    #+end_src
 
    We can also get the polar components directly:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((coordinate-system->1form-basis R2-polar)
-  (literal-vector-field 'b R2-rect))
- ((point R2-rect) (up 'x0 'y0)))
+     (((coordinate-system->1form-basis R2-polar)
+       (literal-vector-field 'b R2-rect))
+      ((point R2-rect) (up 'x0 'y0)))
 
-;; (up
-;;  (/ (+ (* x0 (bˆ0 (up x0 y0))) (* y0 (bˆ1 (up x0 y0))))
-;;     (sqrt (+ (expt x0 2) (expt y0 2))))
-;;  (/ (+ (* x0 (bˆ1 (up x0 y0))) (* -1 y0 (bˆ0 (up x0 y0))))
-;;     (+ (expt x0 2) (expt y0 2))))
+     ;; (up
+     ;;  (/ (+ (* x0 (bˆ0 (up x0 y0))) (* y0 (bˆ1 (up x0 y0))))
+     ;;     (sqrt (+ (expt x0 2) (expt y0 2))))
+     ;;  (/ (+ (* x0 (bˆ1 (up x0 y0))) (* -1 y0 (bˆ0 (up x0 y0))))
+     ;;     (+ (expt x0 2) (expt y0 2))))
    #+end_src
 
    We see that they are the same.
@@ -253,45 +253,45 @@ coefficients by applying the dual basis:
    If $\mathsf{K}$ is the Jacobian that relates the basis vectors in the other
    direction
 
-\begin{equation}
-\mathsf{e^\prime}(\mathsf{f}) = \mathsf{e}(\mathsf{f})\mathsf{K}
-\end{equation}
+   \begin{equation}
+   \mathsf{e^\prime}(\mathsf{f}) = \mathsf{e}(\mathsf{f})\mathsf{K}
+   \end{equation}
 
    then
 
-\begin{equation}
-\mathsf{K}\mathsf{J} = \mathsf{I} = \mathsf{J}\mathsf{K}
-\end{equation}
+   \begin{equation}
+   \mathsf{K}\mathsf{J} = \mathsf{I} = \mathsf{J}\mathsf{K}
+   \end{equation}
 
    where $\mathsf{I}$ is a manifold function that returns the multiplicative
    identity.
 
    The dual basis transforms oppositely. Let
 
-\begin{equation}
-\label{eq:op-transform}
-\boldsymbol{\omega} = \sum_i{\mathsf{a}_i \tilde{\mathsf{e}}^{\prime i}}.
-\end{equation}
+   \begin{equation}
+   \label{eq:op-transform}
+   \boldsymbol{\omega} = \sum_i{\mathsf{a}_i \tilde{\mathsf{e}}^{\prime i}}.
+   \end{equation}
 
    The coefficients are[fn:4]
 
-\begin{equation}
-\mathsf{a}_i = \boldsymbol{\omega}(\mathsf{e}_i) = \sum_j{\mathsf{a}^\prime_j \tilde{\mathsf{e}}^{\prime j}}(\mathsf{e}_i) \
-= \sum_j{\mathsf{a}^\prime_j \mathsf{J}^j_i}
-\end{equation}
+   \begin{equation}
+   \mathsf{a}_i = \boldsymbol{\omega}(\mathsf{e}_i) = \sum_j{\mathsf{a}^\prime_j \tilde{\mathsf{e}}^{\prime j}}(\mathsf{e}_i) \
+   = \sum_j{\mathsf{a}^\prime_j \mathsf{J}^j_i}
+   \end{equation}
 
    or, in tuple arithmetic,
 
-\begin{equation}
-\mathsf{a} = \mathsf{a}^\prime \mathsf{J}.
-\end{equation}
+   \begin{equation}
+   \mathsf{a} = \mathsf{a}^\prime \mathsf{J}.
+   \end{equation}
 
 
-Because of equation (4.18) we can deduce
+   Because of equation (4.18) we can deduce
 
-\begin{equation}
-\tilde{\mathsf{e}} = \mathsf{K}\tilde{\mathsf{e}}^\prime.
-\end{equation}
+   \begin{equation}
+   \tilde{\mathsf{e}} = \mathsf{K}\tilde{\mathsf{e}}^\prime.
+   \end{equation}
 
 ** Rotation Basis
 
@@ -316,77 +316,77 @@ Because of equation (4.18) we can deduce
    to correspond to an incremental rotation of size $\epsilon$ about the
    $\hat{x}$-axis? The direction $(a, b, c)$ is constrained by the equation
 
-\begin{equation}
-R_{x}(\epsilon) M(\theta, \phi, \psi)=M(\theta + a \epsilon, \phi + b \epsilon, \psi + c \epsilon).
-\end{equation}
+   \begin{equation}
+   R_{x}(\epsilon) M(\theta, \phi, \psi)=M(\theta + a \epsilon, \phi + b \epsilon, \psi + c \epsilon).
+   \end{equation}
 
    Linear equations for $(a, b, c)$ can be found by taking the derivative of
    this equation with respect to $\epsilon$. We find
 
-\begin{equation}
-0 = c \cos{\theta} + b,
-\end{equation}
+   \begin{equation}
+   0 = c \cos{\theta} + b,
+   \end{equation}
 
-\begin{equation}
-0 = a \sin{\phi} - c \cos{\phi} \sin{\theta},
-\end{equation}
+   \begin{equation}
+   0 = a \sin{\phi} - c \cos{\phi} \sin{\theta},
+   \end{equation}
 
-\begin{equation}
-1 = c \sin{\phi} \sin{\theta} + a \cos{\phi},
-\end{equation}
+   \begin{equation}
+   1 = c \sin{\phi} \sin{\theta} + a \cos{\phi},
+   \end{equation}
 
    with the solution
 
-\begin{equation}
-a = \cos{\phi},
-\end{equation}
+   \begin{equation}
+   a = \cos{\phi},
+   \end{equation}
 
-\begin{equation}
-b = -\frac{\sin{\phi} \cos{\theta}}{\sin{\theta}},
-\end{equation}
+   \begin{equation}
+   b = -\frac{\sin{\phi} \cos{\theta}}{\sin{\theta}},
+   \end{equation}
 
-\begin{equation}
-c = \frac{\sin{\phi}}{\sin{\theta}}.
-\end{equation}
+   \begin{equation}
+   c = \frac{\sin{\phi}}{\sin{\theta}}.
+   \end{equation}
 
    Therefore, we can write the basis vector field that takes directional
    derivatives in the direction of incremental $x$ rotations as
 
-\begin{equation}
-\begin{aligned}
-\mathsf{e}_{x} &=a \frac{\partial}{\partial \theta}+b \frac{\partial}{\partial \phi}+c \frac{\partial}{\partial \psi} \\
-&=\cos \phi \frac{\partial}{\partial \theta}-\frac{\sin \phi \cos \theta}{\sin \theta} \frac{\partial}{\partial \phi}+\frac{\sin \phi}{\sin \theta} \frac{\partial}{\partial \psi} .
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \mathsf{e}_{x} &=a \frac{\partial}{\partial \theta}+b \frac{\partial}{\partial \phi}+c \frac{\partial}{\partial \psi} \\
+   &=\cos \phi \frac{\partial}{\partial \theta}-\frac{\sin \phi \cos \theta}{\sin \theta} \frac{\partial}{\partial \phi}+\frac{\sin \phi}{\sin \theta} \frac{\partial}{\partial \psi} .
+   \end{aligned}
+   \end{equation}
 
    Similarly, vector fields for the incremental y and z rotations are
 
-\begin{equation}
-\mathsf{e}_{y}=\frac{\cos \phi \cos \theta}{\sin \theta} \frac{\partial}{\partial \phi}+\sin \phi \frac{\partial}{\partial \theta}-\frac{\cos \phi}{\sin \theta} \frac{\partial}{\partial \psi}
-\end{equation}
+   \begin{equation}
+   \mathsf{e}_{y}=\frac{\cos \phi \cos \theta}{\sin \theta} \frac{\partial}{\partial \phi}+\sin \phi \frac{\partial}{\partial \theta}-\frac{\cos \phi}{\sin \theta} \frac{\partial}{\partial \psi}
+   \end{equation}
 
-\begin{equation}
-\mathsf{e}_{z} = \frac{\partial}{\partial \phi}.
-\end{equation}
+   \begin{equation}
+   \mathsf{e}_{z} = \frac{\partial}{\partial \phi}.
+   \end{equation}
 
 ** Commutators
 
    The commutator of two vector fields is defined as
 
-\begin{equation}
-[\mathsf{v}, \mathsf{w}](\mathsf{f}) = \mathsf{v}(\mathsf{w}(\mathsf{f})) - \mathsf{w}(\mathsf{v}(\mathsf{f})).
-\end{equation}
+   \begin{equation}
+   [\mathsf{v}, \mathsf{w}](\mathsf{f}) = \mathsf{v}(\mathsf{w}(\mathsf{f})) - \mathsf{w}(\mathsf{v}(\mathsf{f})).
+   \end{equation}
 
    In the special case that the two vector fields are coordinate basis fields,
    the commutator is zero:
 
-\begin{equation}
-\begin{aligned}
-\left[\mathsf{X}_{i}, \mathsf{X}_{j}\right](\mathsf{f}) &=\mathsf{X}_{i}\left(\mathsf{X}_{j}(\mathsf{f})\right)-\mathsf{X}_{j}\left(\mathsf{X}_{i}(\mathsf{f})\right) \\
-&=\partial_{i} \partial_{j}\left(\mathsf{f} \circ \chi^{-1}\right) \circ \chi-\partial_{j} \partial_{i}\left(\mathsf{f} \circ \chi^{-1}\right) \circ \chi \\
-&=0,
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \left[\mathsf{X}_{i}, \mathsf{X}_{j}\right](\mathsf{f}) &=\mathsf{X}_{i}\left(\mathsf{X}_{j}(\mathsf{f})\right)-\mathsf{X}_{j}\left(\mathsf{X}_{i}(\mathsf{f})\right) \\
+   &=\partial_{i} \partial_{j}\left(\mathsf{f} \circ \chi^{-1}\right) \circ \chi-\partial_{j} \partial_{i}\left(\mathsf{f} \circ \chi^{-1}\right) \circ \chi \\
+   &=0,
+   \end{aligned}
+   \end{equation}
 
    because the individual partial derivatives commute. The vanishing commutator
    is telling us that we get to the same manifold point by integrating from a
@@ -400,26 +400,26 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    $\mathsf{b} = b \circ \chi$, both with respect to the coordinate basis
    $\mathsf{X}$. Then
 
-\begin{equation}
-\begin{aligned}
-[\mathsf{u}, \mathsf{v}](\mathsf{f})=& \mathsf{u}(\mathsf{v}(\mathsf{f}))-\mathsf{v}(\mathsf{u}(\mathsf{f})) \\
-=& \mathsf{u}\left(\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{c}^{i}\right)-\mathsf{v}\left(\sum_{j} \mathsf{X}_{j}(\mathsf{f}) \mathsf{b}^{j}\right) \\
-=& \sum_{j} \mathsf{X}_{j}\left(\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{c}^{i}\right) \mathsf{b}^{j}-\sum_{i} \mathsf{X}_{i}\left(\sum_{j} \mathsf{X}_{j}(\mathsf{f}) \mathsf{b}^{j}\right) \mathsf{c}^{i} \\
-=& \sum_{i j}\left[\mathsf{X}_{j}, \mathsf{X}_{i}\right](\mathsf{f}) \mathsf{c}^{i} \mathsf{~b}^{j} \\
-&+\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \sum_{j}\left(\mathsf{X}_{j}\left(\mathsf{c}^{i}\right) \mathsf{b}^{j}-\mathsf{X}_{j}\left(\mathsf{~b}^{i}\right) \mathsf{c}^{j}\right) \\
-=& \sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{a}^{i},
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   [\mathsf{u}, \mathsf{v}](\mathsf{f})=& \mathsf{u}(\mathsf{v}(\mathsf{f}))-\mathsf{v}(\mathsf{u}(\mathsf{f})) \\
+   =& \mathsf{u}\left(\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{c}^{i}\right)-\mathsf{v}\left(\sum_{j} \mathsf{X}_{j}(\mathsf{f}) \mathsf{b}^{j}\right) \\
+   =& \sum_{j} \mathsf{X}_{j}\left(\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{c}^{i}\right) \mathsf{b}^{j}-\sum_{i} \mathsf{X}_{i}\left(\sum_{j} \mathsf{X}_{j}(\mathsf{f}) \mathsf{b}^{j}\right) \mathsf{c}^{i} \\
+   =& \sum_{i j}\left[\mathsf{X}_{j}, \mathsf{X}_{i}\right](\mathsf{f}) \mathsf{c}^{i} \mathsf{~b}^{j} \\
+   &+\sum_{i} \mathsf{X}_{i}(\mathsf{f}) \sum_{j}\left(\mathsf{X}_{j}\left(\mathsf{c}^{i}\right) \mathsf{b}^{j}-\mathsf{X}_{j}\left(\mathsf{~b}^{i}\right) \mathsf{c}^{j}\right) \\
+   =& \sum_{i} \mathsf{X}_{i}(\mathsf{f}) \mathsf{a}^{i},
+   \end{aligned}
+   \end{equation}
 
    where the coefficient function $\mathsf{a}$ of the commutator vector field is
 
-\begin{equation}
-\begin{aligned}
-\mathsf{a}^i &= \sum_j \left(\mathsf{X}_j \left( \mathsf{c}^i \right) \mathsf{b}^j \
- - \mathsf{X}_j \left(\mathsf{b}^i \right) \mathsf{c}^j \right) \\
-&= \mathsf{u} \left(\mathsf{c}^i \right) - \mathsf{v} \left(\mathsf{b}^i \right).
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \mathsf{a}^i &= \sum_j \left(\mathsf{X}_j \left( \mathsf{c}^i \right) \mathsf{b}^j \
+    - \mathsf{X}_j \left(\mathsf{b}^i \right) \mathsf{c}^j \right) \\
+   &= \mathsf{u} \left(\mathsf{c}^i \right) - \mathsf{v} \left(\mathsf{b}^i \right).
+   \end{aligned}
+   \end{equation}
 
    We used the fact, shown above, that the commutator of two coordinate basis
    fields is zero.
@@ -428,74 +428,74 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    vector fields =e0= and =e1= in polar coordinates:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(let* ((polar-basis (coordinate-system->basis R2-polar))
-       (polar-vector-basis (basis->vector-basis polar-basis))
-       (polar-dual-basis (basis->1form-basis polar-basis))
-       (f (literal-manifold-function 'f-rect R2-rect)))
-  ((- ((commutator e0 e1) f)
-      (* (- (e0 (polar-dual-basis e1))
-            (e1 (polar-dual-basis e0)))
-         (polar-vector-basis f)))
-   R2-rect-point))
-;; 0
+     (let* ((polar-basis (coordinate-system->basis R2-polar))
+            (polar-vector-basis (basis->vector-basis polar-basis))
+            (polar-dual-basis (basis->1form-basis polar-basis))
+            (f (literal-manifold-function 'f-rect R2-rect)))
+       ((- ((commutator e0 e1) f)
+           (* (- (e0 (polar-dual-basis e1))
+                 (e1 (polar-dual-basis e0)))
+              (polar-vector-basis f)))
+        R2-rect-point))
+     ;; 0
    #+end_src
 
    Let $\mathsf{e}$ be a tuple of basis vector fields. The commutator of two
    basis fields can be expressed in terms of the basis vector fields:
 
-\begin{equation}
-[\mathsf{e}_i, \mathsf{e}_j](\mathsf{f}) = \sum_k{\mathsf{d}_{ij}^k \mathsf{e}_k(\mathsf{f})},
-\end{equation}
+   \begin{equation}
+   [\mathsf{e}_i, \mathsf{e}_j](\mathsf{f}) = \sum_k{\mathsf{d}_{ij}^k \mathsf{e}_k(\mathsf{f})},
+   \end{equation}
 
    where $\mathsf{d}_{ij}^k$ are functions of $\mathsf{m}$, called the
    /structure constants/ for the basis vector fields. The coefficients are
 
-\begin{equation}
-\mathsf{d}_{ij}^k = \tilde{\mathsf{e}}^k\left(\left[\mathsf{e}_i, \mathsf{e}_j \right]\right).
-\end{equation}
+   \begin{equation}
+   \mathsf{d}_{ij}^k = \tilde{\mathsf{e}}^k\left(\left[\mathsf{e}_i, \mathsf{e}_j \right]\right).
+   \end{equation}
 
    The commutator $[\mathsf{u}, \mathsf{v}]$ with respect to a non-coordinate
    basis $\mathsf{e}_i$ is
 
-\begin{equation}
-[\mathsf{u}, \mathsf{v}](\mathsf{f}) = \sum_k{\mathsf{e}_k \left(\mathsf{f} \right)\left( \
-\mathsf{u}(\mathsf{c}^k) - \mathsf{v}(\mathsf{b}^k) + \sum_{ij}{\mathsf{c}^i \mathsf{b}^j \mathsf{d}_{ji}^k} \
- \right)}
-\end{equation}
+   \begin{equation}
+   [\mathsf{u}, \mathsf{v}](\mathsf{f}) = \sum_k{\mathsf{e}_k \left(\mathsf{f} \right)\left( \
+   \mathsf{u}(\mathsf{c}^k) - \mathsf{v}(\mathsf{b}^k) + \sum_{ij}{\mathsf{c}^i \mathsf{b}^j \mathsf{d}_{ji}^k} \
+    \right)}
+   \end{equation}
 
    Define the vector fields =Jx=, =Jy=, and =Jz= that generate rotations about
    the three rectangular axes in three dimensions:[fn:5]
 
    #+begin_src scheme
-(define Jz (- (* x d/dy) (* y d/dx)))
-(define Jx (- (* y d/dz) (* z d/dy)))
-(define Jy (- (* z d/dx) (* x d/dz)))
+     (define Jz (- (* x d/dy) (* y d/dx)))
+     (define Jx (- (* y d/dz) (* z d/dy)))
+     (define Jy (- (* z d/dx) (* x d/dz)))
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator Jx Jy) Jz) g) R3-rect-point)
-;; 0
+     (((+ (commutator Jx Jy) Jz) g) R3-rect-point)
+     ;; 0
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator Jy Jz) Jx) g) R3-rect-point)
-;; 0
+     (((+ (commutator Jy Jz) Jx) g) R3-rect-point)
+     ;; 0
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator Jz Jx) Jy) g) R3-rect-point)
-;; 0
+     (((+ (commutator Jz Jx) Jy) g) R3-rect-point)
+     ;; 0
    #+end_src
 
    We see that
 
-\begin{equation}
-\begin{aligned}
-\left[\mathsf{J}_x, \mathsf{J}_y \right] &= -\mathsf{J}_z \\
-\left[\mathsf{J}_y, \mathsf{J}_z \right] &= -\mathsf{J}_x \\
-\left[\mathsf{J}_z, \mathsf{J}_x \right] &= -\mathsf{J}_y
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \left[\mathsf{J}_x, \mathsf{J}_y \right] &= -\mathsf{J}_z \\
+   \left[\mathsf{J}_y, \mathsf{J}_z \right] &= -\mathsf{J}_x \\
+   \left[\mathsf{J}_z, \mathsf{J}_x \right] &= -\mathsf{J}_y
+   \end{aligned}
+   \end{equation}
 
    We can also compute the commutators for the basis vector fields
    $\mathsf{e}_x$, $\mathsf{e}_y$, and $\mathsf{e}_z$ in the SO(3) manifold (see
@@ -503,18 +503,18 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    axes, respectively:[fn:6]
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator e x e y) e z) f) SO3-point)
-;; 0
+     (((+ (commutator e x e y) e z) f) SO3-point)
+     ;; 0
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator e y e z) e x) f) SO3-point)
-;; 0
+     (((+ (commutator e y e z) e x) f) SO3-point)
+     ;; 0
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(((+ (commutator e z e x) e y) f) SO3-point)
-;; 0
+     (((+ (commutator e z e x) e y) f) SO3-point)
+     ;; 0
    #+end_src
 
    You can tell if a set of basis vector fields is a coordinate basis by
@@ -524,17 +524,17 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
 
    Recall equation (3.31)
 
-\begin{equation}
- \left(e^{t \mathsf{v}} \right)\left(\mathsf{m} \right) \
-= \left(\mathsf{f} \circ \phi_t^{\mathsf{v}} \right)\left(\mathsf{m} \right).
-\end{equation}
+   \begin{equation}
+    \left(e^{t \mathsf{v}} \right)\left(\mathsf{m} \right) \
+   = \left(\mathsf{f} \circ \phi_t^{\mathsf{v}} \right)\left(\mathsf{m} \right).
+   \end{equation}
 
    Iterating this equation, we find
 
-\begin{equation}
-\left(e^{s \mathsf{w}} e^{t \mathsf{v}} \right)\left(\mathsf{m} \right) \
-= \left(\mathsf{f} \circ \phi_t^{\mathsf{v}} \circ \phi_s^{\mathsf{w}} \right)\left(\mathsf{m} \right).
-\end{equation}
+   \begin{equation}
+   \left(e^{s \mathsf{w}} e^{t \mathsf{v}} \right)\left(\mathsf{m} \right) \
+   = \left(\mathsf{f} \circ \phi_t^{\mathsf{v}} \circ \phi_s^{\mathsf{w}} \right)\left(\mathsf{m} \right).
+   \end{equation}
 
    Notice that the evolution under $\mathsf{w}$ occurs before the evolution
    under $\mathsf{v}$.
@@ -544,16 +544,16 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    $\mathsf{v}$ and $\mathsf{w}$. We will first follow $\mathsf{v}$, then
    $\mathsf{w}$, then $-\mathsf{v}$, and then $-\mathsf{w}$:
 
-\begin{equation}
-\left(e^{\epsilon \mathsf{v}} e^{\epsilon \mathsf{w}} \
-e^{-\epsilon \mathsf{v}} e^{-\epsilon \mathsf{w}} \mathsf{f} \right)\left(\mathsf{m}\right).
-\end{equation}
+   \begin{equation}
+   \left(e^{\epsilon \mathsf{v}} e^{\epsilon \mathsf{w}} \
+   e^{-\epsilon \mathsf{v}} e^{-\epsilon \mathsf{w}} \mathsf{f} \right)\left(\mathsf{m}\right).
+   \end{equation}
 
    To second order in $\epsilon$ the result is[fn:7]
 
-\begin{equation}
-\left(e^{\epsilon^2 [\mathsf{v}, \mathsf{w}]} \mathsf{f} \right)\left(\mathsf{m}\right)
-\end{equation}
+   \begin{equation}
+   \left(e^{\epsilon^2 [\mathsf{v}, \mathsf{w}]} \mathsf{f} \right)\left(\mathsf{m}\right)
+   \end{equation}
 
    This result is illustrated in figure 4.2.
 
@@ -563,9 +563,9 @@ e^{-\epsilon \mathsf{v}} e^{-\epsilon \mathsf{w}} \mathsf{f} \right)\left(\maths
    $\mathsf{m}$ in the coordinate system corresponding to the $\mathsf{e}$ basis
    satisfy[fn:8]
 
-\begin{equation}
-\mathsf{m} = \phi_1^{x \mathsf{e}}(\mathsf{0}) = \chi^{-1}(x),
-\end{equation}
+   \begin{equation}
+   \mathsf{m} = \phi_1^{x \mathsf{e}}(\mathsf{0}) = \chi^{-1}(x),
+   \end{equation}
 
    where $\chi$ is the coordinate function being defined. Because the elements
    of $\mathsf{e}$ commute, we can translate separately along the integral
@@ -622,20 +622,20 @@ commutator is $[A, [A, B]]$.
 [fn:6] Using
 
 #+begin_src scheme
-(define Euler-angles (coordinate-system-at 'Euler 'Euler-patch SO3))
-(define Euler-angles-chi-inverse (point Euler-angles))
-(define-coordinates (up theta phi psi) Euler-angles)
-(define SO3-point ((point Euler-angles) (up 'theta 'phi 'psi)))
-(define f (literal-manifold-function 'f-Euler Euler-angles))
+  (define Euler-angles (coordinate-system-at 'Euler 'Euler-patch SO3))
+  (define Euler-angles-chi-inverse (point Euler-angles))
+  (define-coordinates (up theta phi psi) Euler-angles)
+  (define SO3-point ((point Euler-angles) (up 'theta 'phi 'psi)))
+  (define f (literal-manifold-function 'f-Euler Euler-angles))
 #+end_src
 
 [fn:5] Using
 
 #+begin_src scheme
-(define R3-rect (coordinate-system-at 'rectangular 'origin R3))
-(define-coordinates (up x y z) R3-rect)
-(define R3-rect-point ((point R3-rect) (up 'x0 'y0 'z0)))
-(define g (literal-manifold-function 'g-rect R3-rect))
+  (define R3-rect (coordinate-system-at 'rectangular 'origin R3))
+  (define-coordinates (up x y z) R3-rect)
+  (define R3-rect-point ((point R3-rect) (up 'x0 'y0 'z0)))
+  (define g (literal-manifold-function 'g-rect R3-rect))
 #+end_src
 
 [fn:4] We see from equations (4.15) and (4.16) that $\mathsf{J}$ and

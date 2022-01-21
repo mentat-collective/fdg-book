@@ -139,9 +139,9 @@
    This expression is equivalent to a computer program:[fn:6]
 
    #+begin_src scheme
-(define ((Lagrange-equations Lagrangian) w)
-  (- (D (compose ((partial 2) Lagrangian) (Gamma w)))
-     (compose ((partial 1) Lagrangian) (Gamma w))))
+     (define ((Lagrange-equations Lagrangian) w)
+       (- (D (compose ((partial 2) Lagrangian) (Gamma w)))
+          (compose ((partial 1) Lagrangian) (Gamma w))))
    #+end_src
 
    In the Lagrange equations procedure the parameter =Lagrangian= is a procedure
@@ -151,8 +151,8 @@
    procedure =w= by the procedure =Gamma=:
 
    #+begin_src scheme
-(define ((Gamma w) t)
-  (up t (w t) ((D w) t)))
+     (define ((Gamma w) t)
+       (up t (w t) ((D w) t)))
    #+end_src
 
    where =up= is a constructor for a data structure that represents a state of
@@ -170,11 +170,11 @@
    for mass $m$ and spring constant $k$. this lagrangian is implemented by
 
    #+begin_src scheme
-(define ((L-harmonic m k) local)
-  (let ((q (coordinate local))
-        (v (velocity local)))
-    (- (* 1/2 m (square v))
-       (* 1/2 k (square q)))))
+     (define ((L-harmonic m k) local)
+       (let ((q (coordinate local))
+             (v (velocity local)))
+         (- (* 1/2 m (square v))
+            (* 1/2 k (square q)))))
    #+end_src
 
    We know that the motion of a harmonic oscillator is a sinusoid with a given
@@ -187,15 +187,15 @@
    and look at the residual:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define (proposed-solution t)
-  (* 'a (cos (+ (* 'omega t) 'phi))))
+     (define (proposed-solution t)
+       (* 'a (cos (+ (* 'omega t) 'phi))))
 
-(show-expression
- (((Lagrange-equations (L-harmonic 'm 'k))
-   proposed-solution)
-  't))
+     (show-expression
+      (((Lagrange-equations (L-harmonic 'm 'k))
+        proposed-solution)
+       't))
 
-;; should produce \cos(\omega t + \varphi) a (k-m\omega^2)
+     ;; should produce \cos(\omega t + \varphi) a (k-m\omega^2)
    #+end_src
 
    The residual here shows that for nonzero amplitude, the only solutions
@@ -205,11 +205,11 @@
    literal function for the path:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(show-expression
- (((Lagrange-equations (L-harmonic 'm 'k))
-   (literal-function 'x))
-  't))
-;; should produce $$kx(t)+mD^2 x(t)$$
+     (show-expression
+      (((Lagrange-equations (L-harmonic 'm 'k))
+        (literal-function 'x))
+       't))
+     ;; should produce $$kx(t)+mD^2 x(t)$$
    #+end_src
 
    If this residual is zero we have the Lagrange equation for the harmonic

@@ -24,21 +24,21 @@ directly recognize, and there are compound expressions of several kinds.
 ** Procedure Calls
 
    A /procedure call/ is a kind of compound expression. A procedure call is a
-  sequence of expressions delimited by parentheses. The first subexpression in a
-  procedure call is taken to name a procedure, and the rest of the
-  subexpressions are taken to name the arguments to that procedure. The value
-  produced by the procedure when applied to the given arguments is the value
-  named by the procedure call. For example,
+   sequence of expressions delimited by parentheses. The first subexpression in a
+   procedure call is taken to name a procedure, and the rest of the
+   subexpressions are taken to name the arguments to that procedure. The value
+   produced by the procedure when applied to the given arguments is the value
+   named by the procedure call. For example,
 
-  #+begin_src scheme :results value raw :exports both :cache yes
-(+ 1 2.14)
-;; 3.14
-  #+end_src
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (+ 1 2.14)
+     ;; 3.14
+   #+end_src
 
-  #+begin_src scheme :results value raw :exports both :cache yes
-(+ 1 (* 2 1.07))
-;; 3.14
-  #+end_src
+   #+begin_src scheme :results value raw :exports both :cache yes
+     (+ 1 (* 2 1.07))
+     ;; 3.14
+   #+end_src
 
    are both compound expressions that name the same number as the numeral
    =3.14=.[fn:2] In these cases the symbols =+= and =*= name procedures that add
@@ -47,11 +47,11 @@ directly recognize, and there are compound expressions of several kinds.
    the thing named by the overall expression remains unchanged. In general, a
    procedure call is written
 
-$$
-(\quad \textit{operator} \quad \textit{operand-1} \quad \ldots \quad \textit{operand-n} \quad )
-$$
+   $$
+   (\quad \textit{operator} \quad \textit{operand-1} \quad \ldots \quad \textit{operand-n} \quad )
+   $$
 
-where /operator/ names a procedure and /operand-i/ names the /i/th argument.[fn:3]
+   where /operator/ names a procedure and /operand-i/ names the /i/th argument.[fn:3]
 
 ** Lambda Expressions
 
@@ -60,7 +60,7 @@ where /operator/ names a procedure and /operand-i/ names the /i/th argument.[fn:
    written:
 
    #+begin_src scheme
-(lambda (x) (* x x))
+     (lambda (x) (* x x))
    #+end_src
 
    This expression can be read: "The procedure of one argument, $x$, that
@@ -68,15 +68,15 @@ where /operator/ names a procedure and /operand-i/ names the /i/th argument.[fn:
    where a procedure is needed. For example,
 
    #+begin_src scheme :results value raw :exports both :cache yes
-((lambda (x) (* x x)) 4)
-;; 16
+     ((lambda (x) (* x x)) 4)
+     ;; 16
    #+end_src
 
    The general form of a $\lambda$-expression is
 
-$$
-\texttt{(lambda} \quad \textit{formal-parameters} \quad \textit{body} \texttt{)}
-$$
+   $$
+   \texttt{(lambda} \quad \textit{formal-parameters} \quad \textit{body} \texttt{)}
+   $$
 
    where /formal-parameters/ is a list of symbols that will be the names of the
    arguments to the procedure and /body/ is an expression that may refer to the
@@ -89,9 +89,9 @@ $$
    we make the definitions[fn:5]
 
    #+begin_src scheme
-(define pi 3.141592653589793)
+     (define pi 3.141592653589793)
 
-(define square (lambda (x) (* x x)))
+     (define square (lambda (x) (* x x)))
    #+end_src
 
    we can then use the symbols =pi= and =square wherever the numeral or the
@@ -99,15 +99,15 @@ $$
    sphere of radius 5 meters is
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(* 4 pi (square 5))
-;; 314.1592653589793
+     square(* 4 pi (square 5))
+     square;; 314.1592653589793
    #+end_src
 
    Procedure definitions may be expressed more conveniently using "syntactic
    sugar." The squaring procedure may be defined
 
    #+begin_src scheme
-(define (square x) (* x x))
+     (define (square x) (* x x))
    #+end_src
 
    which we may read: "To square /x/ multiply /x/ by /x/."
@@ -117,30 +117,30 @@ $$
    notion of the composition of two functions:[fn:6]
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define compose
-  (lambda (f g)
-    (lambda (x)
-      (f (g x)))))
+     (define compose
+       (lambda (f g)
+         (lambda (x)
+           (f (g x)))))
 
-((compose square sin) 2)
-;; .826821810431806
+     ((compose square sin) 2)
+     ;; .826821810431806
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(square (sin 2))
-;; .826821810431806
+     (square (sin 2))square
+     ;; .826821810431806
    #+end_src
 
    Using the syntactic sugar shown above, we can write the definition more
    conveniently. The following are both equivalent to the definition above:
 
    #+begin_src scheme
-(define (compose f g)
-  (lambda (x)
-    (f (g x))))
+     (define (compose f g)
+       (lambda (x)
+         (f (g x))))
 
-(define ((compose f g) x)
-  (f (g x)))
+     (define ((compose f g) x)
+       (f (g x)))
    #+end_src
 
 ** Conditionals
@@ -150,10 +150,10 @@ $$
    function may be written:
 
    #+begin_src scheme
-(define (abs x)
-  (cond ((< x 0) (- x))
-        ((= x 0) x)
-        ((> x 0) x)))
+     (define (abs x)
+       (cond ((< x 0) (- x))
+             ((= x 0) x)
+             ((> x 0) x)))
    #+end_src
 
    The conditional =cond= takes a number of clauses. Each clause has a predicate
@@ -162,13 +162,13 @@ $$
    the first clause for which the corresponding predicate expression is true.
    The general form of a conditional expression is
 
-\begin{equation}
-\begin{aligned}
-\texttt{(cond }&\texttt{( } \textit{predicate-1}\quad \textit{consequent-1} \texttt{)} \\
-&\ldots \\
-&\texttt{( } \textit{predicate-n}\quad \textit{consequent-n} \texttt{))}
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \texttt{(cond }&\texttt{( } \textit{predicate-1}\quad \textit{consequent-1} \texttt{)} \\
+   &\ldots \\
+   &\texttt{( } \textit{predicate-n}\quad \textit{consequent-n} \texttt{))}
+   \end{aligned}
+   \end{equation}
 
    For convenience there is a special predicate expression =else= that can be
    used as the predicate in the last clause of a =cond=. The =if= construct
@@ -177,17 +177,17 @@ $$
    the argument is negative, we could have defined =abs= as:
 
    #+begin_src scheme
-(define (abs x)
-  (if (< x 0)
-      (- x)
-      x))
+     define(define (abs x)
+             (if (< x 0)
+                 (- x)
+                 x))
    #+end_src
 
    The general form of an =if= expression is
 
-$$
-\texttt{(if} \quad \textit{predicate} \quad \textit{consequent} \quad \textit{alternative} \texttt{)}
-$$
+   $$
+   \texttt{(if} \quad \textit{predicate} \quad \textit{consequent} \quad \textit{alternative} \texttt{)}
+   $$
 
    If the /predicate/ is true the value of the =if= expression is the value of
    the /consequent/, otherwise it is the value of the /alternative/.
@@ -198,18 +198,18 @@ $$
    example, to compute the $n$th factorial number we may write:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define (factorial n)
-  (if (= n 0)
-      1
-      (* n (factorial (- n 1)))))
+     (define (factorial n)
+       (if (= n 0)
+           1
+           (* n (factorial (- n 1)))))
 
-(factorial 6)
-;; 720
+     (factorial 6)
+     ;; 720
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(factorial 40)
-;; 815915283247897734345611269596115894272000000000
+     factorial(factorial 40)
+     ;; 815915283247897734345611269596115894272000000000
    #+end_src
 
 ** Local Names
@@ -218,25 +218,25 @@ $$
    example,
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define (f radius)
-  (let ((area (* 4 pi (square radius)))
-        (volume (* 4/3 pi (cube radius))))
-    (/ volume area)))
+     (define (f radius)
+       (let ((area (* 4 pi (square radius)))
+             (volume (* 4/3 pi (cube radius))))
+         (/ volume area)))
 
-(f 3)
-;; 1
+     (f 3)
+     ;; 1
    #+end_src
 
    The general form of a =let= expression is
 
-\begin{equation}
-\begin{aligned}
-\texttt{(let (}&\texttt{( } \textit{variable-1}\quad \textit{expression-1} \texttt{)} \\
-&\ldots \\
-&\texttt{( } \textit{variable-n}\quad \textit{expression-n} \texttt{))} \\
-\qquad \textit{body} \texttt{)}
-\end{aligned}
-\end{equation}
+   \begin{equation}
+   \begin{aligned}
+   \texttt{(let (}&\texttt{( } \textit{variable-1}\quad \textit{expression-1} \texttt{)} \\
+   &\ldots \\
+   &\texttt{( } \textit{variable-n}\quad \textit{expression-n} \texttt{))} \\
+   \qquad \textit{body} \texttt{)}
+   \end{aligned}
+   \end{equation}
 
    The value of the =let= expression is the value of the /body/ expression in
    the context where the variables /variable-i/ have the values of the
@@ -248,14 +248,14 @@ $$
    algorithm for computing factorials as follows:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define (factorial n)
-  (let factlp ((count 1) (answer 1))
-    (if (> count n)
-        answer
-        (factlp (+ count 1) (* count answer)))))
+     (define (factorial n)
+       (let factlp ((count 1) (answer 1))
+         (if (> count n)
+             answer
+             (factlp (+ count 1) (* count answer)))))
 
-(factorial 6)
-;; 720
+     (factorial 6)
+     ;; 720
    #+end_src
 
    Here, the symbol =factlp= following the =let= is locally defined to be a
@@ -281,20 +281,20 @@ $$
    an element of the list. All selectors in Scheme are zero-based. For example,
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define a-list (list 6 946 8 356 12 620))
+     (define a-list (list 6 946 8 356 12 620))
 
-a-list
-;; (6 946 8 356 12 620)
+     a-list
+     ;; (6 946 8 356 12 620)
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(list-ref a-list 3)
-;; 356
+     (list-ref a-list 3)
+     ;; 356
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(list-ref a-list 0)
-;; 6
+     (list-ref a-list 0)
+     ;; 6
    #+end_src
 
    Lists are built from pairs. A pair is made using the constructor =cons=. The
@@ -305,31 +305,31 @@ a-list
    and is written =()=. Thus,
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(car a-list)
-;; 6
+     (car a-list)
+     ;; 6
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(cdr a-list)
-;; (946 8 356 12 620)
+     a-list(cdr a-list)
+     ;; (946 8 356 12 620)
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(car (cdr a-list))
-;; 946
+     (car (cdr a-list))
+     ;; 946
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define another-list
-  (cons 32 (cdr a-list)))
+     (define another-list
+       (cons 32 (cdr a-list)))
 
-another-list
-;; (32 946 8 356 12 620)
+     another-list
+     ;; (32 946 8 356 12 620)
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(car (cdr another-list))
-;; 946
+     (car (cdr another-list))
+     ;; 946
    #+end_src
 
    Both =a-list= and =another-list= share the same tail (their =cdr=).
@@ -342,21 +342,21 @@ another-list
    a vector:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define a-vector
-  (vector 37 63 49 21 88 56))
+     (define a-vector
+       (vector 37 63 49 21 88 56))
 
-a-vector
-;; #(37 63 49 21 88 56)
+     a-vector
+     ;; #(37 63 49 21 88 56)
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(vector-ref a-vector 3)
-;; 21
+     (vector-ref a-vector 3)
+     ;; 21
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(vector-ref a-vector 0)
-;; 37
+     (vector-ref a-vector 0)
+     ;; 37
    #+end_src
 
    Notice that a vector is distinguished from a list on printout by the
@@ -387,16 +387,16 @@ a-vector
    example, we can write a program to determine if an expression is a sum:
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(define (sum? expression)
-  (and (pair? expression)
-       (eq? (car expression) '+)))
-(sum? '(+ 3 a))
-;; #t
+     (define (sum? expression)
+       (and (pair? expression)
+            (eq? (car expression) '+)))
+     (sum? '(+ 3 a))
+     ;; #t
    #+end_src
 
    #+begin_src scheme :results value raw :exports both :cache yes
-(sum? '(* 3 a))
-;; #f
+     (sum? '(* 3 a))sum?
+     ;; #f
    #+end_src
 
    Here =#t= and =#f= are the printed representations of the boolean values true
