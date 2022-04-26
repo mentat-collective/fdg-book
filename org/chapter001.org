@@ -19,8 +19,8 @@
 
   At the North Pole inscribe a line in the ice perpendicular to the Greenwich
   Meridian. Hold a stick parallel to that line and walk down the Greenwich
-  Meridian keeping the stick parallel to itself as you walk. (The phrase “parallel
-  to itself” is a way of saying that as you walk you keep its orientation
+  Meridian keeping the stick parallel to itself as you walk. (The phrase "parallel
+  to itself" is a way of saying that as you walk you keep its orientation
   unchanged. The stick will be aligned East-West, perpendicular to your direction
   of travel.) When you get to the Equator the stick will be parallel to the
   Equator. Turn East, and walk along the Equator, keeping the stick parallel to
@@ -58,7 +58,7 @@
   of the stick when walking loops on the surface, connecting the static shape of
   the surface with the dynamical behavior of the balls. It turns out that the
   dynamical evolution of the balls may be viewed as parallel transport of the
-  ball’s velocity vector in the direction of the velocity vector. This motion by
+  ball's velocity vector in the direction of the velocity vector. This motion by
   parallel transport of the velocity is called /geodesic motion/.
 
   So there are deep connections between the dynamics of particles and the geometry
@@ -72,7 +72,7 @@
   case of systems with no potential energy the Euler-Lagrange equations are
   equivalent to the geodesic equations on the configuration manifold. In fact, the
   coefficients of terms in the Lagrange equations are Christoffel coefficients,
-  which define parallel transport on the manifold. Let’s look into this a bit.
+  which define parallel transport on the manifold. Let's look into this a bit.
 
 ** Lagrange Equations
 
@@ -160,7 +160,7 @@
 
 ** The Metric
 
-   Let’s now take a step into the geometry. A surface has a metric which tells
+   Let's now take a step into the geometry. A surface has a metric which tells
    us how to measure sizes and angles at every point on the surface. (Metrics
    are introduced in Chapter 9.)
 
@@ -239,7 +239,7 @@
    $\mathsf{e}$ have as many components as the dimension of the space so their
    product is interpreted as a contraction.
 
-   Let’s make a general metric on a 2-dimensional real manifold:[fn:4]
+   Let's make a general metric on a 2-dimensional real manifold:[fn:4]
 
    #+begin_src scheme
 (define the-metric (literal-metric 'g R2-rect))
@@ -452,5 +452,5 @@ in Appendix A.
 it, is given in the prologue: Programming and Understanding. More details can be
 found in Appendix B
 
-[fn:1] It is customary to shorten “Euler-Lagrange equations” to “Lagrange
-equations.” We hope Leonhard Euler is not disturbed.
+[fn:1] It is customary to shorten "Euler-Lagrange equations" to "Lagrange
+equations." We hope Leonhard Euler is not disturbed.

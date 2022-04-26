@@ -18,7 +18,7 @@ cannot subtract two manifold points, we cannot take the derivative of a manifold
 function in the way described in elementary calculus. But we can take the
 derivative of a co- ordinate representation of a manifold function, because it
 takes real-number coordinates as its arguments. This is a start, but it is not
-independent of coordinate system. Let’s see what we can build out of this.
+independent of coordinate system. Let's see what we can build out of this.
 
 ** Vector Fields
 

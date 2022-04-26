@@ -505,7 +505,7 @@ D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
    The derivative generalizes to functions that take multiple arguments. The
    derivative of a real-valued function of multiple arguments is an object whose
    contraction with the tuple of increments in the arguments gives a linear
-   approximation to the increment in the function’s value.
+   approximation to the increment in the function's value.
 
    A function of multiple arguments can be thought of as a function of an up
    tuple of those arguments. Thus an incremental argument tuple is an up tuple
@@ -628,7 +628,7 @@ s = \left(t, (x, y), [p_x, p_y] \right).
 
    The derivative of $H$ is a function that produces an object that can be
    contracted with an increment in the argument structure to produce an
-   increment in the function’s value. The derivative is a down tuple of three
+   increment in the function's value. The derivative is a down tuple of three
    partial derivatives. The first partial derivative is the partial derivative
    with respect to the numerical argument. The second partial derivative is a
    down tuple of partial derivatives with respect to each component of the
@@ -789,7 +789,7 @@ e^{x+y}
 
     We can represent functions of multiple arguments as procedures in several
     ways, depending upon how we wish to use them. The simplest idea is to
-    identify the procedure arguments with the function’s arguments.
+    identify the procedure arguments with the function's arguments.
 
     For example, we could write implementations of the functions that occur in
     exercise B.1 as follows:

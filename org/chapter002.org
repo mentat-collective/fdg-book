@@ -43,7 +43,7 @@ plane[fn:2]
 and give it the name R2. One useful patch of the plane is the one
 that contains the origin and covers the entire plane[fn:3].
 #+begin_src scheme
-(define U (patch ’origin R2))
+(define U (patch 'origin R2))
 #+end_src
 
 ** Coordinate Functions
@@ -51,7 +51,7 @@ A coordinate function $\chi$ maps points in a coordinate patch of a
 manifold to a coordinate tuple[fn:4]:
 $$x = \chi(m),$$
 where x may have a convenient tuple structure. Usually, the co-
-ordinates are arranged as an “up structure”; the coordinates are
+ordinates are arranged as an "up structure"; the coordinates are
 selected with superscripts:
 $$x^i = \chi^i(m).$$
 The number of independent components of x is the dimension of
@@ -74,8 +74,8 @@ of the plane identified by the origin[fn:5][fn:6]:
 
 #+begin_src scheme
 ;; Some charts on the patch U
-(define R2-rect (coordinate-system ’rectangular U))
-(define R2-polar (coordinate-system ’polar/cylindrical U))
+(define R2-rect (coordinate-system 'rectangular U))
+(define R2-polar (coordinate-system 'polar/cylindrical U))
 #+end_src
 For each of the coordinate systems above we obtain the coordi-
 nate functions and their inverses:
@@ -93,20 +93,20 @@ The coordinate transformations are then just compositions. The
 polar coordinates of a rectangular point are:
 #+begin_src scheme
 ((compose R2-polar-chi R2-rect-chi-inverse)
-(up ’x0 ’y0))
+(up 'x0 'y0))
 (up (sqrt (+ (expt x0 2) (expt y0 2))) (atan y0 x0))
 #+end_src
 And the rectangular coordinates of a polar point are:
 #+begin_src scheme
 ((compose R2-rect-chi R2-polar-chi-inverse)
-(up ’r0 ’theta0))
+(up 'r0 'theta0))
 (up (* r0 (cos theta0)) (* r0 (sin theta0)))
 #+end_src
 And we can obtain the Jacobian of the polar-to-rectangular trans-
 formation by taking its derivative[fn:7]:
 #+begin_src scheme
 ((D (compose R2-rect-chi R2-polar-chi-inverse))
-(up ’r0 ’theta0))
+(up 'r0 'theta0))
 (down (up (cos theta0) (sin theta0))
 (up (* -1 r0 (sin theta0)) (* r0 (cos theta0))))
 #+end_src
@@ -145,7 +145,7 @@ nates.
 We define a manifold function by specifying its behavior in rectangular coordinates[fn:8]:
 #+begin_src scheme
 (define f
-(compose (literal-function ’f-rect R2->R) R2-rect-chi)
+(compose (literal-function 'f-rect R2->R) R2-rect-chi)
 #+end_src
 where $R2\rightarrowR$ is a signature for functions hat map an up structure of two reals to a real:
 #+begin_src scheme
@@ -153,14 +153,14 @@ where $R2\rightarrowR$ is a signature for functions hat map an up structure of t
 #+end_src
 We can specify a typical manifold point using its rectangular coordinates:
 #+begin_src scheme
-(define R2-rect-point (R2-rect-chi-inverse (up ’x0 ’y0))))
+(define R2-rect-point (R2-rect-chi-inverse (up 'x0 'y0))))
 #+end_src
 We can describe the same point using its polar coordinates:
 #+begin_src scheme
 (define corresponding-polar-point
 (R2-polar-chi-inverse
-(up (sqrt (+ (square ’x0) (square ’y0)))
-(atan ’y0 ’x0))))
+(up (sqrt (+ (square 'x0) (square 'y0)))
+(atan 'y0 'x0))))
 #+end_src
 $(f R2-rect-point)$ and $(f corresponding-polar-point)$ agree,
 even though the point has been specified in two different coordi-
@@ -183,15 +183,15 @@ $x$ and $y$ and for the $R2-polar$ coordinate system $r$ and $theta$.
 This allows us to extract the coordinates from a point, indepen-
 dent of the coordinate system used to specify the point.
 #+begin_src scheme
-(x (R2-rect-chi-inverse (up ’x0 ’y0)))
+(x (R2-rect-chi-inverse (up 'x0 'y0)))
 x0
-(x (R2-polar-chi-inverse (up ’r0 ’theta0)))
+(x (R2-polar-chi-inverse (up 'r0 'theta0)))
 (* r0 (cos theta0))
-(r (R2-polar-chi-inverse (up ’r0 ’theta0)))
+(r (R2-polar-chi-inverse (up 'r0 'theta0)))
 r0
-(r (R2-rect-chi-inverse (up ’x0 ’y0)))
+(r (R2-rect-chi-inverse (up 'x0 'y0)))
 (sqrt (+ (expt x0 2) (expt y0 2)))
-(theta (R2-rect-chi-inverse (up ’x0 ’y0)))
+(theta (R2-rect-chi-inverse (up 'x0 'y0)))
 (atan y0 x0)
 #+end_src
 We can work with the coordinate functions in a natural manner,
@@ -206,7 +206,7 @@ defining new manifold functions in terms of them[fn:9]:
 We can also apply h to a point defined in terms of its polar coor-
 dinates:
 #+begin_src scheme
-(h (R2-polar-chi-inverse (up ’r0 ’theta0)))
+(h (R2-polar-chi-inverse (up 'r0 'theta0)))
 (+ (* (expt r0 3) (expt (sin theta0) 3))
 (* (expt r0 3) (cos theta0)))
 #+end_src
@@ -219,8 +219,8 @@ We can convert this to rectangular coordinates by evaluating the residual
 in rectangular coordinates.
 #+begin_src scheme
 (define-coordinates (up r theta) R2-polar)
-((- r (* 2 ’a (+ 1 (cos theta))))
-((point R2-rect) (up ’x ’y)))
+((- r (* 2 'a (+ 1 (cos theta))))
+((point R2-rect) (up 'x 'y)))
 (/ (+ (* -2
  a x)
 (* -2
@@ -263,7 +263,7 @@ corresponding to a point on the plane with the following incantation:
 (point S2-Riemann)
 (chart R2-rect)
 (point R2-polar))
-(up ’rho ’theta))
+(up 'rho 'theta))
 (up (acos (/ (+ -1 (expt rho 2))
 (+ +1 (expt rho 2))))
 theta)
@@ -286,7 +286,7 @@ depending on what r is.
 
 [fn:8] Alternatively, we can define the same function in a shorthand
 #+begin_src scheme
-(define f (literal-manifold-function ’f-rect R2-rect))
+(define f (literal-manifold-function 'f-rect R2-rect))
 #+end_src
 
 
@@ -295,7 +295,7 @@ derivatives of functions with structured input or output.
 
 [fn:6] We can avoid explicitly naming the patch:
 #+begin_src scheme
-(define R2-rect (coordinate-system-at ’rectangular ’origin R2))
+(define R2-rect (coordinate-system-at 'rectangular 'origin R2))
 #+end_src
 
 [fn:5] The rectangular coordinates are good for the entire plane, but the polar

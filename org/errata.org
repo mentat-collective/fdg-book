@@ -147,8 +147,8 @@
    The torsion example on page 127 uses an =f= that has not yet been defined:
 
    #+begin_src scheme
-(let ((X (literal-vector-field ’X-sphere S2-spherical))
-      (Y (literal-vector-field ’Y-sphere S2-spherical)))
+(let ((X (literal-vector-field 'X-sphere S2-spherical))
+      (Y (literal-vector-field 'Y-sphere S2-spherical)))
   ((((torsion-vector nabla) X Y) f) m))
    #+end_src
 
@@ -194,7 +194,7 @@
    should be explicitly defined like so:
 
 #+begin_src scheme
-(define V (literal-function ’V (-> (UP Real Real Real) Real)))
+(define V (literal-function 'V (-> (UP Real Real Real) Real)))
 #+end_src
 
    Page 147: the expression after "If we evaluate the right-hand side expression

@@ -11,7 +11,7 @@
 
   Although this book is about differential geometry, we can show how thinking
   about programming can help in understanding in a more elementary context. The
-  traditional use of Leibniz’s notation and Newton’s notation is convenient in
+  traditional use of Leibniz's notation and Newton's notation is convenient in
   simple situations, but in more complicated situations it can be a serious
   handicap to clear reasoning.
 
@@ -26,7 +26,7 @@
 
   What could this expression possibly mean?
 
-  Let’s try to write a program that implements Lagrange equations. What are
+  Let's try to write a program that implements Lagrange equations. What are
   Lagrange equations for? Our program must take a proposed path and give a
   result that allows us to decide if the path is allowed. This is already a
   problem; the equation shown above does not have a slot for a path to be
@@ -62,7 +62,7 @@
   By thinking computationally we have reformulated the Lagrange equations into a
   form that is explicit enough to specify a computation. We could convert it
   into a program for any symbolic manipulation program because it tells us /how/
-  to manipulate expressions to compute the residuals of Lagrange’s equations for
+  to manipulate expressions to compute the residuals of Lagrange's equations for
   a purported solution path.[fn:2]
 
 ** Functional Abstraction
@@ -100,7 +100,7 @@
    computed. The ideas become clearer because they do not depend on the detailed
    shape of the expressions.
 
-   So let’s get rid of the expression derivative $d/dt$ and replace it with an
+   So let's get rid of the expression derivative $d/dt$ and replace it with an
    appropriate functional derivative. If $f$ is a function then we will write
    $Df$ as the new function that is the derivative of $f$:[fn:5]
 
@@ -133,7 +133,7 @@
    that the difference of the resulting functions of time must be zero. This
    statement of the Lagrange equation is complete, unambiguous, and functional.
    It is not encumbered with the particular choices made in expressing the
-   Lagrangian. For example, it doesn’t matter if the time is named $t$ or
+   Lagrangian. For example, it doesn't matter if the time is named $t$ or
    $\tau$, and it has an explicit place for the path to be tested.
 
    This expression is equivalent to a computer program:[fn:6]
@@ -183,7 +183,7 @@
    $$x(t) = a \cos(\omega t + \varphi).$$
 
    Suppose we have forgotten how the constants in the solution relate to the
-   physical parameters of the oscillator. Let’s plug in the proposed solution
+   physical parameters of the oscillator. Let's plug in the proposed solution
    and look at the residual:
 
    #+begin_src scheme :results value raw :exports both :cache yes
@@ -218,13 +218,13 @@
    Note that we can flexibly manipulate representations of mathematical
    functions. (See Appendices A and B.)
 
-   We started out thinking that the original statement of Lagrange’s equations
-   accurately captured the idea. But we really don’t know until we try to teach
+   We started out thinking that the original statement of Lagrange's equations
+   accurately captured the idea. But we really don't know until we try to teach
    it to a naive student. If the student is sufficiently ignorant, but is
    willing to ask questions, we are led to clarify the equations in the way that
    we did. There is no dumber but more insistent student than a computer. A
    computer will absolutely refuse to accept a partial statement, with missing
-   parameters or a type error. In fact, the original statement of Lagrange’s
+   parameters or a type error. In fact, the original statement of Lagrange's
    equations contained an obvious type error: the Lagrangian is a function of
    multiple variables, but the $d/dt$ is applicable only to functions of one
    variable.
