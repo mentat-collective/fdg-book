@@ -75,9 +75,9 @@
    new functions, and by specifying the particular partial derivative by the
    position of the argument that is varied
 
-   $$ \frac{d}{d t}\left(\left(\partial_{2} L\right)\left(t, w(t), \frac{d}{d t}
+   $$\frac{d}{d t}\left(\left(\partial_{2} L\right)\left(t, w(t), \frac{d}{d t}
    w(t)\right)\right)-\left(\partial_{1} L\right)\left(t, w(t), \frac{d}{d t}
-   w(t)\right)=0, $$
+   w(t)\right)=0,$$
 
    where $\partial_{i}L$ is the function which is the partial derivative of the
    function L with respect to the ith argument.[fn:4]
@@ -118,7 +118,7 @@
    Using $\Gamma$ we can write:
 
    $$\frac{d}{dt}\left(\left(\partial_{2} L\right) \left(\Gamma[w](t)\right)
-   \right)\right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
+   \right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
 
    If we now define composition of functions $(f \circ g)(x) = f(g(x))$, we can
    express the Lagrange equations entirely in terms of functions:
