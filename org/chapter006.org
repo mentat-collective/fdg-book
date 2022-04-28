@@ -162,8 +162,8 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
 ** Walking on a Sphere
 
-   For example, let μ map the time line to the unit sphere.[fn:2] We use
-   colatitude θ and longitude φ as coordinates on the sphere:
+  For example, let $\mu$ map the time line to the unit sphere.[fn:2] We use
+  colatitude $\theta$ and longitude $\phi$ as coordinates on the sphere:
 
 #+begin_src scheme
 (define S2 (make-manifold S^2 2 3))
@@ -455,9 +455,9 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \mathsf{d}(\mu^{*}\theta) = \mu^{*}(\mathsf{d}\theta),
 \end{equation}
 
-   for θ a function or $k$-form field.
+   for $\theta$ a function or $k$-form field.
 
-   We can verify this by computing an example. Let μ map the rectangular plane
+   We can verify this by computing an example. Let $\mu$ map the rectangular plane
    to rectangular 3-space:
 
 #+begin_src scheme

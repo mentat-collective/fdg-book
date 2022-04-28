@@ -209,13 +209,17 @@ dinates:
 (+ (* (expt r0 3) (expt (sin theta0) 3))
 (* (expt r0 3) (cos theta0)))
 #+end_src
+
 ** Exercise 2.1: Curves
+
 A curve may be specified in different coordinate systems. For example, a
-cardioid constructed by rolling a circle of radius a around another circle
-of the same radius is described in polar coordinates by the equation
-$$r = 2a(1 + cos(θ)).$$
-We can convert this to rectangular coordinates by evaluating the residual
-in rectangular coordinates.
+cardioid constructed by rolling a circle of radius a around another circle of
+the same radius is described in polar coordinates by the equation $$r = 2a(1 +
+cos(\theta)).$$
+
+We can convert this to rectangular coordinates by evaluating the residual in
+rectangular coordinates.
+
 #+begin_src scheme
 (define-coordinates (up r theta) R2-polar)
 ((- r (* 2 'a (+ 1 (cos theta))))

@@ -158,8 +158,8 @@ $$
 
    The conditional =cond= takes a number of clauses. Each clause has a predicate
    expression, which may be either true or false, and a consequent expression.
-   The value of the =cond= expression is the value of the consequent expression of
-   the first clause for which the corresponding predicate expression is true.
+   The value of the =cond= expression is the value of the consequent expression
+   of the first clause for which the corresponding predicate expression is true.
    The general form of a conditional expression is
 
 \begin{aligned}
