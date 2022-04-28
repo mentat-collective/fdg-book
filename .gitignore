@@ -19,3 +19,4 @@ org/*.out
 org/*.toc
 org/ltximg
 org/auto
+_minted*
