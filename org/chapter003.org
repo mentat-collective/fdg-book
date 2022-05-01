@@ -825,9 +825,71 @@ A vector with coordinate components $b_{\chi,\mathsf{v}}$ applies to a manifold
 
      **Exercise 3.3: Hill Climbing**
 
+     The topography of a region on the Earth can be specified by a manifold
+     function $\mathsf{h}$ that gives the altitude at each point on the
+     manifold. Let $\mathsf{v}$ be a vector field on the manifold, perhaps
+     specifying a direction and rate of walking at every point on the manifold.
+
+     **a.** Form an expression that gives the power that must be expended to
+     follow the vector field at each point.
+
+     **b.** Write this as a computational expression.
+
 * Footnotes
 
 [fn:1] In multiple dimensions the derivative $Df(x)$ is a down tuple structure
 of the partial derivatives and the increment $\Delta x$ is an up tuple
 structure, so the indicated product is to be interpreted as a contraction. (See
 equation B.8.)
+
+[fn:2] An operator is just like a procedure except that multiplication is interpreted
+as composition. For example, the derivative procedure is made into an operator
+~D~ so that we can say ~(expt D 2)~ and expect it to compute the second
+derivative. The procedure ~procedure->vector-field~ makes a vector-field operator.
+
+[fn:3] The ~make-operator~ procedure takes a procedure and returns an operator.
+
+[fn:4] If $\mathsf{f}$ has structured output then $\mathsf{v}(\mathsf{f})$ is the structure resulting from $\mathsf{v}$ being
+applied to each component of $\mathsf{f}$.
+
+[fn:5] A set of vector fields, $\{\mathsf{v}_i\}$, is linearly independent with respect to manifold
+functions if we cannot find nonzero manifold functions, $\{\mathsf{a}_i\}$, such that
+\begin{equation}
+\sum_i \mathsf{a}_i \mathsf{v}_i(\mathsf{f}) = \mathsf{0} (\mathsf{f}),
+\end{equation}
+where $\mathsf{0}$ is the vector field such that $\mathsf{0}(\mathsf{f})(\mathsf{m}) = 0$ for all $\mathsf{f}$ and $\mathsf{m}$.
+
+
+[fn:6] This notation helps one remember the transformation rule:
+
+\begin{equation}
+\frac{\partial f}{\partial x^i}
+= \sum_j \frac{\partial f}{\partial x^{'j}} \frac{\partial x^{'j}}{\partial x^i},
+\end{equation}
+
+which is the relation in the usual Leibniz notation. As Spivak pointed out in
+/Calculus on Manifolds/, p.45, $f$ means something different on each side of the
+equation.
+
+[fn:7] For coordinate paths $q$ and $q'$ related by $q(t) = (\chi \circ (\chi')^{-1})(q'(t))$ the velocities
+are related by $Dq(t) = D(\chi \circ (\chi')^{-1})(q'(t))Dq'(t)$. Abstracting off paths, we
+get $v = D(\chi \circ (\chi')^{-1})(x')v'$.
+
+[fn:8] In this expression ~d/dx~ and ~d/dy~ are vector fields that take directional derivatives
+of manifold functions and evaluate them at manifold points; ~x~ and ~y~ are
+manifold functions. ~define-coordinates~ was used to create these operators
+and functions, see page 27.
+
+Note that \textsf{circular} is an operator---a property inherited from ~d/dx~ and
+~d/dy~.
+
+[fn:9] The differential of a manifold function will turn out to be a special case of
+the exterior derivative, which will be introduced later.
+
+[fn:10] The Kronecker delta $\delta^i_j$ is one if $i = j$ and zero otherwise.
+
+[fn:11] The analogous recovery of coefficient tuples from vector fields is equation
+(3.3): $b^i_{\chi, \mathsf{v}} = \mathsf{v}(\chi^i) \circ \chi^{-1}$.
+
+[fn:12] The procedure ~components->1form-field~ is analogous to the procedure
+~components->vector-field~ introduced earlier.
