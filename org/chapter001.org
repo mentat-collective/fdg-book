@@ -188,10 +188,10 @@ gives the size of the vector field $\mathsf{u}$ in the $\theta$ direction at
 the point. Notice that $\mathsf{g}(\mathsf{u}, \mathsf{u})$ is a weighted sum
 of the squares of the components of $\mathsf{u}$. In fact, if we identify
 
-\begin{aligned}
+\begin{align*}
 &\mathsf{d} \theta(\mathsf{v})=\dot{\theta} \\
 &\mathsf{d} \phi(\mathsf{v})=\dot{\phi},
-\end{aligned}
+\end{align*}
 
 then the coefficients in the metric are the same as the coefficients in the
 value of the Lagrangian, equation (1.1), apart from a factor of $m/2$.

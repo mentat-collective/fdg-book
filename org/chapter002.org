@@ -123,8 +123,8 @@ taking its derivative[fn:7]:
 Let $\mathsf{f}$ be a real-valued function on a manifold $\mathsf{M}$: this
 function maps points $\mathsf{m}$ on the manifold to real numbers.
 
-This function has a coordinate representation $f_\chi$ with respect
-to the coordinate function $\chi$ (see figure 2.2):
+This function has a coordinate representation $f_\chi$ with respect to the
+coordinate function $\chi$ (see figure 2.2):
 \begin{equation}
 f_\chi = \mathsf{f} \circ \chi^{-1}.
 \end{equation}
@@ -196,10 +196,10 @@ point has been specified in two different coordinate systems:
 
 ** Naming Coordinate Functions
 
-To make things a bit easier, we can give names to the individual
-coordinate functions associated with a coordinate system. Here we
-name the coordinate functions for the ~R2-rect~ coordinate system
-~x~ and ~y~ and for the ~R2-polar~ coordinate system ~r~ and ~theta~.
+To make things a bit easier, we can give names to the individual coordinate
+functions associated with a coordinate system. Here we name the coordinate
+functions for the ~R2-rect~ coordinate system ~x~ and ~y~ and for the ~R2-polar~
+coordinate system ~r~ and ~theta~.
 #+begin_src scheme
 (define-coordinates (up x y) R2-rect)
 (define-coordinates (up r theta) R2-polar)

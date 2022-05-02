@@ -117,7 +117,7 @@ $$\Gamma[w](t)=\left(t, w(t), \frac{d}{d t} w(t)\right).$$
 Using $\Gamma$ we can write:
 
 $$\frac{d}{dt}\left(\left(\partial_{2} L\right) \left(\Gamma[w](t)\right)
-\right)\right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
+\right) - \left(\partial_{1} L\right) \left(\Gamma[w](t)\right)=0.$$
 
 If we now define composition of functions $(f \circ g)(x) = f(g(x))$, we can
 express the Lagrange equations entirely in terms of functions:
@@ -251,11 +251,11 @@ and exists ($\forall$ and $\exists$).
 
 [fn:2] The /residuals/ of equations are the expressions whose value must be zero
 if the equations are satisfied. For example, if we know that for an unknown $x$,
-$x^3-x=0$ then the residual is $x^3 - x$. We can try $x = −1$ and find a
+$x^3-x=0$ then the residual is $x^3 - x$. We can try $x = -1$ and find a
 residual of 0, indicating that our purported solution satisfies the equation. A
 residual may provide information. For example, if we have the differential
 equation $df(x)/dx - af(x) = 0$ and we plug in a test solution $f(x) = Ae^{bx}$
-we obtain the residual $(b -a)Ae^{bx}$, which can be zero only if $b = a$.
+we obtain the residual $(b - a)Ae^{bx}$, which can be zero only if $b = a$.
 
 [fn:1] The idea of using computer programming to develop skills of clear
 thinking was originally advocated by Seymour Papert. An extensive discussion of
