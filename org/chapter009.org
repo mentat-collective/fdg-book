@@ -416,10 +416,10 @@ $$
     These residuals must be zero; so the numerators must be zero.[fn:4] They
     are:
 
-\begin{aligned}
+\begin{align*}
 D^2x\,(Dy)^2 &= Dx\,Dy\,D^2y \\
 D^2x\,Dx\,Dy &= (Dx)^2\,D^2y
-\end{aligned}
+\end{align*}
 
     Note that the only constraint is $D^2x\,Dy = Dx\,D^2y$, so the resulting
     Lagrange equations are dependent.

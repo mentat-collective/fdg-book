@@ -602,12 +602,12 @@ a scaled vector, along which we translate by one unit.
 
 [fn:7] For non-commuting operators $A$ and $B$,
 
-\begin{aligned}
+\begin{align*}
 e^{A} e^{B} e^{-A} e^{-B} & \\
 =&\left(1+A+\frac{A^{2}}{2}+\cdots\right)\left(1+B+\frac{B^{2}}{2}+\cdots\right) \\
 & \times\left(1-A+\frac{A^{2}}{2}+\cdots\right)\left(1-B+\frac{B^{2}}{2}+\cdots\right) \\
 =& 1+[A, B]+\cdots,
-\end{aligned}
+\end{align*}
 
 to second order in $A$ and $B$. All higher-order terms can be written in terms
 of higher-order commutators of $A$ and $B$. An example of a higher-order

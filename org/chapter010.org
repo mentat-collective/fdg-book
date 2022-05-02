@@ -53,11 +53,11 @@ are gradient, curl, and divergence. If $\hat{\mathrm{x}}$, $\hat{\mathrm{y}}$,
 $\hat{\mathrm{z}}$ are the usual orthonormal rectangular vector basis, $f$ a
 function on the space, and $\vec{v}$ a vector field on the space, then
 
-\begin{aligned}
+\begin{align*}
 \operatorname{grad}(f) &=\frac{\partial f}{\partial x} \hat{\mathrm{x}}+\frac{\partial f}{\partial y} \hat{\mathrm{y}}+\frac{\partial f}{\partial z} \hat{\mathrm{z}} \\
 \operatorname{curl}(\overrightarrow{\mathrm{v}}) &=\left(\frac{\partial v_{z}}{\partial y}-\frac{\partial v_{y}}{\partial z}\right) \hat{\mathrm{x}}+\left(\frac{\partial v_{x}}{\partial z}-\frac{\partial v_{z}}{\partial x}\right) \hat{\mathrm{y}}+\left(\frac{\partial v_{y}}{\partial x}-\frac{\partial v_{x}}{\partial y}\right) \hat{\mathrm{x}} \\
 \operatorname{div}(\overrightarrow{\mathrm{v}}) &=\frac{\partial v_{x}}{\partial x}+\frac{\partial v_{y}}{\partial y}+\frac{\partial v_{z}}{\partial z}.
-\end{aligned}
+\end{align*}
 
    Recall the meaning of the traditional vector operations. Traditionally we
    assume that there is a metric that allows us to determine distances between
