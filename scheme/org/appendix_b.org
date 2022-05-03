@@ -74,7 +74,7 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    A procedure =h= that computes the cube of the sine of its argument may be
    defined by composing the procedures =cube= and =sin=:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define h (compose cube sin))
 
 (h 2)
@@ -83,7 +83,7 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
 
    Which is the same as
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (cube (sin 2))
 ;; .7518269446689928
    #+end_src
@@ -103,14 +103,14 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    A procedure =g= that multiplies the cube of its argument by the sine of its
    argument is
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define g (* cube sin))
 
 (g 2)
 ;; 7.274379414605454
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (* (cube 2) (sin 2))
 ;; 7.274379414605454
    #+end_src
@@ -124,7 +124,7 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    expression ='a= is a literal Scheme symbol that represents an unspecified real
    number:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((compose cube sin) 'a)
 ;; (expt (sin a) 3)
    #+end_src
@@ -132,7 +132,7 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    The default printer simplifies the expression,[fn:1] and displays it in a
    readable form. We can use the simplifier to verify a trigonometric identity:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((- (+ (square sin) (square cos)) 1) 'a)
 ;; 0
    #+end_src
@@ -144,12 +144,12 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    produce one real value. For example, we may want to work with a function $f :
    \mathbf{R} \to \mathbf{R}$:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((literal-function 'f) 'x)
 ;; (f x)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((compose (literal-function 'f) (literal-function 'g)) 'x)
 ;; (f (g x))
    #+end_src
@@ -159,7 +159,7 @@ d(x_1, y_1, x_2, y_2) = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 }.
    named =g= that takes two real arguments and returns a real value ($g :
    \mathbf{R} \times \mathbf{R} \to \mathbf{R}$) we may write:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define g (literal-function 'g (-> (X Real Real) Real)))
 
 (g 'x 'y)
@@ -201,13 +201,13 @@ p = [p_0, p_1, p_2].
    We make tuples with the constructors =up= and =down=:
 
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define v (up 'v^0 'v^1 'v^2))
 v
 ;; (up vˆ0 vˆ1 vˆ2)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define p (down 'p_0 'p_1 'p_2))
 p
 ;; (down p_0 p_1 p_2)
@@ -259,7 +259,7 @@ I_{2,1}(s) &= p_y.
    The procedure =component= is the general selector procedure that implements
    the selector function $I_z$:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((component 0 1) (up (up 'a 'b) (up 'c 'd)))
 ;; b
    #+end_src
@@ -268,7 +268,7 @@ I_{2,1}(s) &= p_y.
    =ref=, which takes a tuple and an index and returns the indicated element of
    the tuple:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (ref (up 'a 'b 'c) 1)
 ;; b
    #+end_src
@@ -276,7 +276,7 @@ I_{2,1}(s) &= p_y.
    We use zero-based indexing everywhere. The procedure =ref= can be used to
    access any substructure of a tree of tuples:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (ref (up (up 'a 'b) (up 'c 'd)) 0 1)
 ;; b
    #+end_src
@@ -312,7 +312,7 @@ pv = p_0 v^0 + p_1 v^1 + p_2 v^2.
    So the product of tuples that are compatible for contraction is an inner
    product. Using the tuples =p= and =v= defined above gives us
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (* p v)
 ;; (+ (* p 0 vˆ0) (* p 1 vˆ1) (* p 2 vˆ2))
    #+end_src
@@ -430,7 +430,7 @@ x \sin \theta + y \cos \theta
    The Scheme procedure for producing the derivative of a function is named =D=.
    The derivative of the =sin= procedure is a procedure that computes =cos=:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define derivative-of-sine (D sin))
 
 (derivative-of-sine 'x)
@@ -485,7 +485,7 @@ D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
    is not what is intended. A product of a number and an operator scales the
    operator. So, for example
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((* 5 D) cos) 'x)
 ;; (* -5 (sin x))
    #+end_src
@@ -495,7 +495,7 @@ D(f \circ g) = \left( (Df) \circ g\right) \cdot Dg.
    a function from its second derivative. Such an operator can be constructed
    and used in Scheme as follows:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((* (+ D I) (- D I)) (literal-function 'f)) 'x)
 ;; (+ (((expt D 2) f) x) (* -1 (f x)))
    #+end_src
@@ -527,7 +527,7 @@ Dg(x,y) \cdot (\Delta x, \Delta y) &= \left[ \partial_0 g(x,y) + \partial_1 g(x,
 
    Using the two-argument literal function =g= defined on page 198, we have:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 ((D g) 'x 'y)
 ;; (down (((partial 0) g) x y) (((partial 1) g) x y))
 #+end_src
@@ -592,17 +592,17 @@ g(x + \Delta x, y + \Delta y) - g(x,y) &\approx [3x^2y^5, 5x^3y^4] \cdot (\Delta
   (g (ref s 0) (ref s 1)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (h (up 'x 'y))
 ;; (g x y)
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 ((D g) 'x 'y)
 ;; (down (((partial 0) g) x y) (((partial 1) g) x y))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 ((D h) (up 'x 'y))
 (down (((partial 0) g) x y) (((partial 1) g) x y))
 #+end_src
@@ -676,12 +676,12 @@ DH(s)\Delta s = &\partial_0 H(s)\Delta t \\
    (-> (UP Real (UP Real Real) (DOWN Real Real)) Real)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (H s)
 ;; (H (up t (up x y) (down p x p y)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 ((D H) s)
 ;; (down
 ;;  (((partial 0) H) (up t (up_x y) (down p_x p_y)))
@@ -729,7 +729,7 @@ Dh(t) = (-\sin t, \cos t, 1).
    Its derivative is just the up tuple of the derivatives of each component of
    the function:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((D helix) 't)
 (up (* -1 (sin t)) (cos t) 1)
    #+end_src
@@ -765,7 +765,7 @@ e^{x+y}
   (up (square (+ x y)) (cube (- y x)) (exp (+ x y))))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((D g) 'x 'y)
 ;; (down (up (+ (* 2 x) (* 2 y))
 ;;           (+ (* -3 (expt x 2)) (* 6 x y) (* -3 (expt y 2)))
@@ -820,6 +820,8 @@ e^{x+y}
   (let ((x (ref v 0))
         (y (ref v 1)))
     (* (square x) (cube y))))
+
+
 
 (define (g v)
   (let ((x (ref v 0))

@@ -467,7 +467,7 @@ x = 0 = \gamma(\beta)(x^\prime + \beta c t'),
 
    We can check that the interval is invariant:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (- (proper-space-interval
     ((general-boost (up 'vx 'vy 'vz))
      (make-4tuple 'ct (up 'x 'y 'z))))
@@ -538,7 +538,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    In terms of this we can check the relation between boosts and rotations:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (let ((beta (up 'bx 'by 'bz))
       (xi (make-4tuple 'ct (up 'x 'y 'z)))
       (R (compose
@@ -666,7 +666,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
     the spatial origin of frame =B=, with =B= coordinates =(up 'ct 0 0 0)=, we
     have
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((B-origin-home-coords
        ((chart home)
         ((point B)
@@ -739,7 +739,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    If we examine the displacement of the traveller in his own frame we see that
    the traveller has aged 7 years and he has not moved from his spatial origin.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (- ((chart outgoing) traveller-at-turning-point-event)
    ((chart outgoing) start-event))
 ;; (up (* 7 :c) 0 0 0)
@@ -748,7 +748,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    But in the frame of the homebody we see that the time has advanced by 25
    years.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (- ((chart home) traveller-at-turning-point-event)
    ((chart home) start-event))
 ;; (up (* 25 :c) (* 24 :c) 0 0)
@@ -757,14 +757,14 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    The proper time interval is 7 years, as seen in any frame, because it
    measures the aging of the traveller:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart outgoing) traveller-at-turning-point-event)
     ((chart outgoing) start-event)))
 ;; (* 7 :c)
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart home) traveller-at-turning-point-event)
     ((chart home) start-event)))
@@ -773,7 +773,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    When the traveller is at the turning point, the event of the homebody is:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (define halfway-at-home-event
   ((point home)
    (make-SR-coordinates home (up (* :c 25) 0 0 0))))
@@ -781,14 +781,14 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    and the homebody has aged
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart home) halfway-at-home-event)
     ((chart home) start-event)))
 ;; (* 25 :c)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart outgoing) halfway-at-home-event)
     ((chart outgoing) start-event)))
@@ -812,7 +812,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    less than the traveller. This may seem weird, but it is OK because this event
    is different from the halfway event in the home frame.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart home) home-at-outgoing-turning-point-event)
     ((chart home) start-event)))
@@ -823,7 +823,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    return trip. The incoming trip is the reverse of the outgoing trip, with
    origin at the turning-point event:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define incoming
   (make-SR-frame 'incoming home
                  (up -1 0 0) 24/25
@@ -841,14 +841,14 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    Indeed, the traveller comes home after 7 more years in the incoming frame:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (- ((chart incoming) end-event)
    (make-SR-coordinates incoming
                         (up (* :c 7) 0 0 0)))
 ;; (up 0 0 0 0)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (- ((chart home) end-event)
    ((chart home)
     ((point incoming)
@@ -860,7 +860,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    The traveller ages only 7 years on the return segment, so his total aging is
    14 years:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (+ (proper-time-interval
     (- ((chart outgoing) traveller-at-turning-point-event)
        ((chart outgoing) start-event)))
@@ -872,7 +872,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
 
    But the homebody ages 50 years:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart home) end-event)
     ((chart home) start-event)))
@@ -891,7 +891,7 @@ B(\boldsymbol{\beta})=\left(\mathcal{R}(R) \right)^{-1} \circ B\left( R(\boldsym
    The time elapsed for the homebody between the reunion and the turning point
    of the homebody, as viewed by the incoming traveller, is about 2 years.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (proper-time-interval
  (- ((chart home) end-event)
     ((chart home) home-at-incoming-turning-point-event)))

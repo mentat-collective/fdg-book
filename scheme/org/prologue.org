@@ -3,6 +3,16 @@
 
 * Prologue
 
+#+begin_src scheme :exports none
+(load "utils.scm")
+#+end_src
+
+#+RESULTS:
+: ;    Loading "utils.scm"...
+: ;      Loading "exdisplay.scm"... done
+: ;    ... done
+: #| ->tex-equation |#
+
 ** Programming and Understanding
 
 One way to become aware of the precision required to unambiguously communicate a
@@ -143,6 +153,9 @@ This expression is equivalent to a computer program:[fn:6]
      (compose ((partial 1) Lagrangian) (Gamma w))))
 #+end_src
 
+#+RESULTS:
+: #| Lagrange-equations |#
+
 In the Lagrange equations procedure the parameter =Lagrangian= is a procedure
 that implements the Lagrangian. The derivatives of the Lagrangian, for example
 =((partial 2) Lagrangian)=, are also procedures. The state-space path procedure
@@ -153,6 +166,9 @@ the procedure =Gamma=:
 (define ((Gamma w) t)
   (up t (w t) ((D w) t)))
 #+end_src
+
+#+RESULTS:
+: #| Gamma |#
 
 where =up= is a constructor for a data structure that represents a state of the
 dynamical system (time, coordinates, velocities).
@@ -176,6 +192,9 @@ for mass $m$ and spring constant $k$. this lagrangian is implemented by
        (* 1/2 k (square q)))))
 #+end_src
 
+#+RESULTS:
+: #| L-harmonic |#
+
 We know that the motion of a harmonic oscillator is a sinusoid with a given
 amplitude $a$, frequency $\omega$, and phase $\varphi$:
 
@@ -185,31 +204,40 @@ Suppose we have forgotten how the constants in the solution relate to the
 physical parameters of the oscillator. Let’s plug in the proposed solution and
 look at the residual:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme
 (define (proposed-solution t)
   (* 'a (cos (+ (* 'omega t) 'phi))))
+#+end_src
 
-(show-expression
+#+RESULTS:
+: #| proposed-solution |#
+
+#+begin_src scheme :results wrap :exports both :cache yes
+(->tex
  (((Lagrange-equations (L-harmonic 'm 'k))
    proposed-solution)
   't))
-
-;; should produce \cos(\omega t + \varphi) a (k-m\omega^2)
 #+end_src
+
+#+RESULTS[a1567b5130995a397296f8851e0036615effec20]:
+:results:
+\[  - a m {\omega}^{2} \cos\left( \omega t + \phi \right) + a k \cos\left( \omega t + \phi \right) \]
+:end:
 
 The residual here shows that for nonzero amplitude, the only solutions allowed
 are ones where $(k - m\omega^2) = 0$ or $\omega = \sqrt{k/m}$.
 
 But, suppose we had no idea what the solution looks like. We could propose a
 literal function for the path:
-
-#+begin_src scheme :results value raw :exports both :cache yes
-(show-expression
+#+begin_src scheme :results wrap :exports both :cache yes :padline no
+(->tex
  (((Lagrange-equations (L-harmonic 'm 'k))
    (literal-function 'x))
   't))
-;; should produce $$kx(t)+mD^2 x(t)$$
 #+end_src
+
+#+RESULTS[981e02186fef8db904bcef9e336b7b44b2cc6011]:
+\[ k x\left( t \right) + m {D}^{2}x\left( t \right) \]
 
 If this residual is zero we have the Lagrange equation for the harmonic
 oscillator.

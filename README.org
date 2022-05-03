@@ -3,3 +3,7 @@
 Executable version of Functional Differential Geometry.
 
 Scheme and Clojure Versions.
+
+** Dependencies
+
+~dvisvgm~ for rendering LaTeX. Easiest way to do this is [[https://www.tug.org/mactex/][Mactex on OS X]].

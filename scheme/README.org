@@ -8,13 +8,56 @@ Org file of the FDG book.
 
 ** Installing scmutils
 
+TODO get these notes over from the exercises repo. We are going to want
+instructions on how to do that.
+
 ** Scheme Version
 
-Chapters live in subfolders, big thing lives in `org`.
+Chapters live in subfolders, big thing lives in ~org~.
 
 - Get TeX installed.
 - Check that you have (???)
 
+** Emacs Config
+
+- https://github.com/doomemacs/doomemacs
+- https://www.spacemacs.org/,
+- https://emacsforosx.com/
+
+*** Geiser
+
+- [[https://www.nongnu.org/geiser/geiser_2.html#Installation][installing Geiser]]
+- [[https://develop.spacemacs.org/layers/+lang/scheme/README.html][Geiser]] for spacemacs
+
+When you get this working, you can
+
+- go into a code fence with the cursor
+- run ~C-c '~, for ~org-edit-special~
+- Type ~C-c C-z~ to get a repl buffer
+- ~C-c '~ gets you back out again.
+
+That's a great way to interact with the REPL. BUT!!!! It has a big problem.
+
+*** CMU Scheme
+
+#+begin_src emacs-lisp
+(require 'cmuscheme)
+
+(defun mechanics-local ()
+  (interactive)
+  (run-scheme "mechanics"))
+
+;; And finally, the goods for SICM.
+(defun mechanics ()
+  (interactive)
+  (let ((default-directory (or (projectile-project-root)
+                               default-directory)))
+    (call-interactively #'mechanics-local)))
+#+end_src
+
+*** ob-scheme
+
+ANNOYINGLY...
 
 #+begin_src scheme
 ;; This is required for better LaTeX in org mode.

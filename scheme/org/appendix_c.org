@@ -88,7 +88,7 @@ Riemann tensor (see equation 8.2), is indeed a tensor field. A real-valued
 geometric function is a tensor if it is linear (over the functions) in each of
 its arguments. We can try it for 3-dimensional rectangular coordinates:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (let ((cs R3-rect))
   (let ((u (literal-vector-field 'u-coord cs))
         (v (literal-vector-field 'v-coord cs))
@@ -140,7 +140,7 @@ the procedure =T= to be tested, a list of argument types, and a coordinate
 system to be used. It tests each argument for linearity (over functions). If the
 function passed as T is a tensor, the result will be a list of zeros.
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (tensor-test
  (Riemann (covariant-derivative (literal-Cartan 'G R3-rect)))
  '(1form vector vector vector)
@@ -150,7 +150,7 @@ function passed as T is a tensor, the result will be a list of zeros.
 
 and so does the torsion (see equation 8.21):
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (tensor-test
  (torsion (covariant-derivative (literal-Cartan 'G R3-rect)))
  '(1form vector vector)
@@ -169,7 +169,7 @@ interesting and important case. The function $\mathsf{F}$, defined by
 is a geometric object, since the result is independent of the coordinate system
 used to represent the $\nabla$. For example:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (define ((F nabla) omega u v)
   (omega ((nabla u) v)))
 (((- (F (covariant-derivative
@@ -191,7 +191,7 @@ used to represent the $\nabla$. For example:
 
 But it is not a tensor field:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (tensor-test
  (F (covariant-derivative (literal-Cartan 'G R3-rect)))
  '(1form vector vector)

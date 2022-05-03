@@ -3,6 +3,16 @@
 
 * Chapter 1: Introduction
 
+#+begin_src scheme :exports none
+(load "utils.scm")
+#+end_src
+
+#+RESULTS:
+: ;    Loading "utils.scm"...
+: ;      Loading "exdisplay.scm"... done
+: ;    ... done
+: #| ->tex-equation |#
+
 #+begin_quote
 Philosophy is written in that great book which ever lies before our eyes—I mean
 the Universe—but we cannot understand it if we do not learn the language and
@@ -99,6 +109,9 @@ energy, $mv^2/2$. The procedure =Lfree= implements the free Lagrangian:[fn:3]
   (* 1/2 mass (square (velocity state))))
 #+end_src
 
+#+RESULTS:
+: #| Lfree |#
+
 For us the dynamical state of a system of particles is a tuple of time,
 coordinates, and velocities. The free-particle Lagrangian depends only on the
 velocity part of the state.
@@ -125,6 +138,9 @@ $z = 0$.)
           (* R (cos theta))))))       ; z
 #+end_src
 
+#+RESULTS:
+: #| sphere->R3 |#
+
 The coordinate transformation maps the generalized coordinates on the sphere to
 the 3-dimensional rectangular coordinates. Given this coordinate transformation
 we construct a corresponding transformation of velocities; these make up the
@@ -140,6 +156,9 @@ transformation of states from a coordinate transformation:
             (velocity state)))))
 #+end_src
 
+#+RESULTS:
+: #| F->C |#
+
 A Lagrangian governing free motion on a sphere of radius $R$ is then the
 composition of the free Lagrangian with the transformation of states.
 
@@ -148,19 +167,36 @@ composition of the free Lagrangian with the transformation of states.
   (compose (Lfree m) (F->C (sphere->R3 R))))
 #+end_src
 
+#+RESULTS:
+: #| Lsphere |#
+
 So the value of the Lagrangian at an arbitrary dynamical state is:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :exports both :cache yes
 ((Lsphere 'm 'R)
  (up 't (up 'theta 'phi) (up 'thetadot 'phidot)))
 #+end_src
 
+#+RESULTS[3f00b79b88e2070619388711ee524cebec3124b3]:
+: #|
+: (+ (* 1/2 (expt R 2) m (expt phidot 2) (expt (sin theta) 2))
+:    (* 1/2 (expt R 2) m (expt thetadot 2)))
+: |#
+
 or, in infix notation:
 
+#+begin_src scheme :results wrap :exports results :cache yes
+(->tex-equation
+ ((Lsphere 'm 'R)
+  (up 't (up 'theta 'phi) (up 'thetadot 'phidot))))
+#+end_src
+
+#+RESULTS[f48a547afdb61ba245bea23c374d98a7736bad70]:
+:results:
 \begin{equation}
-\frac{1}{2} mR^2\dot{\theta}^2 +
-\frac{1}{2}mR^2\left(\sin\left(\theta\right)\right)^2\dot{\phi}^2.
+{{1}\over {2}} {R}^{2} m {\dot{\phi}}^{2} {\left( \sin\left( \theta \right) \right)}^{2} + {{1}\over {2}} {R}^{2} m {\dot{\theta}}^{2}
 \end{equation}
+:end:
 
 ** The Metric
 
@@ -216,6 +252,9 @@ We can capture this geometric statement as a program:
   (* 1/2 mass ((metric velocity velocity) place)))
 #+end_src
 
+#+RESULTS:
+: #| L2 |#
+
 This program gives the Lagrangian in a coordinate-independent, geometric way.
 It is entirely in terms of geometric objects, such as a place on the
 configuration manifold, the velocity at that place, and the metric that
@@ -233,6 +272,9 @@ Thus, we can form a coordinate representation of the Lagrangian.
     ((L2 mass metric) ((point coordsys) x) (* e v))))
 #+end_src
 
+#+RESULTS:
+: #| Lc |#
+
 The manifold point $\mathsf{m}$ represented by the coordinates $x$ is given
 by =(define m ((point coordsys) x))=. The coordinates of $\mathsf{m}$ in a
 different coordinate system are given by =((chart coordsys2) m)=. The
@@ -249,6 +291,9 @@ Let's make a general metric on a 2-dimensional real manifold:[fn:4]
 (define the-metric (literal-metric 'g R2-rect))
 #+end_src
 
+#+RESULTS:
+: #| the-metric |#
+
 The metric is expressed in rectangular coordinates, so the coordinate system
 is =R2-rect=.[fn:5] The component functions will be labeled as subscripted
 =g=s.
@@ -259,14 +304,21 @@ We can now make the Lagrangian for the system:
 (define L (Lc 'm the-metric R2-rect))
 #+end_src
 
+#+RESULTS:
+: #| L |#
+
 And we can apply our Lagrangian to an arbitrary state:
 
-#+begin_src scheme
+#+begin_src scheme :exports both
 (L (up 't (up 'x 'y) (up 'vx 'vy)))
-;; (+ (* 1/2 m (g_00 (up x y)) (expt vx 2))
-;;    (* m (g_01 (up x y)) vx vy)
-;;    (* 1/2 m (g_11 (up x y)) (expt vy 2)))
 #+end_src
+
+#+RESULTS:
+: #|
+: (+ (* 1/2 m (expt vx 2) (g_00 (up x y)))
+:    (* m vx vy (g_01 (up x y)))
+:    (* 1/2 m (expt vy 2) (g_11 (up x y))))
+: |#
 
 Compare this result with equation (1.3).
 
@@ -281,6 +333,9 @@ between manifolds in Chapter 6.) Consider an arbitrary path:[fn:6]
 (define gamma (literal-manifold-map 'q R1-rect R2-rect))
 #+end_src
 
+#+RESULTS:
+: #| gamma |#
+
 The values of $\gamma$ are points on the manifold, not a coordinate
 representation of the points. We may evaluate =gamma= only on points of the
 real-line manifold; =gamma= produces points on the $\mathbb{R}^2$ manifold.
@@ -289,18 +344,31 @@ line we use =((point R1-rect) 't)= and to go from a point =m= in
 $\mathbb{R}^2$ to its coordinate representation we use =((chart R2-rect) m)=.
 (The procedures point and chart are introduced in Chapter 2.) Thus
 
-#+begin_src scheme
+#+begin_src scheme :exports both :cache yes
 ((chart R2-rect) (gamma ((point R1-rect) 't)))
-;; (up (qˆ0 t) (qˆ1 t))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+RESULTS[b64b05e0b03afd39e7a91867ef5ccdc6b837fbab]:
+: #|
+: (up (q^0 t) (q^1 t))
+: |#
+
+#+begin_src scheme
 (define coordinate-path
   (compose (chart R2-rect) gamma (point R1-rect)))
-
-(coordinate-path 't)
-;; (up (qˆ0 t) (qˆ1 t))
 #+end_src
+
+#+RESULTS:
+: #| coordinate-path |#
+
+#+begin_src scheme :exports both :cache yes
+(coordinate-path 't)
+#+end_src
+
+#+RESULTS[ecb77250d2290a383c4ab355c6b97a23654b80a4]:
+: #|
+: (up (q^0 t) (q^1 t))
+: |#
 
 Now we can compute the residuals of the Euler-Lagrange equations, but we get
 a large messy expression that we will not show.[fn:7] However, we will save it to
@@ -310,6 +378,9 @@ compare with the residuals of the geodesic equations.
 (define Lagrange-residuals
   (((Lagrange-equations L) coordinate-path) 't))
 #+end_src
+
+#+RESULTS:
+: #| Lagrange-residuals |#
 
 ** Geodesic Equations
 

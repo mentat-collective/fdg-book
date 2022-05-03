@@ -253,7 +253,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    The components of the gradient of a scalar field are obtained using the dual
    basis:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((orthonormal-spherical-1form-basis
   ((gradient spherical-metric orthonormal-spherical-basis)
    (literal-manifold-function 'f spherical)))
@@ -277,7 +277,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    The curl is a bit complicated:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((orthonormal-spherical-1form-basis
   ((curl spherical-metric orthonormal-spherical-basis) v))
  R3-spherical-point)
@@ -300,7 +300,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    But the divergence and Laplacian are simpler
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((divergence spherical-metric orthonormal-spherical-basis) v)
  R3-spherical-point)
 ;; (+ (((partial 0) vˆ0) (up r0 theta0 phi0))
@@ -312,7 +312,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 ;;       (* r0 (sin theta0))))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((Laplacian spherical-metric orthonormal-spherical-basis)
   (literal-manifold-function 'f spherical))
  R3-spherical-point)
@@ -377,7 +377,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    /timelike/ and the square root of its negation is the /proper time/ of the
    vector. If $\sigma$ is zero the vector is /lightlike/ or /null/.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((g-Minkowski a-vector a-vector) an-event)
 ;; (+ (* -1 (expt (vˆt (up ct0 x0 y0 z0)) 2))
 ;;    (expt (vˆx (up ct0 x0 y0 z0)) 2)
@@ -396,7 +396,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    We check that it is orthonormal with respect to the metric:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((g-Minkowski SR-vector-basis SR-vector-basis) an-event)
 ;; (down (down -1 0 0 0)
 ;;       (down 0 1 0 0)
@@ -410,7 +410,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 (define p (literal-manifold-function 'phi SR))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((Laplacian g-Minkowski SR-basis) p) an-event)
 ;; (+ (((partial 0) ((partial 0) phi)) (up ct0 x0 y0 z0))
 ;;    (* -1 (((partial 1) ((partial 1) phi)) (up ct0 x0 y0 z0)))
@@ -462,7 +462,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    And indeed, it transforms the Faraday tensor into the Maxwell tensor:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((- (SR-star (Faraday 'Ex 'Ey 'Ez 'Bx 'By 'Bz))
      (Maxwell 'Ex 'Ey 'Ez 'Bx 'By 'Bz))
   (literal-vector-field 'u SR)
@@ -544,7 +544,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    x, \partial / \partial y, \partial / \partial z)$ of equation 10.13 is
    equation 10.15:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((d F) d/dx d/dy d/dz) an-event)
 ;; (+ (((partial 1) Bx) (up ct0 x0 y0 z0))
 ;;    (((partial 2) By) (up ct0 x0 y0 z0))
@@ -560,7 +560,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    The three mixed space and time components of equation 10.13 are equation
    10.16:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((d F) d/dct d/dy d/dz) an-event)
 ;; (+ (((partial 0) Bx) (up ct0 x0 y0 z0))
 ;;    (((partial 2) Ez) (up ct0 x0 y0 z0))
@@ -573,7 +573,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 = \frac{1}{c} \frac{\partial B_x}{\partial t},
 \end{equation}
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((d F) d/dct d/dz d/dx) an-event)
 ;; (+ (((partial 0) By) (up ct0 x0 y0 z0))
 ;;    (((partial 3) Ex) (up ct0 x0 y0 z0))
@@ -586,7 +586,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 = \frac{1}{c} \frac{\partial B_y}{\partial t},
 \end{equation}
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((d F) d/dct d/dx d/dy) an-event)
 ;; (+ (((partial 0) Bz) (up ct0 x0 y0 z0))
 ;;    (((partial 1) Ey) (up ct0 x0 y0 z0))
@@ -601,7 +601,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    The purely spatial component of equation 10.14 is equation 10.17:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
   d/dx d/dy d/dz)
  an-event)
@@ -620,7 +620,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
    And finally, the three mixed time and space components of equation 10.14 are
    equation 10.18:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
   d/dct d/dy d/dz)
  an-event)
@@ -636,7 +636,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 = -\frac{1}{c} \frac{\partial E_x}{\partial t} - \frac{4\pi}{c}I_x,
 \end{equation}
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
   d/dct d/dz d/dx)
  an-event)
@@ -652,7 +652,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 = -\frac{1}{c} \frac{\partial E_y}{\partial t} - \frac{4\pi}{c}I_y,
 \end{equation}
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((- (d (SR-star F)) (* 4 :pi (SR-star 4-current)))
   d/dct d/dx d/dy)
  an-event)
@@ -696,7 +696,7 @@ g^{*}\mathsf{d}(g^{*}\theta) = \
 
    The 3-space force that results is a mess:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (* 'q (+ (E an-event) (cross-product V (B an-event))))
 ;; (up (+ (* q (Ex (up ct0 x0 y0 z0)))
 ;;        (* q V_y (Bz (up ct0 x0 y0 z0)))
@@ -736,7 +736,7 @@ f^\nu = -\sum_{\alpha, \mu}{q U^\mu F_{\mu \alpha} \eta^{\alpha \nu}},
    So, for example, the force in the $\hat{x}$ direction for a stationary
    particle is
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((Force 'q F d/dct dx) an-event)
 ;; (* q (Ex (up ct0 x0 y0 z0)))
    #+end_src
@@ -754,7 +754,7 @@ f^\nu = -\sum_{\alpha, \mu}{q U^\mu F_{\mu \alpha} \eta^{\alpha \nu}},
      (* (/ beta (sqrt (- 1 (square beta)))) d/dx)))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((Force 'q F (Ux 'v/c) dy) an-event)
 ;; (/ (+ (* -1 q v/c (Bz (up ct0 x0 y0 z0)))
 ;;       (* q (Ey (up ct0 x0 y0 z0))))
@@ -770,7 +770,7 @@ f^\nu = -\sum_{\alpha, \mu}{q U^\mu F_{\mu \alpha} \eta^{\alpha \nu}},
 
     b. What is the meaning of the time component? For example, consider:
 
-       #+begin_src scheme :results value raw :exports both :cache yes
+       #+begin_src scheme :results wrap :exports both :cache yes
 ((Force 'q F (Ux 'v/c) dct) an-event)
 ;; (/ (* q v/c (Ex (up ct0 x0 y0 z0)))
 ;;    (sqrt (+ 1 (* -1 (expt v/c 2)))))

@@ -193,7 +193,7 @@ the manifold.
    The Christoffel coefficients of the first kind are a complex structure with
    all three indices down:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((Christoffel->symbols
   (metric->Christoffel-1 (g-sphere 'R) S2-basis))
  ((point S2-spherical) (up 'theta0 'phi0)))
@@ -208,7 +208,7 @@ the manifold.
    And the Christoffel coefficients of the second kind have the innermost index
    up:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((Christoffel->symbols
   (metric->Christoffel-2 (g-sphere 'R) S2-basis))
  ((point S2-spherical) (up 'theta0 'phi0)))
@@ -273,7 +273,7 @@ D^2 q^i + \sum_{jk} \left(\Gamma_{jk}^i \circ \chi^{-1} \circ q \right) Dq^j Dq^
    the structure of velocities. Because the elementary partials commute we get
    two copies of each coefficient, requiring a factor of 1/2.
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (let* ((metric (literal-metric 'g R3-rect))
        (q (typical-coords R3-rect))
        (L2 (metric->Lagrangian metric R3-rect)))
@@ -372,7 +372,7 @@ $$
 
     Although the mass matrix of $L_2$ is nonsingular
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (determinant
  (((partial 2) ((partial 2) L2))
   (up 't (up 'x 'y) (up 'vx 'vy))))
@@ -382,7 +382,7 @@ $$
 
     the mass matrix of $L_1$ has determinant zero
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (determinant
  (((partial 2) ((partial 2) L1))
   (up 't (up 'x 'y) (up 'vx 'vy))))
@@ -399,7 +399,7 @@ $$
   (sqrt (square (velocity state))))
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (((Lagrange-equations L1)
   (up (literal-function 'x) (literal-function 'y)))
  't)
@@ -468,7 +468,7 @@ $$
     condition under which a reparameterization $f$ of the geodesic paths with
     coordinates $q$ satisfies the Lagrange equations for $L_1$ is:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((x (literal-function 'x))
       (y (literal-function 'y))
       (f (literal-function 'f))
@@ -502,7 +502,7 @@ $$
     which a reparameterization $f$ of geodesic paths with coordinates $q$
     satisfies the Lagrange equations for $L_2$ are:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((q (up (literal-function 'x) (literal-function 'y)))
       (f (literal-function 'f)))
   ((- (compose (Euler-Lagrange-operator L2)
@@ -681,7 +681,7 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
 
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (((Ricci nabla (coordinate-system->basis spacetime-rect))
   d/dt d/dt)
  ((point spacetime-rect) (up 't 'x 'y 'z)))
@@ -712,7 +712,7 @@ R_{\mu \nu} = \frac{8 \pi G}{c^4} \left(T_{\mu \nu} - \frac{1}{2} T g_{\mu \nu} 
 
     If we evaluate the right-hand side expression we obtain[fn:7]
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((g (Newton-metric 'M 'G ':c V)))
   (let ((T ij ((drop2 g spacetime-rect-basis) (Tdust 'rho))))
     (let ((T ((trace2down g spacetime-rect-basis) T ij)))

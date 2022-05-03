@@ -13,10 +13,10 @@ pom.xml.asc
 .nrepl-port
 .cpcache/
 **/org/*.pdf
-**/org/*.tex
-**/org/*.aux
-**/org/*.out
-**/org/*.toc
-**/org/ltximg
-**/org/auto
+*.tex
+*.aux
+*.out
+*.toc
+ltximg
+auto
 _minted*

@@ -30,12 +30,12 @@ directly recognize, and there are compound expressions of several kinds.
   produced by the procedure when applied to the given arguments is the value
   named by the procedure call. For example,
 
-  #+begin_src scheme :results value raw :exports both :cache yes
+  #+begin_src scheme :results wrap :exports both :cache yes
 (+ 1 2.14)
 ;; 3.14
   #+end_src
 
-  #+begin_src scheme :results value raw :exports both :cache yes
+  #+begin_src scheme :results wrap :exports both :cache yes
 (+ 1 (* 2 1.07))
 ;; 3.14
   #+end_src
@@ -67,7 +67,7 @@ where /operator/ names a procedure and /operand-i/ names the /i/th argument.[fn:
    multiplies $x$ by $x$." Of course, we can use this expression in any context
    where a procedure is needed. For example,
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 ((lambda (x) (* x x)) 4)
 ;; 16
    #+end_src
@@ -98,7 +98,7 @@ $$
    $\lambda$-expression could appear. For example, the area of the surface of a
    sphere of radius 5 meters is
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (* 4 pi (square 5))
 ;; 314.1592653589793
    #+end_src
@@ -116,7 +116,7 @@ $$
    example, it is possible to make a procedure that implements the mathematical
    notion of the composition of two functions:[fn:6]
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define compose
   (lambda (f g)
     (lambda (x)
@@ -126,7 +126,7 @@ $$
 ;; .826821810431806
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (square (sin 2))
 ;; .826821810431806
    #+end_src
@@ -195,7 +195,7 @@ $$
    Given conditionals and definitions, we can write recursive procedures. For
    example, to compute the $n$th factorial number we may write:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define (factorial n)
   (if (= n 0)
       1
@@ -205,7 +205,7 @@ $$
 ;; 720
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (factorial 40)
 ;; 815915283247897734345611269596115894272000000000
    #+end_src
@@ -215,7 +215,7 @@ $$
    The =let= expression is used to give names to objects in a local context. For
    example,
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define (f radius)
   (let ((area (* 4 pi (square radius)))
         (volume (* 4/3 pi (cube radius))))
@@ -243,7 +243,7 @@ $$
    looping constructs. We can write a procedure that implements an alternative
    algorithm for computing factorials as follows:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define (factorial n)
   (let factlp ((count 1) (answer 1))
     (if (> count n)
@@ -276,19 +276,19 @@ $$
    The procedure =list= is the constructor for lists. The selector =list-ref= gets
    an element of the list. All selectors in Scheme are zero-based. For example,
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define a-list (list 6 946 8 356 12 620))
 
 a-list
 ;; (6 946 8 356 12 620)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (list-ref a-list 3)
 ;; 356
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (list-ref a-list 0)
 ;; 6
    #+end_src
@@ -300,22 +300,22 @@ a-list
    for the last =cdr=, which is a distinguishable value called the empty list
    and is written =()=. Thus,
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (car a-list)
 ;; 6
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (cdr a-list)
 ;; (946 8 356 12 620)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (car (cdr a-list))
 ;; 946
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define another-list
   (cons 32 (cdr a-list)))
 
@@ -323,7 +323,7 @@ another-list
 ;; (32 946 8 356 12 620)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (car (cdr another-list))
 ;; 946
    #+end_src
@@ -337,7 +337,7 @@ another-list
    used to make vectors and a selector =vector-ref for accessing the elements of
    a vector:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define a-vector
   (vector 37 63 49 21 88 56))
 
@@ -345,12 +345,12 @@ a-vector
 ;; #(37 63 49 21 88 56)
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (vector-ref a-vector 3)
 ;; 21
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (vector-ref a-vector 0)
 ;; 37
    #+end_src
@@ -382,7 +382,7 @@ a-vector
    We can test if two symbols are identical by using the predicate =eq?=. For
    example, we can write a program to determine if an expression is a sum:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define (sum? expression)
   (and (pair? expression)
        (eq? (car expression) '+)))
@@ -390,7 +390,7 @@ a-vector
 ;; #t
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (sum? '(* 3 a))
 ;; #f
    #+end_src
