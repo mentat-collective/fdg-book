@@ -1,0 +1,5 @@
+* fdg-book
+
+Executable version of Functional Differential Geometry.
+
+Scheme and Clojure Versions.
