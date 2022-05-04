@@ -1,5 +1,9 @@
 #+title: Functional Differential Geometry
 #+PROPERTY: header-args :eval no-export
+#+LATEX_HEADER: \usepackage[hang,flushmargin]{footmisc}
+#+LATEX_HEADER: \setlength{\footnotesep}{\baselineskip}
+# required for epub:
+# #+OPTIONS: tex:dvipng
 
 #+Author: Gerald Jay Sussman and Jack Wisdom
 #+Email: gjs@mit.edu

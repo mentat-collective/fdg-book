@@ -1,3 +1,6 @@
+#+STARTUP: indent
+#+PROPERTY: header-args :eval no-export
+
 * Manifolds
 
 A /manifold/ is a generalization of our idea of a smooth surface embedded in
@@ -8,7 +11,7 @@ set to a tuple of /n/ real numbers, the /coordinates/. In general, several
 charts are needed to label all points on a manifold. It is required that if a
 region is in more than one coordinate patch then the coordinates are consistent
 in that the function mapping one set of coordinates to another is continuous
-(and perhaps differentiable to some de- gree). A consistent system of coordinate
+(and perhaps differentiable to some degree). A consistent system of coordinate
 patches and coordinate functions that covers the entire manifold is called an
 /atlas/.
 
@@ -38,8 +41,10 @@ we can make an object that represents the plane[fn:2]
 #+begin_src scheme
 (define R2 (make-manifold R^n 2))
 #+end_src
-and give it the name ~R2~. One useful patch of the plane is the one
-that contains the origin and covers the entire plane[fn:3].
+
+and give it the name ~R2~. One useful patch of the plane is the one that
+contains the origin and covers the entire plane[fn:3].
+
 #+begin_src scheme
 (define U (patch 'origin R2))
 #+end_src
@@ -59,8 +64,7 @@ arranged as an "up structure"; the coordinates are selected with superscripts:
 \begin{equation}
 x^i = \chi^i(m).
 \end{equation}
-The number of independent components of $x$ is the dimension of
-the manifold.
+The number of independent components of $x$ is the dimension of the manifold.
 
 Assume we have two coordinate functions $\chi$ and $\chi'$. The coordinate
 transformation from $\chi'$ coordinates to $\chi$ coordinates is just the
