@@ -20,3 +20,4 @@ pom.xml.asc
 ltximg
 auto
 _minted*
+.cache

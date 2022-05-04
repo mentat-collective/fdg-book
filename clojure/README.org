@@ -1,0 +1,6 @@
+* fdg-book
+
+Clojure version of executable Functional Differential Geometry.
+
+- you'll need to run
+  https://github.com/sicmutils/sicmutils/blob/main/doc/linters.md for linting.
