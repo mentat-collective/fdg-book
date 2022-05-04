@@ -135,7 +135,7 @@ independent of this coordinate system. Then we can verify that the bases
 $\mathsf{e}$ and $\tilde{\mathsf{e}}$ satisfy the dual relationship (equation
 3.41) by applying the dual basis to the vector basis:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 ((e-dual-basis e-vector-basis) R2-rect-point)
 ;; (up (down 1 0) (down 0 1))
 #+end_src
@@ -147,7 +147,7 @@ expressed!
 Or we can make a general vector field with this basis and then pick out the
 coefficients by applying the dual basis:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (define v
   (* (up (literal-manifold-function 'b^0 R2-rect)
          (literal-manifold-function 'b^1 R2-rect))
@@ -215,7 +215,7 @@ coefficients by applying the dual basis:
 
    The polar components are:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (define b-polar
   (* (Jacobian (coordinate-system->basis R2-polar)
                (coordinate-system->basis R2-rect))
@@ -231,7 +231,7 @@ coefficients by applying the dual basis:
 
    We can also get the polar components directly:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((coordinate-system->1form-basis R2-polar)
   (literal-vector-field 'b R2-rect))
  ((point R2-rect) (up 'x0 'y0)))
@@ -422,11 +422,11 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    We can check this formula for the commutator for the general
    vector fields =e0= and =e1= in polar coordinates:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (let* ((polar-basis (coordinate-system->basis R2-polar))
        (polar-vector-basis (basis->vector-basis polar-basis))
        (polar-dual-basis (basis->1form-basis polar-basis))
-       (f (literal-manifold-function ’f-rect R2-rect)))
+       (f (literal-manifold-function 'f-rect R2-rect)))
   ((- ((commutator e0 e1) f)
       (* (- (e0 (polar-dual-basis e1))
             (e1 (polar-dual-basis e0)))
@@ -467,17 +467,17 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
 (define Jy (- (* z d/dx) (* x d/dz)))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator Jx Jy) Jz) g) R3-rect-point)
 ;; 0
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator Jy Jz) Jx) g) R3-rect-point)
 ;; 0
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator Jz Jx) Jy) g) R3-rect-point)
 ;; 0
    #+end_src
@@ -497,17 +497,17 @@ c = \frac{\sin{\phi}}{\sin{\theta}}.
    equations 4.29–4.31) that correspond to rotations about the $x$, $y$, and $z$
    axes, respectively:[fn:6]
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator e x e y) e z) f) SO3-point)
 ;; 0
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator e y e z) e x) f) SO3-point)
 ;; 0
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((+ (commutator e z e x) e y) f) SO3-point)
 ;; 0
    #+end_src
@@ -602,12 +602,12 @@ a scaled vector, along which we translate by one unit.
 
 [fn:7] For non-commuting operators $A$ and $B$,
 
-\begin{aligned}
+\begin{align*}
 e^{A} e^{B} e^{-A} e^{-B} & \\
 =&\left(1+A+\frac{A^{2}}{2}+\cdots\right)\left(1+B+\frac{B^{2}}{2}+\cdots\right) \\
 & \times\left(1-A+\frac{A^{2}}{2}+\cdots\right)\left(1-B+\frac{B^{2}}{2}+\cdots\right) \\
 =& 1+[A, B]+\cdots,
-\end{aligned}
+\end{align*}
 
 to second order in $A$ and $B$. All higher-order terms can be written in terms
 of higher-order commutators of $A$ and $B$. An example of a higher-order

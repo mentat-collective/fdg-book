@@ -49,7 +49,7 @@ as
 
 So, for example,[fn:2]
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((Riemann (covariant-derivative sphere-Cartan))
   dphi d/dtheta d/dphi d/dtheta)
  ((point S2-spherical) (up 'theta0 'phi0)))
@@ -228,7 +228,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
     explicit parallel transport of a vector around an infinitesimal loop is what
     is computed by the Riemann curvature.
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((U (literal-vector-field 'U-rect R2-rect))
       (W (literal-vector-field 'W-rect R2-rect))
       (V (literal-vector-field 'V-rect R2-rect))
@@ -290,12 +290,12 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
          (((((Riemann-curvature nabla) w v) u) f) m)))))
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (test R2-rect general-Cartan-2)
 ;; 0
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (test R2-polar general-Cartan-2)
 ;; 0
     #+end_src
@@ -316,7 +316,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 
     Unfortunately, this does not work, as demonstrated below:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((U (literal-vector-field 'U-rect R2-rect))
       (V (literal-vector-field 'V-rect R2-rect))
       (W (literal-vector-field 'W-rect R2-rect))
@@ -332,7 +332,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 
     The obvious identification does not work, but neither does the other one!
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((U (literal-vector-field 'U-rect R2-rect))
       (V (literal-vector-field 'V-rect R2-rect))
       (W (literal-vector-field 'W-rect R2-rect))
@@ -346,7 +346,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 ;; a nonzero mess
     #+end_src
 
-    Let’s compute the two parts of the Riemann curvature operator and see how
+    Let's compute the two parts of the Riemann curvature operator and see how
     this works out. First, recall
 
 \begin{equation}
@@ -358,7 +358,7 @@ u(t+\epsilon) = \left(e^{\epsilon L_g} U\right)\left(s(t)\right),
 \end{aligned}
 \end{equation}
 
-    where the second form uses tuple arithmetic. Now let’s consider the first
+    where the second form uses tuple arithmetic. Now let's consider the first
     part of the Riemann curvature operator:
 
 \begin{equation}
@@ -476,7 +476,7 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
    coefficients =S2-Christoffel= above is zero. We demonstrate this by applying
    the torsion to the basis vector fields:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (for-each
  (lambda (x)
    (for-each
@@ -494,7 +494,7 @@ R(\mathsf{u}, \mathsf{v})=\sum_i \mathsf{R}\left(\tilde{\mathsf{e}}^i, \mathsf{u
 ;; 0
    #+end_src
 
-*** Torsion Doesn’t Affect Geodesics
+*** Torsion Doesn't Affect Geodesics
 
     There are multiple connections that give the same geodesic curves. Among
     these connections there is always one with zero torsion. Thus, if you care
@@ -617,7 +617,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
     We can verify that every longitude line is a geodesic:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((omega (((covariant-derivative Cartan) T) T)) m)
 ;; 0
     #+end_src
@@ -626,14 +626,14 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
     Now let =U= be =d/dphi=, then =U= commutes with =T=:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (((commutator U T) f) m)
 ;; 0
     #+end_src
 
     The torsion for the usual connection for the sphere is zero:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (let ((X (literal-vector-field 'X-sphere S2-spherical))
       (Y (literal-vector-field 'Y-sphere S2-spherical)))
   ((((torsion-vector nabla) X Y) f) m))
@@ -642,7 +642,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
     So we can compute the geodesic deviation using =Riemann=
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((+ (omega ((nabla T) ((nabla T) U)))
     ((Riemann nabla) omega T U T))
  m)
@@ -659,12 +659,12 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     $\nabla_\mathsf{T}\left(\nabla_\mathsf{T} \mathsf{U}\right)$. We know that
     the distance is purely in the $\phi$ direction, so
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((dphi ((nabla T) U)) m)
 ;; (/ (cos theta0) (sin theta0))
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((dphi ((nabla T) ((nabla T) U))) m)
 ;; -1
     #+end_src
@@ -680,8 +680,8 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
   (* R (sin theta) Delta-phi))
     #+end_src
 
-    #+begin_src scheme :results value raw :exports both :cache yes
-(((partial 1) (delta ’R)) 'phi0 'theta0 'Delta-phi)
+    #+begin_src scheme :results wrap :exports both :cache yes
+(((partial 1) (delta 'R)) 'phi0 'theta0 'Delta-phi)
 ;; (* Delta-phi R (cos theta0))
     #+end_src
 
@@ -698,7 +698,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
     We can measure the $\phi$ component with $d\phi$:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((dphi (* (((partial 1) (delta 'R))
            'phi0 'theta0 'Delta-phi)
           phi-hat))
@@ -712,7 +712,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
     Similarly, the magnitude of the acceleration is
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 (((partial 1) ((partial 1) (delta 'R)))
  'phi0 'theta0 'Delta-phi)
 ;; (* -1 Delta-phi R (sin theta0))
@@ -721,7 +721,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
     and the acceleration vector is the product of this result with $\hat{\phi}$.
     Measuring this with $d\phi$ we get:
 
-    #+begin_src scheme :results value raw :exports both :cache yes
+    #+begin_src scheme :results wrap :exports both :cache yes
 ((dphi (* (((partial 1) ((partial 1) (delta 'R)))
            'phi0 'theta0 'Delta-phi)
           phi-hat))
@@ -748,10 +748,10 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
   (covariant-derivative
    (Christoffel->Cartan
     (symmetrize-Christoffel
-     (literal-Christoffel-2 ’C R4-rect)))))
+     (literal-Christoffel-2 'C R4-rect)))))
    #+end_src
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((torsion nabla) omega X Y)
  (typical-point R4-rect))
 ;; 0
@@ -777,7 +777,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
    or, as a program:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((cyclic-sum
    (lambda (x y z)
      ((Riemann nabla) omega x y z)))
@@ -796,7 +796,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
    or, as a program:
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((cyclic-sum
    (lambda (x y z)
      (((nabla x) (Riemann nabla))
@@ -813,7 +813,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 (define nabla
   (covariant-derivative
    (Christoffel->Cartan
-    (literal-Christoffel-2 ’C R4-rect))))
+    (literal-Christoffel-2 'C R4-rect))))
 
 (define R (Riemann nabla))
 (define T (torsion-vector nabla))
@@ -824,7 +824,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
    The first Bianchi identity is now:[fn:10]
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((cyclic-sum
    (lambda (x y z)
      (- (R omega x y z)
@@ -837,7 +837,7 @@ D^2 \sigma^i(t) = \sum_{jk} \Gamma_{jk}^i(\gamma(t))D\sigma^j(t)D\sigma^k(t = 0.
 
    and the second Bianchi identity for a general connection is
 
-   #+begin_src scheme :results value raw :exports both :cache yes
+   #+begin_src scheme :results wrap :exports both :cache yes
 (((cyclic-sum
    (lambda (x y z)
      (+ (((nabla x) R) omega V y z)

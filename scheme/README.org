@@ -1,0 +1,110 @@
+* fdg-book
+
+Scheme version of executable Functional Differential Geometry.
+
+** What is this?
+
+Org file of the FDG book.
+
+** Installing scmutils
+
+TODO get these notes over from the exercises repo. We are going to want
+instructions on how to do that.
+
+** Scheme Version
+
+Chapters live in subfolders, big thing lives in ~org~.
+
+- Get TeX installed.
+- Check that you have (???)
+
+** Emacs Config
+
+- https://github.com/doomemacs/doomemacs
+- https://www.spacemacs.org/,
+- https://emacsforosx.com/
+
+*** Geiser
+
+- [[https://www.nongnu.org/geiser/geiser_2.html#Installation][installing Geiser]]
+- [[https://develop.spacemacs.org/layers/+lang/scheme/README.html][Geiser]] for spacemacs
+
+When you get this working, you can
+
+- go into a code fence with the cursor
+- run ~C-c '~, for ~org-edit-special~
+- Type ~C-c C-z~ to get a repl buffer
+- ~C-c '~ gets you back out again.
+
+That's a great way to interact with the REPL. BUT!!!! It has a big problem.
+
+*** CMU Scheme
+
+#+begin_src emacs-lisp
+(require 'cmuscheme)
+
+(defun mechanics-local ()
+  (interactive)
+  (run-scheme "mechanics"))
+
+;; And finally, the goods for SICM.
+(defun mechanics ()
+  (interactive)
+  (let ((default-directory (or (projectile-project-root)
+                               default-directory)))
+    (call-interactively #'mechanics-local)))
+#+end_src
+
+*** ob-scheme
+
+ANNOYINGLY...
+
+#+begin_src scheme
+;; This is required for better LaTeX in org mode.
+(setq org-latex-create-formula-image-program 'dvisvgm)
+
+;; TODO double check why I need this.
+;; I guess I can override this for specific images.
+(setq org-image-actual-width nil)
+
+;; for the REPL:
+(setq geiser-mit-binary "/Users/sritchie/bin/mechanics")
+
+;; TODO note that this doesn't matter...
+(setq geiser-repl-current-project-function 'projectile-project-root)
+#+end_src
+
+
+*** Screenshots
+
+This was how I was taking notes with screenshots:
+
+#+begin_src scheme
+;; This sets properties for image downloading, so I can embed images directly.
+(setq org-download-image-attr-list
+      '("#+attr_org: :width 400px"
+        "#+attr_html: :width 80% :align center"
+        "#+attr_latex: :width 8cm"))
+
+;; This lets me take screenshots on OS X.
+(setq org-download-screenshot-method "screencapture -i %s")
+
+;; This adds support for embedding dropbox images
+(add-to-list 'org-html-inline-image-rules
+             `("https" . ,(format "\\.%s\\'"
+                                  (regexp-opt
+                                   '("gif?dl=1")
+                                   t))))
+#+end_src
+
+** Licenses
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
+[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg

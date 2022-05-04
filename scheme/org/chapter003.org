@@ -1,10 +1,9 @@
 #+title: Chapter 3: Vector Fields and One-Form Fields
-#+STARTUP: noindent
 
-We want a way to think about how a function varies on a mani- fold. Suppose we
+We want a way to think about how a function varies on a manifold. Suppose we
 have some complex linkage, such as a multiple pendulum. The potential energy is
 an important function on the multi-dimensional configuration manifold of the
-linkage. To un- derstand the dynamics of the linkage we need to know how the
+linkage. To understand the dynamics of the linkage we need to know how the
 potential energy changes as the configuration changes. The change in potential
 energy for a step of a certain size in a particular di- rection in the
 configuration space is a real physical quantity; it does not depend on how we
@@ -13,83 +12,84 @@ determined: What is a step size? What is a direction? We cannot subtract two
 configurations to determine the distance between them. It is our job here to
 make sense of this idea.
 
-So we would like something like a derivative, but there are prob- lems. Since we
+So we would like something like a derivative, but there are problems. Since we
 cannot subtract two manifold points, we cannot take the derivative of a manifold
 function in the way described in elementary calculus. But we can take the
-derivative of a co- ordinate representation of a manifold function, because it
+derivative of a coordinate representation of a manifold function, because it
 takes real-number coordinates as its arguments. This is a start, but it is not
-independent of coordinate system. Let’s see what we can build out of this.
+independent of coordinate system. Let's see what we can build out of this.
 
 ** Vector Fields
 
-   In multiple dimensions the derivative of a function is the multiplier for the
-   best linear approximation of the function at each argument point:[fn:1]
-   \begin{equation}
-   f(x + \Delta x) \approx f(x) + (Df(x)) \Delta x
-   \end{equation}
-   The derivative $Df(x)$ is independent of $\Delta x$. Although the derivative
-   depends on the coordinates, the product $(Df(x)) \Delta x$ is invariant under
-   change of coordinates in the following sense. Let $\phi = \chi \circ
-   \chi^{\prime -1}$ be a coordinate transformation, and $x = \phi(y)$. Then
-   $\Delta x = D\phi(y)\Delta y$ is the linear approximation to the change in
-   $x$ when $y$ changes by $\Delta y$. If $f$ and $g$ are the representations of
-   a manifold function in the two coordinate systems, $g(y) = f(\phi(y)) =
-   f(x)$, then the linear approximations to the increments in $f$ and $g$ are
-   equal:
-   \begin{equation}
-   Dg(y) \Delta y
-   = Df(\phi(y)) (D\phi(y) \Delta y)
-   = Df(x) \Delta x. \nonumber
-   \end{equation}
+In multiple dimensions the derivative of a function is the multiplier for the
+best linear approximation of the function at each argument point:[fn:1]
 
-   The invariant product $(Df(x)) \Delta x$ is the /directional derivative/
-   of $f$ at $x$ with respect to the vector specified by the tuple of
-   components $ \Delta x$ in the coordinate system. We can generalize this
-   idea to allow the vector at each point to depend on the point,
-   making a /vector field/. Let b be a function of coordinates. We then
-   have a directional derivative of $f$ at each point $x$, determined by $b$
-   \begin{equation}
-   D_b(f)(x) = (Df(x)) b(x).
-   \end{equation}
-   Now we bring this back to the manifold and develop a useful
-   generalization of the idea of directional derivative for functions on a
-   manifold, rather than functions on $\mathbb{R}^n$. A /vector field/ on a
-   manifold is an assignment of a vector to each point on the manifold.
-   In elementary geometry, a vector is an arrow anchored at a point
-   on the manifold with a magnitude and a direction. In differential
-   geometry, a vector is an operator that takes directional deriva-
-   tives of manifold functions at its anchor point. The direction and
-   magnitude of the vector are the direction and scale factor of the
-   directional derivative.
+\begin{equation}
+f(x + \Delta x) \approx f(x) + (Df(x)) \Delta x
+\end{equation}
 
-   Let $\mathsf{m}$ be a point on a manifold, $\mathsf{v}$ be a vector field on the
-   manifold, and $\mathsf{f}$ be a real-valued function on the manifold. Then $\mathsf{v}(\mathsf{f})$
-   is the directional derivative of the function $\mathsf{f}$ and $\mathsf{v}(\mathsf{f})(\mathsf{m})$ is the
-   directional derivative of the function$\mathsf{f}$at the point $\mathsf{m}$. The vector
-   field is an operator that takes a real-valued manifold function and
-   a manifold point and produces a number. The order of arguments
-   is chosen to make $\mathsf{v}(\mathsf{f})$ be a new manifold function that can be
-   manipulated further. Directional derivative operators, unlike
-   ordinary derivative operators, produce a result of the same type as
-   their argument. Note that there is no mention here of any coordinate
-   system. The vector field specifies a direction and magnitude
-   at each manifold point that is independent of how it is described
-   using any coordinate system.
+The derivative $Df(x)$ is independent of $\Delta x$. Although the derivative
+depends on the coordinates, the product $(Df(x)) \Delta x$ is invariant under
+change of coordinates in the following sense. Let $\phi = \chi \circ
+\chi^{\prime -1}$ be a coordinate transformation, and $x = \phi(y)$. Then
+$\Delta x = D\phi(y)\Delta y$ is the linear approximation to the change in $x$
+when $y$ changes by $\Delta y$. If $f$ and $g$ are the representations of a
+manifold function in the two coordinate systems, $g(y) = f(\phi(y)) = f(x)$,
+then the linear approximations to the increments in $f$ and $g$ are equal:
 
-   A useful way to characterize a vector field in a particular coordinate
-   system is by applying it to the coordinate functions. The
-   resulting functions $b^i_{\chi,\mathsf{v}}$ are called the /coordinate component functions/
-   or /coefficient functions/ of the vector field; they measure how
-   quickly the coordinate functions change in the direction of the
-   vector field, scaled by the magnitude of the vector field:
-   \begin{equation}
-   b^i_{\chi,\mathsf{v}}
-   = \mathsf{v}(\chi^i) \circ \chi^{-1}.
-   \end{equation}
-   Note that we have chosen the coordinate components to be functions
-   of the coordinate tuple, not of a manifold point.
+\begin{equation}
+Dg(y)\Delta y = Df(\phi(y))(D\phi(y)\Delta y) = Df(x)\Delta x.
+\end{equation}
 
-   A vector with coordinate components $b_{\chi,\mathsf{v}}$ applies to a manifold
+The invariant product $(Df(x)) \Delta x$ is the /directional derivative/ of $f$
+at $x$ with respect to the vector specified by the tuple of components $\Delta
+x$ in the coordinate system. We can generalize this idea to allow the vector at
+each point to depend on the point, making a /vector field/. Let b be a function
+of coordinates. We then have a directional derivative of $f$ at each point $x$,
+determined by $b$
+
+\begin{equation}
+D_b(f)(x) = (Df(x)) b(x).
+\end{equation}
+
+Now we bring this back to the manifold and develop a useful generalization of
+the idea of directional derivative for functions on a manifold, rather than
+functions on $\mathbb{R}^n$. A /vector field/ on a manifold is an assignment of
+a vector to each point on the manifold. In elementary geometry, a vector is an
+arrow anchored at a point on the manifold with a magnitude and a direction. In
+differential geometry, a vector is an operator that takes directional deriva-
+tives of manifold functions at its anchor point. The direction and magnitude of
+the vector are the direction and scale factor of the directional derivative.
+
+Let $\mathsf{m}$ be a point on a manifold, $\mathsf{v}$ be a vector field on the
+manifold, and $\mathsf{f}$ be a real-valued function on the manifold. Then
+$\mathsf{v}(\mathsf{f})$ is the directional derivative of the function
+$\mathsf{f}$ and $\mathsf{v}(\mathsf{f})(\mathsf{m})$ is the directional
+derivative of the function$\mathsf{f}$at the point $\mathsf{m}$. The vector
+field is an operator that takes a real-valued manifold function and a manifold
+point and produces a number. The order of arguments is chosen to make
+$\mathsf{v}(\mathsf{f})$ be a new manifold function that can be manipulated
+further. Directional derivative operators, unlike ordinary derivative operators,
+produce a result of the same type as their argument. Note that there is no
+mention here of any coordinate system. The vector field specifies a direction
+and magnitude at each manifold point that is independent of how it is described
+using any coordinate system.
+
+A useful way to characterize a vector field in a particular coordinate system is
+by applying it to the coordinate functions. The resulting functions
+$b^i_{\chi,\mathsf{v}}$ are called the /coordinate component functions/ or
+/coefficient functions/ of the vector field; they measure how quickly the
+coordinate functions change in the direction of the vector field, scaled by the
+magnitude of the vector field:
+
+\begin{equation}
+b^i_{\chi,\mathsf{v}} = \mathsf{v}(\chi^i) \circ \chi^{-1}.
+\end{equation}
+
+Note that we have chosen the coordinate components to be functions of the
+coordinate tuple, not of a manifold point.
+
+A vector with coordinate components $b_{\chi,\mathsf{v}}$ applies to a manifold
    function $\mathsf{f}$ via
    \begin{align}
    \mathsf{v}(\mathsf{f})(\mathsf{m})
@@ -826,14 +826,15 @@ independent of coordinate system. Let’s see what we can build out of this.
      **Exercise 3.3: Hill Climbing**
 
      The topography of a region on the Earth can be specified by a manifold
-     function $\mathsf{h}$ that gives the altitude at each point on the manifold. Let
-     $\mathsf{v}$ be a vector field on the manifold, perhaps specifying a direction and
-     rate of walking at every point on the manifold.
+     function $\mathsf{h}$ that gives the altitude at each point on the
+     manifold. Let $\mathsf{v}$ be a vector field on the manifold, perhaps
+     specifying a direction and rate of walking at every point on the manifold.
 
      **a.** Form an expression that gives the power that must be expended to
      follow the vector field at each point.
 
      **b.** Write this as a computational expression.
+
 * Footnotes
 
 [fn:1] In multiple dimensions the derivative $Df(x)$ is a down tuple structure

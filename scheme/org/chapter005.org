@@ -229,7 +229,7 @@ can write the coordinate-area two-form in another way: $\mathsf{A} =
 (define v (+ (* 'v^0 d/dx) (* 'v^1 d/dy)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((wedge dx dy) u v) R3-rect-point)
 ;; (+ (* u^0 v^1) (* -1 u^1 v^0))
 #+end_src
@@ -244,7 +244,7 @@ the analogous answer in cylindrical coordinates:
 (define b (+ (* 'b^0 d/dr) (* 'b^1 d/dtheta)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((wedge dr dtheta) ab) ((point R3-cyl) (up 'r0 'theta0 'z0)))
 ;; (+ (* a^0 b^1 ) (* -1 a^1 b^0))
 #+end_src
@@ -262,7 +262,7 @@ volumes in $\mathsf{R}^{3}$ with a Euclidean metric:
 (define w (+ (* 'w^0 d/dx) (* 'w^1 d/dy) (* 'w^2 d/dz)))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((wedge dx dy dz) u v w) R3-rect-point)
 ;; (+ (* u^0 v^1 w^2)
 ;;    (* -1 u^0 v^2 w^1)
@@ -274,7 +274,7 @@ volumes in $\mathsf{R}^{3}$ with a Euclidean metric:
 
 This last expression is the determinant of a $3 \times 3$ matrix:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (- (((wedge dx dy dz) u v w) R3-rect-point)
    (determinant
     (matrix-by-rows (list 'u^0 'u^1 'u^2)
@@ -386,7 +386,7 @@ The test will require two arbitrary vector fields
 (define Y (literal-vector-field 'Y-rect R3-rect))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((- (d theta)
      (+ (wedge (d a) dx)
         (wedge (d b) dy)
@@ -420,7 +420,7 @@ Here we need another vector field because our result will be a three-form field.
 (define Z (literal-vector-field 'Z-rect R3-rect))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((- (d omega)
      (+ (wedge (d a) dy dz)
         (wedge (d b) dz dx)
@@ -467,9 +467,9 @@ It is easy to show equation (5.29) for manifold functions:
 \end{aligned}
 \end{equation}
 
-Consider the general one-form field θ defined on 3-dimensional rectangular
-space. Taking two exterior derivatives of θ yields a three-form field. It is
-zero:
+Consider the general one-form field $\theta$ defined on 3-dimensional
+rectangular space. Taking two exterior derivatives of $\theta$ yields a
+three-form field. It is zero:
 
 (((d (d theta)) X Y Z) R3-rect-point)
 0
@@ -570,7 +570,7 @@ We can now test our integrands:[fn:10]
 (define beta (literal function 'beta R2->R))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (let ((dx (ref (basis->1form-basis R2-rect-basis) 0))
       (dy (ref (basis-1>form-basis R2-rect-basis) 1)))
   (((- (d (+ (* (compose alpha (chart R2-rect)) dx)
@@ -655,7 +655,7 @@ vector fields at an arbitrary point:
 (define Z (literal-vector-field 'Z-rect R3-rect))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((- production-in-volume-element
      (d flux-through-boundary-element))
   X Y Z)

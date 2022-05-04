@@ -162,8 +162,8 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
 ** Walking on a Sphere
 
-   For example, let μ map the time line to the unit sphere.[fn:2] We use
-   colatitude θ and longitude φ as coordinates on the sphere:
+  For example, let $\mu$ map the time line to the unit sphere.[fn:2] We use
+  colatitude $\theta$ and longitude $\phi$ as coordinates on the sphere:
 
 #+begin_src scheme
 (define S2 (make-manifold S^2 2 3))
@@ -193,7 +193,7 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
   (literal-manifold-function 'h-spherical S2-spherical))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((basis->vector-basis S2-basis-over-mu) h)
  ((point R1-rect) 't0))
 ;; (down
@@ -206,7 +206,7 @@ d\mu(\mathsf{v})(I)(\mathsf{n}) = (\mathsf{v}(I\circ\mu))(\mathsf{n}) = (\mathsf
 
    We can check that the dual basis over the map does the correct thing:
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((basis->1form-basis S2-basis-over-mu)
   (basis->vector-basis S2-basis-over-mu))
  ((point R1-rect) 't0))
@@ -230,7 +230,7 @@ v^{i}(t) = \mathsf{d}\mathsf{x}^{i}_{\mu}(d\mu({\partial}/{\partial\mathsf{t}}))
 
    For example, the coordinate velocities on a sphere are
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((basis->1form-basis S2-basis-over-mu)
   ((differential mu) d/dt))
  ((point R1-rect) 't0))
@@ -455,9 +455,9 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 \mathsf{d}(\mu^{*}\theta) = \mu^{*}(\mathsf{d}\theta),
 \end{equation}
 
-   for θ a function or $k$-form field.
+   for $\theta$ a function or $k$-form field.
 
-   We can verify this by computing an example. Let μ map the rectangular plane
+   We can verify this by computing an example. Let $\mu$ map the rectangular plane
    to rectangular 3-space:
 
 #+begin_src scheme
@@ -472,7 +472,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 (define X (literal-vector-field 'X-rect R2-rect))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((- ((pullback mu) (d f)) (d ((pull back mu) f))) X)
  ((point R2-rect) (up 'x0 'y0)))
 ;; 0
@@ -486,7 +486,7 @@ d\mu(\mathsf{v})(\mathsf{f})(\mathsf{n}) = \mathsf{v}(\mathsf{f}\circ\mu)(\maths
 (define Y (literal-vector-field 'Y-rect R2-rect))
 #+end_src
 
-#+begin_src scheme :results value raw :exports both :cache yes
+#+begin_src scheme :results wrap :exports both :cache yes
 (((- ((pullback mu) (d theta)) (d ((pullback mu) theta))) X Y)
  ((point R2-rect) (up 'x0 'y0)))
 ;; 0
